@@ -4,7 +4,7 @@ VENPromotionsManager enables easy definition, management and control of in-app l
 - Define promotion action events along with trigger locations and active date intervals
 - Check for location based promotions on a background timer (optional)
 - Use an included location service built on a CLLocationManager or a custom location service
-![image](example.gif)
+<img src="example.png" width="312" align="left" style="padding-top:-20px; padding-left:20px;" />
 ### Usage
 
 First create one (or more) promotion(s)
