@@ -7,7 +7,7 @@ VENPromotionsManager enables easy definition, management and control of in-app l
 
 ### Usage
 
-First create promotions. For example:
+First create one (or more) promotion(s)
 ```objc
     CLLocation *appleHQLocation = [[CLLocation alloc] initWithLatitude:37.3318 longitude:-122.0312];
     NSDate *newYears2014 = [NSDate dateWithTimeIntervalSince1970:1388552400];
@@ -22,15 +22,15 @@ First create promotions. For example:
                                                                      //Implement code to launch promotion here
                                                                  }];
  ```
-Then create start the promotions manager with an array of the created promotions.
+Then start the promotions manager with an array of the created promotion(s).
 ```objc
-        [VPLPromotionsManager startWithPromotions:@[promotions1,promotions2,promotions3]
+        [VPLPromotionsManager startWithPromotions:@[promotion1,promotion2,promotion3]
                                 locationTypes:VPLLocationTypeGPSRequestPermission
                               locationService:nil //custom location service. use nil if you plan to use the included CLLocationManger.
-                          withRefreshInterval:5 //in seconds
+                          withRefreshInterval:600 //in seconds
                       withMultipleTriggerType:VPLMultipleTriggerOnRefreshTypeTriggerOnce];
  ```
-
+The VPLPromotionsManager is a singleton instance and will display any valid location based promotions.  It checks for a valid promotion every 10 minutes.  By supplying a userdefaults key, you gurantee a user will not see a repeat promotion on subsequent launches.
 ### Contributing
 
 1. Fork it
