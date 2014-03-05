@@ -9,11 +9,11 @@ Pod::Spec.new do |s|
                     - Use an included location service built on a CLLocationManager or a custom location service
                    DESC
 
-  s.homepage     = "https://github.braintreeps.com/dasmer/VENPromotionsManager"
+  s.homepage     = "https://github.com/venmo/VENPromotionsManager/"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
   s.author       = { "Dasmer Singh" => "dasmer.singh@venmo.com" }
   s.platform     = :ios, '5.0'
-  s.source       = { :git => "git@github.braintreeps.com:dasmer/VENPromotionsManager.git", :tag => "v#{s.version}" }
+  s.source       = { :git => "https://github.com/venmo/VENPromotionsManager.git", :tag => "v#{s.version}" }
   s.source_files = 'VPLPromotionsManager/**/*.{h,m}'
   s.requires_arc = true
 end
