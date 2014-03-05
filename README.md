@@ -22,7 +22,7 @@ First create one (or more) promotion(s)
                                                                      //Implement code to launch promotion here
                                                                  }];
  ```
-Then start the promotions manager with an array of the created promotion(s).
+Then start the promotions manager with an array of the created promotion(s)
 ```objc
         [VPLPromotionsManager startWithPromotions:@[promotion1,promotion2,promotion3]
                                 locationTypes:VPLLocationTypeGPSRequestPermission
@@ -30,7 +30,7 @@ Then start the promotions manager with an array of the created promotion(s).
                           withRefreshInterval:600 //in seconds
                       withMultipleTriggerType:VPLMultipleTriggerOnRefreshTypeTriggerOnce];
  ```
-The VPLPromotionsManager is a singleton instance and will display any valid location based promotions.  It checks for a valid promotion every 10 minutes.  By supplying a userdefaults key, you gurantee a user will not see a repeat promotion on subsequent launches.
+The VPLPromotionsManager is a singleton object and will display any valid location based promotions.  It checks for a valid promotion every 10 minutes.  By supplying a userdefaults key, you gurantee a user will not see a repeat promotion on subsequent launches.
 ### Contributing
 
 1. Fork it
