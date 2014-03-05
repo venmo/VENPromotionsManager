@@ -2,7 +2,6 @@
 #import "VPLAppDelegate.h"
 #import "VPLPromotionsManager.h"
 
-
 static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
 
 @implementation VPLViewController
@@ -10,9 +9,7 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     CLLocation *appleHQLocation = [[CLLocation alloc] initWithLatitude:37.3318 longitude:-122.0312];
-    
     NSMutableArray *promotions = [[NSMutableArray alloc] init];
-    
     for (NSInteger i=0; i<15; i++) {
         NSString *userDefaultsKey = [NSString stringWithFormat:@"%@%d", kVENPromotionAppleKey,i];
         VPLPromotion *promotion = [[VPLPromotion alloc] initWithCenter:appleHQLocation
@@ -25,11 +22,11 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
                                                                  }];
         [promotions addObject:promotion];
     }
-    
     [VPLPromotionsManager startWithPromotions:[promotions copy]
                                 locationTypes:VPLLocationTypeGPSRequestPermission
                               locationService:nil
-                          withRefreshInterval:5 withMultipleTriggerType:VPLMultipleTriggerOnRefreshTypeTriggerOnce];
+                          withRefreshInterval:5
+                      withMultipleTriggerType:VPLMultipleTriggerOnRefreshTypeTriggerOnce];
 }
 
 
