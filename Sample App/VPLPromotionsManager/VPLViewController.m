@@ -36,12 +36,9 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
 - (IBAction)startStopClicked:(id)sender {
     if ([VPLPromotionsManager sharedManager].isRunning) {
         [[VPLPromotionsManager sharedManager] stopMonitoringForPromotionLocations];
-        NSLog(@"Manager Stopped");
     }
     else {
         [[VPLPromotionsManager sharedManager] startMonitoringForPromotionLocations];
-        NSLog(@"Manager Started Again2");
-
     }
 }
 
