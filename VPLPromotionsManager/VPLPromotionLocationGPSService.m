@@ -2,8 +2,10 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface VPLPromotionLocationGPSService () <CLLocationManagerDelegate>
+
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (copy) void(^callback)(VPLLocation *location, NSError *error);
+@property (nonatomic) float gpsMinimumHorizontalAccuracy;
 
 @end
 
@@ -11,11 +13,14 @@
 
 #pragma mark - Initializers
 
-- (id)init {
+- (id)initWithLocationAccuracy:(CLLocationAccuracy)accuracy
+  andMinimumHorizontalAccuracy:(float)horizontalAccuracy {
     self = [super init];
     if (self) {
         self.locationManager = [[CLLocationManager alloc] init];
+        self.locationManager.desiredAccuracy = accuracy;
         self.locationManager.delegate = self;
+        self.gpsMinimumHorizontalAccuracy = horizontalAccuracy;
     }
     return self;
 }
@@ -23,7 +28,6 @@
 
 - (void)requestCurrentLocationWithCompletion:(void(^)(VPLLocation *location, NSError *error))callback {
     self.callback = callback;
-    self.locationManager.desiredAccuracy = self.delegate.gpsDesiredLocationAccuracy;
     [self.locationManager startUpdatingLocation];
 }
 
@@ -31,7 +35,7 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     CLLocation *myCurrentLocation = [locations lastObject];
     
-    if(myCurrentLocation.horizontalAccuracy <= self.delegate.gpsMinimumHorizontalAccuracy) {
+    if(myCurrentLocation.horizontalAccuracy <= self.gpsMinimumHorizontalAccuracy) {
         [self.locationManager stopUpdatingLocation];
         VPLLocation *currentVPLLocation = [[VPLLocation alloc] initWithLocation:myCurrentLocation];
         if (self.callback) {

@@ -4,8 +4,7 @@
 
 @interface VPLPromotionLocationGPSService : NSObject <VPLLocationServiceProtocol>
 
-@property (nonatomic, weak) VPLPromotionsManager *delegate;
-
-- (id)init;
+- (id)initWithLocationAccuracy:(CLLocationAccuracy)accuracy
+  andMinimumHorizontalAccuracy:(float)horizontalAccuracy;
 
 @end

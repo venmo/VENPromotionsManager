@@ -26,13 +26,6 @@ typedef NS_OPTIONS(NSUInteger, VPLLocationType) {
 ///YES if the VLPPromotionsManager is checking for location based promotions at the rate specified by the refresh interval. NO otherwise.
 @property (nonatomic, assign) BOOL isRunning;
 
-///The desired accuracy of the VLPPromotionsManager's GPS Service. By default it is set to kCLLocationAccuracyBest.
-@property (nonatomic, assign) CLLocationAccuracy gpsDesiredLocationAccuracy;
-
-///The desired minimum horizontal accuracy of the VLPPromotionsManager's GPS Service. By default it is set to 5000m.
-@property (nonatomic, assign) CGFloat gpsMinimumHorizontalAccuracy;
-
-
 /**
  Creates and starts a Promotion Manager singleton object.
  @param promotions promotions array of VPLPromotion objects in order of fire priority.
