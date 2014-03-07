@@ -8,6 +8,14 @@ VENPromotionsManager enables easy definition, management and control of in-app l
 ### Demo
 <img src="example.gif" width="320">
 
+
+### Installation
+
+You can install VENPromotionsManager in your project by using [CocoaPods](https://github.com/cocoapods/cocoapods):
+
+```Ruby
+pod 'VENPromotionsManager', '~> 0.2.0'
+```
 ### Usage
 
 First create one (or more) promotion(s)
