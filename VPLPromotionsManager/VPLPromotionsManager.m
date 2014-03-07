@@ -110,9 +110,10 @@ static VPLPromotionsManager *promotionsManager = nil;
                 }
         }
         id<VPLLocationServiceProtocol> currentService = self.gpsService ? self.gpsService : self.locationService;
+        NSDate *now = [NSDate date];
         NSMutableArray *currentTimeValidPromotions = [[NSMutableArray alloc] init];
         for (VPLPromotion *promotion in self.promotions) {
-            if ([promotion isTimeValid]) {
+            if ([promotion shouldTriggerOnDate:now]) {
                 [currentTimeValidPromotions addObject:promotion];
             }
         }
@@ -121,7 +122,7 @@ static VPLPromotionsManager *promotionsManager = nil;
             [currentService requestCurrentLocationWithCompletion:^(VPLLocation *currentLocation, NSError *error) {
                 if (!error){
                     for (VPLPromotion *timeValidPromotion in currentTimeValidPromotions) {
-                        if ([timeValidPromotion shouldTriggerForLocation:currentLocation]) {
+                        if ([timeValidPromotion shouldTriggerOnDate:now atLocation:currentLocation]) {
                             [timeValidPromotion triggerPromotion];
                             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                             NSString *showOnceUserDefaultsKey = timeValidPromotion.showOnceUserDefaultsKey;

@@ -51,15 +51,42 @@ showOnceUserDefaultsKey:(NSString *)userDefaultsKey
 
 #pragma mark - Custom Methods
 
-- (BOOL)shouldTriggerForLocation:(VPLLocation *)location {
+- (BOOL)shouldTriggerOnDate:(NSDate *)date atLocation:(VPLLocation *)location {
     if (![location isValid]) {
         return NO;
     }
-    
-    if (![self isTimeValid]) {
+    if (![self shouldTriggerOnDate:date] || ![self shouldTriggerAtLocation:location]) {
         return NO;
     }
-    
+    return YES;
+}
+
+
+- (void)triggerPromotion {
+    if (self.action) {
+        self.action();
+    }
+}
+
+
+- (BOOL)shouldTriggerOnDate:(NSDate *)date {
+    NSTimeInterval givenDateIntervalSinceReferenceDate = [date timeIntervalSinceReferenceDate];
+    NSTimeInterval startDateTimeIntervalSinceReferenceDate = [self.startDate timeIntervalSinceReferenceDate];
+    NSTimeInterval endDateTimeIntervalSinceReferenceDate = [self.endDate timeIntervalSinceReferenceDate];
+    if (!(startDateTimeIntervalSinceReferenceDate <= givenDateIntervalSinceReferenceDate)) {
+        return NO;
+    }
+    if (!(endDateTimeIntervalSinceReferenceDate >= givenDateIntervalSinceReferenceDate)) {
+        if(self.showOnceUserDefaultsKey) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:self.showOnceUserDefaultsKey];
+        }
+        return NO;
+    }
+    return YES;
+}
+
+
+- (BOOL)shouldTriggerAtLocation:(VPLLocation *)location {
     if (self.city && self.state && self.country) {
         if (![self.city isEqualToString: location.city] && ![self.city isEqualToString:kVPLWildCardLocationAttribute]) {
             return NO;
@@ -79,30 +106,6 @@ showOnceUserDefaultsKey:(NSString *)userDefaultsKey
         }
     }
     return NO;
-}
-
-
-- (void)triggerPromotion {
-    if (self.action) {
-        self.action();
-    }
-}
-
-
-- (BOOL)isTimeValid {
-    NSTimeInterval currentTimeIntervalSinceReferenceDate = [[NSDate date] timeIntervalSinceReferenceDate];
-    NSTimeInterval startDateTimeIntervalSinceReferenceDate = [self.startDate timeIntervalSinceReferenceDate];
-    NSTimeInterval endDateTimeIntervalSinceReferenceDate = [self.endDate timeIntervalSinceReferenceDate];
-    if (!(startDateTimeIntervalSinceReferenceDate <= currentTimeIntervalSinceReferenceDate)) {
-        return NO;
-    }
-    if (!(endDateTimeIntervalSinceReferenceDate >= currentTimeIntervalSinceReferenceDate)) {
-        if(self.showOnceUserDefaultsKey) {
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:self.showOnceUserDefaultsKey];
-        }
-        return NO;
-    }
-    return YES;
 }
 
 
