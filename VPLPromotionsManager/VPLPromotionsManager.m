@@ -10,6 +10,7 @@ const NSInteger VPLPromotionsManagerRefreshIntervalNone = 0;
 static VPLPromotionsManager *promotionsManager = nil;
 
 @interface VPLPromotionsManager()
+
 @property (nonatomic, strong) id<VPLLocationServiceProtocol> locationService;
 @property (nonatomic, strong) VPLPromotionLocationGPSService<VPLLocationServiceProtocol> *gpsService;
 @property (nonatomic, assign) NSUInteger refreshInterval;
@@ -17,6 +18,10 @@ static VPLPromotionsManager *promotionsManager = nil;
 @property (nonatomic, assign) VPLLocationType types;
 @property (nonatomic, assign) VPLMultipleTriggerOnRefreshType multipleTriggerType;
 @property (nonatomic, copy) VPLGCDtimerTick promotionCheckTimerTick;
+
+@property (nonatomic, assign) CLLocationAccuracy gpsDesiredLocationAccuracy;
+@property (nonatomic, assign) CGFloat gpsMinimumHorizontalAccuracy;
+
 @end
 
 @implementation VPLPromotionsManager
@@ -104,8 +109,8 @@ static VPLPromotionsManager *promotionsManager = nil;
             if ((self.types & VPLLocationTypeGPSRequestPermission)
                 || (self.types & VPLLocationTypeGPSIfPermissionGranted
                     && [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)) {
-                    self.gpsService             = [[VPLPromotionLocationGPSService alloc] init];
-                    self.gpsService.delegate    = self;
+                    
+                    self.gpsService = [[VPLPromotionLocationGPSService alloc] initWithLocationAccuracy:self.gpsDesiredLocationAccuracy andMinimumHorizontalAccuracy:self.gpsMinimumHorizontalAccuracy];
 
                 }
         }

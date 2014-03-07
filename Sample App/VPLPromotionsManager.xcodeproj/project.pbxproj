@@ -26,6 +26,7 @@
 		3AF6EF4318C695D1000AD74B /* VPLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6EF3E18C695D1000AD74B /* VPLAppDelegate.m */; };
 		3AF6EF4418C695D1000AD74B /* VPLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6EF4018C695D1000AD74B /* VPLViewController.m */; };
 		437E09A539C14F89B9300BA6 /* libPods-VPLPromotionsManagerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D2D48CF2C70471A865B175B /* libPods-VPLPromotionsManagerTests.a */; };
+		C2D7747718C8D8C300B6F4AE /* Pods-VPLPromotionsManagerTests.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7CD492AB7C074AB4BF559E34 /* Pods-VPLPromotionsManagerTests.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,9 +72,7 @@
 		3AF6EF3E18C695D1000AD74B /* VPLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLAppDelegate.m; path = VPLPromotionsManager/VPLAppDelegate.m; sourceTree = SOURCE_ROOT; };
 		3AF6EF3F18C695D1000AD74B /* VPLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPLViewController.h; path = VPLPromotionsManager/VPLViewController.h; sourceTree = SOURCE_ROOT; };
 		3AF6EF4018C695D1000AD74B /* VPLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLViewController.m; path = VPLPromotionsManager/VPLViewController.m; sourceTree = SOURCE_ROOT; };
-		47207C4813CD44ED85587E92 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		65B7D4273FA04F7CBFC73F23 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		738C0D37591C4DB5BD2138B4 /* Pods-VENPromotionManagerTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VENPromotionManagerTests.xcconfig"; path = "Pods/Pods-VENPromotionManagerTests.xcconfig"; sourceTree = "<group>"; };
 		7CD492AB7C074AB4BF559E34 /* Pods-VPLPromotionsManagerTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VPLPromotionsManagerTests.xcconfig"; path = "Pods/Pods-VPLPromotionsManagerTests.xcconfig"; sourceTree = "<group>"; };
 		F796929953A34FEB98C98F64 /* libPods-VENPromotionManagerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VENPromotionManagerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -106,12 +105,11 @@
 		3AA8545218C624BA00F03FCF = {
 			isa = PBXGroup;
 			children = (
-				3AA8546418C624BA00F03FCF /* VPLPromotionsManager */,
+				3AA8549A18C626CC00F03FCF /* VPLPromotionsManager */,
+				3AA8546418C624BA00F03FCF /* Sample App */,
 				3AA8548618C624BA00F03FCF /* VPLPromotionsManagerTests */,
 				3AA8545D18C624BA00F03FCF /* Frameworks */,
 				3AA8545C18C624BA00F03FCF /* Products */,
-				738C0D37591C4DB5BD2138B4 /* Pods-VENPromotionManagerTests.xcconfig */,
-				47207C4813CD44ED85587E92 /* Pods.xcconfig */,
 				7CD492AB7C074AB4BF559E34 /* Pods-VPLPromotionsManagerTests.xcconfig */,
 			);
 			sourceTree = "<group>";
@@ -139,7 +137,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3AA8546418C624BA00F03FCF /* VPLPromotionsManager */ = {
+		3AA8546418C624BA00F03FCF /* Sample App */ = {
 			isa = PBXGroup;
 			children = (
 				3AF6EF3B18C695D1000AD74B /* Images.xcassets */,
@@ -148,10 +146,9 @@
 				3AF6EF3E18C695D1000AD74B /* VPLAppDelegate.m */,
 				3AF6EF3F18C695D1000AD74B /* VPLViewController.h */,
 				3AF6EF4018C695D1000AD74B /* VPLViewController.m */,
-				3AA8549A18C626CC00F03FCF /* Source Files */,
 				3AA8546518C624BA00F03FCF /* Supporting Files */,
 			);
-			name = VPLPromotionsManager;
+			name = "Sample App";
 			path = VENPromotionManager;
 			sourceTree = "<group>";
 		};
@@ -186,7 +183,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		3AA8549A18C626CC00F03FCF /* Source Files */ = {
+		3AA8549A18C626CC00F03FCF /* VPLPromotionsManager */ = {
 			isa = PBXGroup;
 			children = (
 				3A5095C318C69A5C00C6905B /* VPLPromotionsManager.h */,
@@ -201,7 +198,7 @@
 				3A5095BA18C69A5C00C6905B /* NSString+VPLSanitiation.h */,
 				3A5095BB18C69A5C00C6905B /* NSString+VPLSanitiation.m */,
 			);
-			name = "Source Files";
+			name = VPLPromotionsManager;
 			path = ..;
 			sourceTree = SOURCE_ROOT;
 		};
@@ -212,11 +209,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3AA8549018C624BA00F03FCF /* Build configuration list for PBXNativeTarget "VPLPromotionsManager" */;
 			buildPhases = (
-				3897458BBA6245C68C9F9895 /* Check Pods Manifest.lock */,
 				3AA8545718C624BA00F03FCF /* Sources */,
 				3AA8545818C624BA00F03FCF /* Frameworks */,
 				3AA8545918C624BA00F03FCF /* Resources */,
-				E30FAE3575CA4E99BFD54724 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -295,27 +290,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2D7747718C8D8C300B6F4AE /* Pods-VPLPromotionsManagerTests.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3897458BBA6245C68C9F9895 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		45EA63B7AA9645D1AC5CF42E /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -344,21 +325,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Pods-VPLPromotionsManagerTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E30FAE3575CA4E99BFD54724 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -475,7 +441,6 @@
 		};
 		3AA8549118C624BA00F03FCF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 47207C4813CD44ED85587E92 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -490,7 +455,6 @@
 		};
 		3AA8549218C624BA00F03FCF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 47207C4813CD44ED85587E92 /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
