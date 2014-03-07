@@ -51,6 +51,13 @@ showOnceUserDefaultsKey:(NSString *)userDefaultsKey
 
 #pragma mark - Custom Methods
 
+- (void)triggerPromotion {
+    if (self.action) {
+        self.action();
+    }
+}
+
+
 - (BOOL)shouldTriggerOnDate:(NSDate *)date atLocation:(VPLLocation *)location {
     if (![location isValid]) {
         return NO;
@@ -59,13 +66,6 @@ showOnceUserDefaultsKey:(NSString *)userDefaultsKey
         return NO;
     }
     return YES;
-}
-
-
-- (void)triggerPromotion {
-    if (self.action) {
-        self.action();
-    }
 }
 
 
