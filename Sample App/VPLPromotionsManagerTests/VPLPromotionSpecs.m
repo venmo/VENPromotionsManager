@@ -157,6 +157,7 @@ describe(@"shouldTriggerForLocation", ^{
                                                           showOnceUserDefaultsKey:nil
                                                                            action:^(VPLLocation * location) { }];
     it(@"should trigger for if current time is after start date and before end date", ^{
+        expect([validTimeIntervalPromotion isTimeValid]).to.equal(YES);
         expect([validTimeIntervalPromotion shouldTriggerForLocation:validLocation]).to.equal(YES);
     });
     
@@ -169,6 +170,7 @@ describe(@"shouldTriggerForLocation", ^{
                                                                                           action:^(VPLLocation * location) { }];
     it(@"should trigger for nil start date if end date is after current time", ^{
         expect([nilStartDateValidEndDateIntervalPromotion shouldTriggerForLocation:validLocation]).to.equal(YES);
+        expect([nilStartDateValidEndDateIntervalPromotion shouldTriggerForLocation:validLocation]).to.equal(YES);
     });
     
     VPLPromotion *nilStartDateInvalidEndDateIntervalPromotion = [[VPLPromotion alloc] initWithCity:@"Austin"
@@ -179,6 +181,7 @@ describe(@"shouldTriggerForLocation", ^{
                                                                            showOnceUserDefaultsKey:nil
                                                                                             action:^(VPLLocation * location) { }];
     it(@"should not trigger for nil start date if end date is before current time", ^{
+        expect([nilStartDateInvalidEndDateIntervalPromotion isTimeValid]).to.equal(NO);
         expect([nilStartDateInvalidEndDateIntervalPromotion shouldTriggerForLocation:validLocation]).to.equal(NO);
     });
     
@@ -190,6 +193,7 @@ describe(@"shouldTriggerForLocation", ^{
                                                                        showOnceUserDefaultsKey:nil
                                                                                         action:^(VPLLocation * location) { }];
     it(@"should always trigger for nil start time and nil end time", ^{
+        expect([nilStartDateNilEndDateIntervalPromotion isTimeValid]).to.equal(YES);
         expect([nilStartDateNilEndDateIntervalPromotion shouldTriggerForLocation:validLocation]).to.equal(YES);
     });
     
@@ -201,6 +205,7 @@ describe(@"shouldTriggerForLocation", ^{
                                                                          showOnceUserDefaultsKey:nil
                                                                                           action:^(VPLLocation * location) { }];
     it(@"should trigger for start date prior to current date and nil end date", ^{
+        expect([validStartDateNilEndDateIntervalPromotion isTimeValid]).to.equal(YES);
         expect([validStartDateNilEndDateIntervalPromotion shouldTriggerForLocation:validLocation]).to.equal(YES);
     });
     
@@ -212,7 +217,9 @@ describe(@"shouldTriggerForLocation", ^{
                                                                            showOnceUserDefaultsKey:nil
                                                                                             action:^(VPLLocation * location) { }];
     it(@"should not trigger for start date after current date and nil end date", ^{
+        expect([invalidStartDateNilEndDateIntervalPromotion isTimeValid]).to.equal(NO);
         expect([invalidStartDateNilEndDateIntervalPromotion shouldTriggerForLocation:validLocation]).to.equal(NO);
+        
     });
     
     VPLPromotion *invalidStartDateAndInvalidEndDateIntervalPromotion = [[VPLPromotion alloc] initWithCity:@"Austin"
@@ -223,6 +230,7 @@ describe(@"shouldTriggerForLocation", ^{
                                                                                   showOnceUserDefaultsKey:nil
                                                                                                    action:^(VPLLocation * location) { }];
     it(@"should not trigger for start date after current date and end date prior to current date", ^{
+        expect([invalidStartDateAndInvalidEndDateIntervalPromotion isTimeValid]).to.equal(NO);
         expect([invalidStartDateAndInvalidEndDateIntervalPromotion shouldTriggerForLocation:validLocation]).to.equal(NO);
     });
     
