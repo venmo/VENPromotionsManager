@@ -58,15 +58,15 @@ describe(@"Non wildcard promotion shouldTriggerForLocation", ^{
     
     
     it(@"should never trigger for empty object", ^{
-        expect([promotion shouldTriggerForLocation:emptyLocation]).to.equal(NO);
+        expect([promotion shouldTriggerAtLocation:emptyLocation]).to.equal(NO);
     });
     
     it(@"should never trigger for a different city", ^{
-        expect([promotion shouldTriggerForLocation:validWrongCityLocation]).to.equal(NO);
+        expect([promotion shouldTriggerAtLocation:validWrongCityLocation]).to.equal(NO);
     });
     
     it(@"should trigger for the correct location", ^{
-        expect([promotion shouldTriggerForLocation:validLocation]).to.equal(YES);
+        expect([promotion shouldTriggerAtLocation:validLocation]).to.equal(YES);
     });
 });
 
@@ -80,19 +80,19 @@ describe(@"City wildcard promotion shouldTriggerForLocation", ^{
                                                           action:^(VPLLocation * location) { }];
     
     it(@"should never trigger for empty object", ^{
-        expect([promotion shouldTriggerForLocation:emptyLocation]).to.equal(NO);
+        expect([promotion shouldTriggerAtLocation:emptyLocation]).to.equal(NO);
     });
     
     it(@"should trigger for a different city", ^{
-        expect([promotion shouldTriggerForLocation:validWrongCityLocation]).to.equal(YES);
+        expect([promotion shouldTriggerAtLocation:validWrongCityLocation]).to.equal(YES);
     });
     
     it(@"should not trigger for a different state", ^{
-        expect([promotion shouldTriggerForLocation:validWrongStateLocation]).to.equal(NO);
+        expect([promotion shouldTriggerAtLocation:validWrongStateLocation]).to.equal(NO);
     });
     
     it(@"should not trigger for a different country", ^{
-        expect([promotion shouldTriggerForLocation:validWrongCountryLocation]).to.equal(NO);
+        expect([promotion shouldTriggerAtLocation:validWrongCountryLocation]).to.equal(NO);
     });
 });
 
@@ -106,19 +106,19 @@ describe(@"State wildcard promotion shouldTriggerForLocation", ^{
                                                           action:^(VPLLocation * location) { }];
     
     it(@"should never trigger for empty object", ^{
-        expect([promotion shouldTriggerForLocation:emptyLocation]).to.equal(NO);
+        expect([promotion shouldTriggerAtLocation:emptyLocation]).to.equal(NO);
     });
     
     it(@"should not trigger for a different city", ^{
-        expect([promotion shouldTriggerForLocation:validWrongCityLocation]).to.equal(NO);
+        expect([promotion shouldTriggerAtLocation:validWrongCityLocation]).to.equal(NO);
     });
     
     it(@"should trigger for a different state", ^{
-        expect([promotion shouldTriggerForLocation:validWrongStateLocation]).to.equal(YES);
+        expect([promotion shouldTriggerAtLocation:validWrongStateLocation]).to.equal(YES);
     });
     
     it(@"should not trigger for a different country", ^{
-        expect([promotion shouldTriggerForLocation:validWrongCountryLocation]).to.equal(NO);
+        expect([promotion shouldTriggerAtLocation:validWrongCountryLocation]).to.equal(NO);
     });
 });
 
@@ -132,19 +132,19 @@ describe(@"Country wildcard promotion shouldTriggerForLocation", ^{
                                                           action:^(VPLLocation * location) { }];
     
     it(@"should never trigger for empty object", ^{
-        expect([promotion shouldTriggerForLocation:emptyLocation]).to.equal(NO);
+        expect([promotion shouldTriggerAtLocation:emptyLocation]).to.equal(NO);
     });
     
     it(@"should not trigger for a different city", ^{
-        expect([promotion shouldTriggerForLocation:validWrongCityLocation]).to.equal(NO);
+        expect([promotion shouldTriggerAtLocation:validWrongCityLocation]).to.equal(NO);
     });
     
     it(@"should not trigger for a different state", ^{
-        expect([promotion shouldTriggerForLocation:validWrongStateLocation]).to.equal(NO);
+        expect([promotion shouldTriggerAtLocation:validWrongStateLocation]).to.equal(NO);
     });
     
     it(@"should trigger for a different country", ^{
-        expect([promotion shouldTriggerForLocation:validWrongCountryLocation]).to.equal(YES);
+        expect([promotion shouldTriggerAtLocation:validWrongCountryLocation]).to.equal(YES);
     });
 });
 
@@ -157,7 +157,7 @@ describe(@"shouldTriggerForLocation", ^{
                                                           showOnceUserDefaultsKey:nil
                                                                            action:^(VPLLocation * location) { }];
     it(@"should trigger for if current time is after start date and before end date", ^{
-        expect([validTimeIntervalPromotion shouldTriggerForLocation:validLocation]).to.equal(YES);
+        expect([validTimeIntervalPromotion shouldTriggerOnDate:currentDate]).to.equal(YES);
     });
     
     VPLPromotion *nilStartDateValidEndDateIntervalPromotion = [[VPLPromotion alloc] initWithCity:@"Austin"
@@ -168,7 +168,7 @@ describe(@"shouldTriggerForLocation", ^{
                                                                          showOnceUserDefaultsKey:nil
                                                                                           action:^(VPLLocation * location) { }];
     it(@"should trigger for nil start date if end date is after current time", ^{
-        expect([nilStartDateValidEndDateIntervalPromotion shouldTriggerForLocation:validLocation]).to.equal(YES);
+        expect([nilStartDateValidEndDateIntervalPromotion shouldTriggerOnDate:currentDate]).to.equal(YES);
     });
     
     VPLPromotion *nilStartDateInvalidEndDateIntervalPromotion = [[VPLPromotion alloc] initWithCity:@"Austin"
@@ -179,7 +179,7 @@ describe(@"shouldTriggerForLocation", ^{
                                                                            showOnceUserDefaultsKey:nil
                                                                                             action:^(VPLLocation * location) { }];
     it(@"should not trigger for nil start date if end date is before current time", ^{
-        expect([nilStartDateInvalidEndDateIntervalPromotion shouldTriggerForLocation:validLocation]).to.equal(NO);
+        expect([nilStartDateInvalidEndDateIntervalPromotion shouldTriggerOnDate:currentDate]).to.equal(NO);
     });
     
     VPLPromotion *nilStartDateNilEndDateIntervalPromotion = [[VPLPromotion alloc] initWithCity:@"Austin"
@@ -190,7 +190,7 @@ describe(@"shouldTriggerForLocation", ^{
                                                                        showOnceUserDefaultsKey:nil
                                                                                         action:^(VPLLocation * location) { }];
     it(@"should always trigger for nil start time and nil end time", ^{
-        expect([nilStartDateNilEndDateIntervalPromotion shouldTriggerForLocation:validLocation]).to.equal(YES);
+        expect([nilStartDateNilEndDateIntervalPromotion shouldTriggerOnDate:currentDate]).to.equal(YES);
     });
     
     VPLPromotion *validStartDateNilEndDateIntervalPromotion = [[VPLPromotion alloc] initWithCity:@"Austin"
@@ -201,7 +201,7 @@ describe(@"shouldTriggerForLocation", ^{
                                                                          showOnceUserDefaultsKey:nil
                                                                                           action:^(VPLLocation * location) { }];
     it(@"should trigger for start date prior to current date and nil end date", ^{
-        expect([validStartDateNilEndDateIntervalPromotion shouldTriggerForLocation:validLocation]).to.equal(YES);
+        expect([validStartDateNilEndDateIntervalPromotion shouldTriggerOnDate:currentDate]).to.equal(YES);
     });
     
     VPLPromotion *invalidStartDateNilEndDateIntervalPromotion = [[VPLPromotion alloc] initWithCity:@"Austin"
@@ -212,7 +212,8 @@ describe(@"shouldTriggerForLocation", ^{
                                                                            showOnceUserDefaultsKey:nil
                                                                                             action:^(VPLLocation * location) { }];
     it(@"should not trigger for start date after current date and nil end date", ^{
-        expect([invalidStartDateNilEndDateIntervalPromotion shouldTriggerForLocation:validLocation]).to.equal(NO);
+        expect([invalidStartDateNilEndDateIntervalPromotion shouldTriggerOnDate:currentDate]).to.equal(NO);
+        
     });
     
     VPLPromotion *invalidStartDateAndInvalidEndDateIntervalPromotion = [[VPLPromotion alloc] initWithCity:@"Austin"
@@ -223,7 +224,7 @@ describe(@"shouldTriggerForLocation", ^{
                                                                                   showOnceUserDefaultsKey:nil
                                                                                                    action:^(VPLLocation * location) { }];
     it(@"should not trigger for start date after current date and end date prior to current date", ^{
-        expect([invalidStartDateAndInvalidEndDateIntervalPromotion shouldTriggerForLocation:validLocation]).to.equal(NO);
+        expect([invalidStartDateAndInvalidEndDateIntervalPromotion shouldTriggerOnDate:currentDate]).to.equal(NO);
     });
     
 });

@@ -115,21 +115,27 @@ static VPLPromotionsManager *promotionsManager = nil;
                 }
         }
         id<VPLLocationServiceProtocol> currentService = self.gpsService ? self.gpsService : self.locationService;
-        if (currentService) {
+        NSDate *now = [NSDate date];
+        NSMutableArray *currentTimeValidPromotions = [[NSMutableArray alloc] init];
+        for (VPLPromotion *promotion in self.promotions) {
+            if ([promotion shouldTriggerOnDate:now]) {
+                [currentTimeValidPromotions addObject:promotion];
+            }
+        }
+        if (currentService && [currentTimeValidPromotions count]) {
             __weak VPLPromotionsManager *weakSelf = self;
             [currentService requestCurrentLocationWithCompletion:^(VPLLocation *currentLocation, NSError *error) {
                 if (!error){
-                    NSArray *currentPromotions = [weakSelf.promotions copy];
-                    for (VPLPromotion *promotion in currentPromotions) {
-                        if ([promotion shouldTriggerForLocation:currentLocation]) {
-                            [promotion triggerPromotion];
+                    for (VPLPromotion *timeValidPromotion in currentTimeValidPromotions) {
+                        if ([timeValidPromotion shouldTriggerOnDate:now atLocation:currentLocation]) {
+                            [timeValidPromotion triggerPromotion];
                             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                            NSString *showOnceUserDefaultsKey = promotion.showOnceUserDefaultsKey;
-                            if (promotion.showOnceUserDefaultsKey) {
+                            NSString *showOnceUserDefaultsKey = timeValidPromotion.showOnceUserDefaultsKey;
+                            if (timeValidPromotion.showOnceUserDefaultsKey) {
                                 [userDefaults setBool:YES forKey:showOnceUserDefaultsKey];
                                 [userDefaults synchronize];
                             }
-                            [weakSelf.promotions removeObject:promotion];
+                            [weakSelf.promotions removeObject:timeValidPromotion];
                             if (self.multipleTriggerType == VPLMultipleTriggerOnRefreshTypeTriggerOnce) {
                                 break;
                             }

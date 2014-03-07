@@ -66,15 +66,26 @@ typedef void(^VPLPromotionAction)();
                        endDate:(NSDate *)endDate
                showOnceUserDefaultsKey:(NSString *)userDefaultsKey
                         action:(VPLPromotionAction)action;
-
 /**
  Triggers the action block of the promotion.
  */
 - (void)triggerPromotion;
 
 /**
- @return YES if the VPLLocation matches either the promotion's city, state, country or is within the valid geocircle created by the center location and range, and the current time is within the valid interval created by startDate and endDate. NO otherwise.
+ @return YES if the VPLLocation matches either the promotion's city, state, country or is within the valid geocircle created by the center location and range. NO otherwise.
  */
-- (BOOL)shouldTriggerForLocation:(VPLLocation *)location;
+- (BOOL)shouldTriggerAtLocation:(VPLLocation *)location;
+
+
+/**
+ @return YES if the current time is within the valid interval created by startDate and endDate. NO otherwise.
+ */
+- (BOOL)shouldTriggerOnDate:(NSDate *)date;
+
+
+/**
+ @return YES if the VPLLocation matches either the promotion's city, state, country or is within the valid geocircle created by the center location and range and if the current time is within the valid interval created by startDate and endDate. NO otherwise.
+ */
+- (BOOL)shouldTriggerOnDate:(NSDate *)date atLocation:(VPLLocation *)location;
 
 @end
