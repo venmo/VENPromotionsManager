@@ -55,16 +55,8 @@ showOnceUserDefaultsKey:(NSString *)userDefaultsKey
     if (![location isValid]) {
         return NO;
     }
-    NSTimeInterval currentTimeIntervalSinceReferenceDate = [[NSDate date] timeIntervalSinceReferenceDate];
-    NSTimeInterval startDateTimeIntervalSinceReferenceDate = [self.startDate timeIntervalSinceReferenceDate];
-    NSTimeInterval endDateTimeIntervalSinceReferenceDate = [self.endDate timeIntervalSinceReferenceDate];
-    if (!(startDateTimeIntervalSinceReferenceDate <= currentTimeIntervalSinceReferenceDate)) {
-        return NO;
-    }
-    if (!(endDateTimeIntervalSinceReferenceDate >= currentTimeIntervalSinceReferenceDate)) {
-        if(self.showOnceUserDefaultsKey) {
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:self.showOnceUserDefaultsKey];
-        }
+    
+    if (![self isTimeValid]) {
         return NO;
     }
     
@@ -94,6 +86,23 @@ showOnceUserDefaultsKey:(NSString *)userDefaultsKey
     if (self.action) {
         self.action();
     }
+}
+
+
+- (BOOL)isTimeValid {
+    NSTimeInterval currentTimeIntervalSinceReferenceDate = [[NSDate date] timeIntervalSinceReferenceDate];
+    NSTimeInterval startDateTimeIntervalSinceReferenceDate = [self.startDate timeIntervalSinceReferenceDate];
+    NSTimeInterval endDateTimeIntervalSinceReferenceDate = [self.endDate timeIntervalSinceReferenceDate];
+    if (!(startDateTimeIntervalSinceReferenceDate <= currentTimeIntervalSinceReferenceDate)) {
+        return NO;
+    }
+    if (!(endDateTimeIntervalSinceReferenceDate >= currentTimeIntervalSinceReferenceDate)) {
+        if(self.showOnceUserDefaultsKey) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:self.showOnceUserDefaultsKey];
+        }
+        return NO;
+    }
+    return YES;
 }
 
 

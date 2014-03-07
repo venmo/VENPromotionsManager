@@ -77,4 +77,9 @@ typedef void(^VPLPromotionAction)();
  */
 - (BOOL)shouldTriggerForLocation:(VPLLocation *)location;
 
+/**
+ @return YES if the current time is within the valid interval created by startDate and endDate. NO otherwise.
+ */
+- (BOOL)isTimeValid;
+
 @end
