@@ -4,8 +4,6 @@
 @protocol VPLLocationServiceProtocol <NSObject>
 @required
 
--(void(^)(VPLLocation * location, NSError *)) callback;
-
 /**
  Requests the user's current location and passes it in the completion block.
  */

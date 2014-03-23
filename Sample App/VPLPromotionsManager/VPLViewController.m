@@ -11,14 +11,14 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
     CLLocation *appleHQLocation = [[CLLocation alloc] initWithLatitude:37.3318 longitude:-122.0312];
     NSMutableArray *promotions = [[NSMutableArray alloc] init];
     for (NSInteger i=0; i<15; i++) {
-        NSString *userDefaultsKey = [NSString stringWithFormat:@"%@%d", kVENPromotionAppleKey,i];
+        NSString *userDefaultsKey = [NSString stringWithFormat:@"%@%ld", kVENPromotionAppleKey,(long)i];
         VPLPromotion *promotion = [[VPLPromotion alloc] initWithCenter:appleHQLocation
                                                                   range:3000
                                                               startDate:nil
                                                                 endDate:nil
                                                 showOnceUserDefaultsKey:userDefaultsKey
                                                                  action:^{
-                                                                     NSLog(@"Promotion Number %d Fired",(i+1));
+                                                                     NSLog(@"Promotion Number %ld Fired",(i+1));
                                                                  }];
         [promotions addObject:promotion];
     }
