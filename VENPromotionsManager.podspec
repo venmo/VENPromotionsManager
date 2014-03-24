@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "VENPromotionsManager"
-  s.version      = "0.1.1"
+  s.version      = "0.2.1"
   s.summary      = "Definition, management and control of in-app location based promotions."
   s.description  = <<-DESC
                    VENPromotionsManager enables easy definition, management and control of in-app location based promotions including the following:
