@@ -77,7 +77,7 @@ typedef NS_OPTIONS(NSUInteger, VPLLocationType) {
 
 
 /**
- Checks if user's current location should fire any promotion(s) manually. This is automatically called at regular intervals after startMonitoringForPromotionLocations.
+ Checks if user's current location should fire any location promotion(s) manually. This is automatically called at regular intervals after startMonitoringForPromotionLocations.
  */
 - (void)checkForLocationBasedPromotions;
 

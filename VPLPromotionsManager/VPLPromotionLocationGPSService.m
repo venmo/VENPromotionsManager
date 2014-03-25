@@ -1,11 +1,12 @@
 #import "VPLPromotionLocationGPSService.h"
 #import <CoreLocation/CoreLocation.h>
+#import "VPLBeaconPromotion.h"
 
 @interface VPLPromotionLocationGPSService () <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (copy) void(^callback)(VPLLocation *location, NSError *error);
-@property (nonatomic) float gpsMinimumHorizontalAccuracy;
+@property (nonatomic, assign) float gpsMinimumHorizontalAccuracy;
 
 @end
 
@@ -53,4 +54,68 @@
     self.callback = nil;
 }
 
+#pragma mark - Beacon Methods
+
+
+- (void)startMonitoringForRegion:(CLRegion *)region {
+    NSSet *monitoredRegions = [self.locationManager monitoredRegions];
+    if (![monitoredRegions containsObject:region]) {
+        [self.locationManager startMonitoringForRegion:region];
+        [self.locationManager requestStateForRegion:(CLBeaconRegion *)region];
+    }
+}
+
+- (void)stopMonitoringForRegion:(CLRegion *)region {
+    [self.locationManager stopMonitoringForRegion:region];
+}
+
+- (void)startMonitoringForBeaconPromotions:(NSMutableDictionary *)beaconPromotions {
+    self.beaconPromotions = beaconPromotions;
+    NSArray *beaconRegions = [beaconPromotions allKeys];
+    for (id beaconRegion in beaconRegions) {
+        if ([beaconRegion isKindOfClass:[CLBeaconRegion class]]) {
+            [self.locationManager startMonitoringForRegion:(CLBeaconRegion *)beaconRegion];
+            [self.locationManager requestStateForRegion:(CLBeaconRegion *)beaconRegion];
+        }
+    }
+    NSLog(@"ranged regions %@", [self.locationManager.rangedRegions description]);
+}
+
+- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
+    [self.locationManager startRangingBeaconsInRegion:(CLBeaconRegion *)region];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
+    [self.locationManager stopRangingBeaconsInRegion:(CLBeaconRegion *)region];
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+        didRangeBeacons:(NSArray *)beacons
+               inRegion:(CLBeaconRegion *)region {
+    [self triggerValidPromotionsInRegion:region];
+
+}
+
+
+- (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region {
+    if (state == CLRegionStateInside) {
+        [self triggerValidPromotionsInRegion:region];
+    }
+}
+
+
+- (void)triggerValidPromotionsInRegion:(CLRegion *)region {
+    NSMutableArray *promotionsAtRegion = self.beaconPromotions[region];
+    for (VPLBeaconPromotion *promotion in promotionsAtRegion) {
+        if ([promotion shouldTriggerOnDate:[NSDate date]]) {
+            [promotion triggerPromotion];
+            [promotionsAtRegion removeObject:promotion];
+            if (![promotionsAtRegion count]) {
+                [self.beaconPromotions removeObjectForKey:region];
+                [self.locationManager stopMonitoringForRegion:region];
+            }
+            break;
+        }
+    }
+}
 @end

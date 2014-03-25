@@ -1,13 +1,14 @@
-//
-//  VPLBeaconPromotion.h
-//  VPLPromotionsManager
-//
-//  Created by Dasmer Singh on 3/24/14.
-//  Copyright (c) 2014 Venmo. All rights reserved.
-//
+#import "VPLPromotion.h"
+#import <CoreLocation/CoreLocation.h>
 
-#import "VPLLocation.h"
+@interface VPLBeaconPromotion : VPLPromotion
 
-@interface VPLBeaconPromotion : VPLLocation
+@property (nonatomic, strong) CLBeaconRegion *beaconRegion;
+
+- (instancetype)initWithBeaconRegion:(CLBeaconRegion *)beaconRegion
+                            startDate:(NSDate *)startDate
+                              endDate:(NSDate *)endDate
+              showOnceUserDefaultsKey:(NSString *)userDefaultsKey
+                               action:(VPLPromotionAction)action;
 
 @end
