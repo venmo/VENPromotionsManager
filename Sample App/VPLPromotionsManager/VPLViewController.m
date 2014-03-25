@@ -2,6 +2,7 @@
 #import "VPLAppDelegate.h"
 #import "VPLPromotionsManager.h"
 #import "VPLLocationPromotion.h"
+#import "VPLBeaconPromotion.h"
 
 static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
 
@@ -23,6 +24,16 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
                                                                  }];
         [promotions addObject:promotion];
     }
+    NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
+    CLBeaconRegion *testRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:@"EstimoteRemote"];
+    
+    VPLBeaconPromotion *beaconPromotion = [[VPLBeaconPromotion alloc] initWithBeaconRegion:testRegion startDate:nil endDate:nil showOnceUserDefaultsKey:nil action:^{
+        NSLog(@"beacon promotion triggered");
+        self.view.backgroundColor = [UIColor blackColor];
+    }];
+    
+    [promotions addObject:beaconPromotion];
+    
     [VPLPromotionsManager startWithPromotions:[promotions copy]
                                 locationTypes:VPLLocationTypeGPSRequestPermission
                               locationService:nil
@@ -30,12 +41,7 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
                       withMultipleTriggerType:VPLMultipleTriggerOnRefreshTypeTriggerOnce];
     
     
-    NSUUID *uuid1 = [[NSUUID alloc] initWithUUIDString:@"DED1F934-59A0-4511-901F-756A2B66538C"];
-    CLBeaconRegion *region1 = [[CLBeaconRegion alloc] initWithProximityUUID:uuid1 major:100 minor:20 identifier:@"com.dasmer"];
-    
-    NSUUID *uuid2 = [[NSUUID alloc] initWithUUIDString:@"DED1F934f-59A0-4511-901F-756A2B66538C"];
-    CLBeaconRegion *region2 = [[CLBeaconRegion alloc] initWithProximityUUID:uuid2 major:100 minor:20 identifier:@"com.dasmer"];
-    
+
     
 }
 
