@@ -18,6 +18,8 @@
 		3AA8548118C624BA00F03FCF /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA8548018C624BA00F03FCF /* XCTest.framework */; };
 		3AA8548218C624BA00F03FCF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA8545E18C624BA00F03FCF /* Foundation.framework */; };
 		3AA8548318C624BA00F03FCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA8546218C624BA00F03FCF /* UIKit.framework */; };
+		3ABD12E818E12DF300AF9AC8 /* VPLBeaconPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABD12E718E12DF300AF9AC8 /* VPLBeaconPromotion.m */; };
+		3ABD12EB18E12F3B00AF9AC8 /* VPLLocationPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABD12EA18E12F3B00AF9AC8 /* VPLLocationPromotion.m */; };
 		3AF6EF0018C68DAD000AD74B /* VPLLocationSpecs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6EEFD18C68DAD000AD74B /* VPLLocationSpecs.m */; };
 		3AF6EF0218C68DAD000AD74B /* VPLPromotionSpecs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6EEFF18C68DAD000AD74B /* VPLPromotionSpecs.m */; };
 		3AF6EF1518C690D2000AD74B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6EF1118C690D2000AD74B /* main.m */; };
@@ -26,7 +28,6 @@
 		3AF6EF4318C695D1000AD74B /* VPLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6EF3E18C695D1000AD74B /* VPLAppDelegate.m */; };
 		3AF6EF4418C695D1000AD74B /* VPLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6EF4018C695D1000AD74B /* VPLViewController.m */; };
 		437E09A539C14F89B9300BA6 /* libPods-VPLPromotionsManagerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D2D48CF2C70471A865B175B /* libPods-VPLPromotionsManagerTests.a */; };
-		C2D7747718C8D8C300B6F4AE /* Pods-VPLPromotionsManagerTests.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7CD492AB7C074AB4BF559E34 /* Pods-VPLPromotionsManagerTests.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,10 @@
 		3AA8546218C624BA00F03FCF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3AA8547F18C624BA00F03FCF /* VPLPromotionsManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VPLPromotionsManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3AA8548018C624BA00F03FCF /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		3ABD12E618E12DF300AF9AC8 /* VPLBeaconPromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPLBeaconPromotion.h; path = VPLPromotionsManager/VPLBeaconPromotion.h; sourceTree = "<group>"; };
+		3ABD12E718E12DF300AF9AC8 /* VPLBeaconPromotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLBeaconPromotion.m; path = VPLPromotionsManager/VPLBeaconPromotion.m; sourceTree = "<group>"; };
+		3ABD12E918E12F3B00AF9AC8 /* VPLLocationPromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPLLocationPromotion.h; path = VPLPromotionsManager/VPLLocationPromotion.h; sourceTree = "<group>"; };
+		3ABD12EA18E12F3B00AF9AC8 /* VPLLocationPromotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLLocationPromotion.m; path = VPLPromotionsManager/VPLLocationPromotion.m; sourceTree = "<group>"; };
 		3AF6EEFD18C68DAD000AD74B /* VPLLocationSpecs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLLocationSpecs.m; path = VPLPromotionsManagerTests/VPLLocationSpecs.m; sourceTree = SOURCE_ROOT; };
 		3AF6EEFF18C68DAD000AD74B /* VPLPromotionSpecs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLPromotionSpecs.m; path = VPLPromotionsManagerTests/VPLPromotionSpecs.m; sourceTree = SOURCE_ROOT; };
 		3AF6EF0318C68DB6000AD74B /* VPLPromotionsManagerTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "VPLPromotionsManagerTests-Info.plist"; path = "VPLPromotionsManagerTests/VPLPromotionsManagerTests-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -188,6 +193,10 @@
 			children = (
 				3A5095C318C69A5C00C6905B /* VPLPromotionsManager.h */,
 				3A5095C418C69A5C00C6905B /* VPLPromotionsManager.m */,
+				3ABD12E618E12DF300AF9AC8 /* VPLBeaconPromotion.h */,
+				3ABD12E718E12DF300AF9AC8 /* VPLBeaconPromotion.m */,
+				3ABD12E918E12F3B00AF9AC8 /* VPLLocationPromotion.h */,
+				3ABD12EA18E12F3B00AF9AC8 /* VPLLocationPromotion.m */,
 				3A5095BF18C69A5C00C6905B /* VPLPromotion.h */,
 				3A5095C018C69A5C00C6905B /* VPLPromotion.m */,
 				3A5095BC18C69A5C00C6905B /* VPLLocation.h */,
@@ -249,7 +258,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = VPL;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Venmo;
 				TargetAttributes = {
 					3AA8547E18C624BA00F03FCF = {
@@ -290,7 +299,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2D7747718C8D8C300B6F4AE /* Pods-VPLPromotionsManagerTests.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,10 +344,12 @@
 			files = (
 				3A5095C918C69A5C00C6905B /* VPLPromotionsManager.m in Sources */,
 				3A5095C518C69A5C00C6905B /* NSString+VPLSanitiation.m in Sources */,
+				3ABD12E818E12DF300AF9AC8 /* VPLBeaconPromotion.m in Sources */,
 				3AF6EF4318C695D1000AD74B /* VPLAppDelegate.m in Sources */,
 				3A5095C718C69A5C00C6905B /* VPLPromotion.m in Sources */,
 				3AF6EF1518C690D2000AD74B /* main.m in Sources */,
 				3A5095C618C69A5C00C6905B /* VPLLocation.m in Sources */,
+				3ABD12EB18E12F3B00AF9AC8 /* VPLLocationPromotion.m in Sources */,
 				3A5095C818C69A5C00C6905B /* VPLPromotionLocationGPSService.m in Sources */,
 				3AF6EF4418C695D1000AD74B /* VPLViewController.m in Sources */,
 			);
@@ -369,7 +379,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -409,7 +418,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -471,7 +479,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7CD492AB7C074AB4BF559E34 /* Pods-VPLPromotionsManagerTests.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/VPLPromotionsManager.app/VPLPromotionsManager";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -495,7 +502,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7CD492AB7C074AB4BF559E34 /* Pods-VPLPromotionsManagerTests.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/VPLPromotionsManager.app/VPLPromotionsManager";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
