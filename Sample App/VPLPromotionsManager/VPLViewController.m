@@ -15,47 +15,95 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
     for (NSInteger i=0; i<15; i++) {
         NSString *userDefaultsKey = [NSString stringWithFormat:@"%@%ld", kVENPromotionAppleKey,(long)i];
         VPLLocationPromotion *promotion = [[VPLLocationPromotion alloc] initWithCenter:appleHQLocation
-                                                                  range:3000
-                                                              startDate:nil
-                                                                endDate:nil
-                                                showOnceUserDefaultsKey:userDefaultsKey
-                                                                 action:^{
-                                                                     NSLog(@"Promotion Number %ld Fired",(long)(i+1));
-                                                                 }];
+                                                                                 range:3000
+                                                                             startDate:nil
+                                                                               endDate:nil
+                                                               showOnceUserDefaultsKey:userDefaultsKey
+                                                                                action:^{
+                                                                                    NSLog(@"Promotion Number %ld Fired",(long)(i+1));
+                                                                                }];
         [promotions addObject:promotion];
     }
     NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
-//    CLBeaconRegion *testRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid
-//                                                                         major:12622
-//                                                                         minor:33881
-//                                                                    identifier:@"EstimoteRemote"];
-    CLBeaconRegion *testRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid
+    CLBeaconRegion *doorRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid
+                                                                         major:12622
+                                                                         minor:33881
+                                                                    identifier:@"DoorEstimoteRemote"];
+    CLBeaconRegion *deskRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid
                                                                          major:20874
                                                                          minor:64674
-                                                                    identifier:@"EstimoteRemote"];
+                                                                    identifier:@"DeskEstimoteRemote"];
     
-    VPLBeaconPromotion *beaconPromotion = [[VPLBeaconPromotion alloc]
-                                           initWithBeaconRegion:testRegion
-                                           withMaximiumProximity:CLProximityImmediate
-                                           repeatInterval:10
-                                           startDate:nil
-                                           endDate:nil
-                                           showOnceUserDefaultsKey:nil
-                                           action:^{
-                                               [[[UIAlertView alloc] initWithTitle:@"Welcome to Venmo!" message:@"You've just stepped into the world's most innovative office" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
-                                           }];
+    VPLBeaconPromotion *deskBeaconPromotion =
+    [[VPLBeaconPromotion alloc]
+     initWithBeaconRegion:deskRegion
+     withMaximiumProximity:CLProximityImmediate
+     repeatInterval:10
+     startDate:nil
+     endDate:nil
+     showOnceUserDefaultsKey:nil
+     action:^{
+         NSString *title    = @"Welcome to Chris's Desk!";
+         NSString *message  = @"This is the future of Venmo Mobile";
+         UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+         if (state == UIApplicationStateActive) {
+             [[[UIAlertView alloc] initWithTitle:title
+                                         message:message
+                                        delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles: nil] show];
+         }
+         else {
+             UILocalNotification *notification = [[UILocalNotification alloc] init];
+             notification.alertAction = title;
+             notification.alertBody = message;
+             [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+         }
+         
+         
+     }];
     
-    [promotions addObject:beaconPromotion];
+    VPLBeaconPromotion *doorBeaconPromotion =
+    [[VPLBeaconPromotion alloc]
+     initWithBeaconRegion:doorRegion
+     withMaximiumProximity:CLProximityImmediate
+     repeatInterval:10
+     startDate:nil
+     endDate:nil
+     showOnceUserDefaultsKey:nil
+     action:^{
+         NSLog(@"TRIGGERED");
+         
+         NSString *title    = @"Welcome to Venmo!";
+         NSString *message  = @"You've just stepped into the world's most innovative office";
+         
+         UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+         if (state == UIApplicationStateActive) {
+             [[[UIAlertView alloc] initWithTitle:title
+                                         message:message
+                                        delegate:nil
+                               cancelButtonTitle:@"OK"
+                               otherButtonTitles: nil] show];
+         }
+         else {
+             UILocalNotification *notification = [[UILocalNotification alloc] init];
+             notification.alertAction = title;
+             notification.alertBody = message;
+             [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+         }
+         
+
+     }];
+    
+    [promotions addObject:deskBeaconPromotion];
+    [promotions addObject:doorBeaconPromotion];
+
     
     [VPLPromotionsManager startWithPromotions:[promotions copy]
                                 locationTypes:VPLLocationTypeGPSRequestPermission
                               locationService:nil
-                          withLocationRequestInterval:5
+                  withLocationRequestInterval:5
                       withMultipleTriggerType:VPLMultipleTriggerOnRefreshTypeTriggerOnce];
-    
-    
-
-    
 }
 
 

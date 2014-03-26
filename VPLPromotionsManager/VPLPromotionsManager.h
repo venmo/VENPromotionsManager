@@ -81,4 +81,9 @@ typedef NS_OPTIONS(NSUInteger, VPLLocationType) {
  */
 - (void)checkForLocationBasedPromotions;
 
+- (void)foundBeaconRegion:(CLBeaconRegion *)region withBeacons:(NSArray *)beacons;
+
+- (BOOL)shouldRangeRegion:(CLRegion *)region;
+
+
 @end

@@ -13,7 +13,10 @@
         self.city       = city;
         self.state      = state;
         self.country    = country;
-        [self setStartDate:startDate endDate:endDate showOnceUserDefaultsKey:userDefaultsKey action:action];
+        [self setStartDate:startDate
+                   endDate:endDate
+   showOnceUserDefaultsKey:userDefaultsKey
+                    action:action];
     }
     return self;
 }

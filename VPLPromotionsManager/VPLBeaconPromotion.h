@@ -9,6 +9,9 @@
 
 @property (nonatomic, assign) NSInteger repeatInterval;
 
+@property (nonatomic, strong) NSDate* nextFireDate;
+
+
 - (instancetype)initWithBeaconRegion:(CLBeaconRegion *)beaconRegion
                 withMaximiumProximity:(CLProximity)proximity
                       repeatInterval:(NSInteger)repeatInterval

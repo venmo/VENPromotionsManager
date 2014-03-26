@@ -261,6 +261,13 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Venmo;
 				TargetAttributes = {
+					3AA8545A18C624BA00F03FCF = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					3AA8547E18C624BA00F03FCF = {
 						TestTargetID = 3AA8545A18C624BA00F03FCF;
 					};

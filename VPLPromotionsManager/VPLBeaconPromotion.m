@@ -1,11 +1,5 @@
 #import "VPLBeaconPromotion.h"
 
-@interface VPLBeaconPromotion ()
-
-@property (nonatomic, strong) NSDate* lastFireDate;
-
-@end
-
 @implementation VPLBeaconPromotion
 
 - (instancetype)initWithBeaconRegion:(CLBeaconRegion *)beaconRegion
@@ -20,7 +14,12 @@
         self.beaconRegion       = beaconRegion;
         self.maximumProximity   = proximity;
         self.repeatInterval = repeatInterval;
-        self.lastFireDate = [[NSUserDefaults standardUserDefaults] objectForKey:[self lastFireDateDefaultsKey]];
+        self.nextFireDate = [[NSUserDefaults standardUserDefaults] objectForKey:[self nextFireDateDefaultsKey]];
+        if ([[NSDate date] compare: startDate] ==  NSOrderedAscending && !self.nextFireDate) {
+            self.nextFireDate = startDate;
+            [self saveNextFireDate];
+            
+        }
         [self setStartDate:startDate
                    endDate:endDate
    showOnceUserDefaultsKey:userDefaultsKey
@@ -29,8 +28,8 @@
     return self;
 }
 
-- (NSString *)lastFireDateDefaultsKey {
-    return [NSString stringWithFormat:@"kVPL%@LastFireDate", self.beaconRegion.identifier];
+- (NSString *)nextFireDateDefaultsKey {
+    return [NSString stringWithFormat:@"kVPL%@NextFireDate", self.beaconRegion.identifier];
 }
 
 
@@ -38,20 +37,22 @@
     if (![super shouldTriggerOnDate:date]) {
         return NO;
     }
-    if (self.lastFireDate) {
-        NSDate *validAfterDate = [self.lastFireDate dateByAddingTimeInterval:self.repeatInterval];
-        if ([date compare:validAfterDate] == NSOrderedAscending) {
+    if (self.nextFireDate) {
+        if ([date compare:self.nextFireDate] == NSOrderedAscending) {
             return NO;
         }
     }
-    
     return YES;
 }
 
 - (void)triggerPromotion {
     [super triggerPromotion];
-    self.lastFireDate = [NSDate date];
-    [[NSUserDefaults standardUserDefaults] setObject:self.lastFireDate forKey:[self lastFireDateDefaultsKey]];
+    self.nextFireDate = [[NSDate date] dateByAddingTimeInterval:self.repeatInterval];
+    [self saveNextFireDate];
+}
+
+- (void) saveNextFireDate {
+    [[NSUserDefaults standardUserDefaults] setObject:self.nextFireDate forKey:[self nextFireDateDefaultsKey]];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
