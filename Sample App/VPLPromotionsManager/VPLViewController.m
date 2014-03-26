@@ -20,24 +20,37 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
                                                                 endDate:nil
                                                 showOnceUserDefaultsKey:userDefaultsKey
                                                                  action:^{
-                                                                     NSLog(@"Promotion Number %ld Fired",(i+1));
+                                                                     NSLog(@"Promotion Number %ld Fired",(long)(i+1));
                                                                  }];
         [promotions addObject:promotion];
     }
     NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
-    CLBeaconRegion *testRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid identifier:@"EstimoteRemote"];
+//    CLBeaconRegion *testRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid
+//                                                                         major:12622
+//                                                                         minor:33881
+//                                                                    identifier:@"EstimoteRemote"];
+    CLBeaconRegion *testRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid
+                                                                         major:20874
+                                                                         minor:64674
+                                                                    identifier:@"EstimoteRemote"];
     
-    VPLBeaconPromotion *beaconPromotion = [[VPLBeaconPromotion alloc] initWithBeaconRegion:testRegion startDate:nil endDate:nil showOnceUserDefaultsKey:nil action:^{
-        NSLog(@"beacon promotion triggered");
-        self.view.backgroundColor = [UIColor blackColor];
-    }];
+    VPLBeaconPromotion *beaconPromotion = [[VPLBeaconPromotion alloc]
+                                           initWithBeaconRegion:testRegion
+                                           withMaximiumProximity:CLProximityImmediate
+                                           repeatInterval:10
+                                           startDate:nil
+                                           endDate:nil
+                                           showOnceUserDefaultsKey:nil
+                                           action:^{
+                                               [[[UIAlertView alloc] initWithTitle:@"Welcome to Venmo!" message:@"You've just stepped into the world's most innovative office" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+                                           }];
     
     [promotions addObject:beaconPromotion];
     
     [VPLPromotionsManager startWithPromotions:[promotions copy]
                                 locationTypes:VPLLocationTypeGPSRequestPermission
                               locationService:nil
-                          withRefreshInterval:5
+                          withLocationRequestInterval:5
                       withMultipleTriggerType:VPLMultipleTriggerOnRefreshTypeTriggerOnce];
     
     

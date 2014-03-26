@@ -32,7 +32,9 @@ typedef void(^VPLPromotionAction)();
  */
 - (BOOL)canTriggerInFutureForCurrentDate:(NSDate *)date;
 
-
+/**
+ This method should not be called. It will be called by super class's of the VPLPromotion during initialization. This method the valid date interval for the promotion, the user defaults key that will persist if the promotion has been shown,and the action that takes place when the promotion is triggered.
+ */
 - (void)setStartDate:(NSDate *)startDate
              endDate:(NSDate *)endDate
 showOnceUserDefaultsKey:(NSString *)userDefaultsKey

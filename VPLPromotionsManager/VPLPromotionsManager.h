@@ -38,7 +38,7 @@ typedef NS_OPTIONS(NSUInteger, VPLLocationType) {
 + (instancetype)startWithPromotions:(NSArray *)promotions
                                 locationTypes:(VPLLocationType)types
                               locationService:(id<VPLLocationServiceProtocol>)locationService
-                          withRefreshInterval:(NSUInteger)seconds
+                          withLocationRequestInterval:(NSUInteger)seconds
            withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType;
 
 
@@ -60,7 +60,7 @@ typedef NS_OPTIONS(NSUInteger, VPLLocationType) {
 - (instancetype)initWithPromotions:(NSArray *)promotions
                      locationTypes:(VPLLocationType)types
                    locationService:(id<VPLLocationServiceProtocol>)locationService
-               withRefreshInterval:(NSUInteger)seconds
+               withLocationRequestInterval:(NSUInteger)seconds
            withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType;
 
 

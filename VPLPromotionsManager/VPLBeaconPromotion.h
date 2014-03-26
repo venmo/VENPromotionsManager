@@ -5,7 +5,13 @@
 
 @property (nonatomic, strong) CLBeaconRegion *beaconRegion;
 
+@property (nonatomic, assign) CLProximity maximumProximity;
+
+@property (nonatomic, assign) NSInteger repeatInterval;
+
 - (instancetype)initWithBeaconRegion:(CLBeaconRegion *)beaconRegion
+                withMaximiumProximity:(CLProximity)proximity
+                      repeatInterval:(NSInteger)repeatInterval
                             startDate:(NSDate *)startDate
                               endDate:(NSDate *)endDate
               showOnceUserDefaultsKey:(NSString *)userDefaultsKey
