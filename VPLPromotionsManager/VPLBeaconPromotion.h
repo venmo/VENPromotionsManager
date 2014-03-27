@@ -15,9 +15,9 @@
 - (instancetype)initWithBeaconRegion:(CLBeaconRegion *)beaconRegion
                 withMaximiumProximity:(CLProximity)proximity
                       repeatInterval:(NSInteger)repeatInterval
-                            startDate:(NSDate *)startDate
-                              endDate:(NSDate *)endDate
-              showOnceUserDefaultsKey:(NSString *)userDefaultsKey
-                               action:(VPLPromotionAction)action;
+                           startDate:(NSDate *)startDate
+                             endDate:(NSDate *)endDate
+                        showOnlyOnce:(BOOL)showOnce
+                              action:(VPLPromotionAction)action;
 
 @end

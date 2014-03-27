@@ -6,9 +6,7 @@
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (copy) void(^callback)(VPLLocation *location, NSError *error);
-
 @property (nonatomic, assign) float gpsMinimumHorizontalAccuracy;
-
 @property (nonatomic, strong) NSMutableArray *pausedRegions;
 
 @end
@@ -38,7 +36,6 @@
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     CLLocation *myCurrentLocation = [locations lastObject];
-    
     if(myCurrentLocation.horizontalAccuracy <= self.gpsMinimumHorizontalAccuracy) {
         [self.locationManager stopUpdatingLocation];
         VPLLocation *currentVPLLocation = [[VPLLocation alloc] initWithLocation:myCurrentLocation];
@@ -57,6 +54,7 @@
     self.callback = nil;
 }
 
+
 #pragma mark - Beacon Methods
 
 - (void)startMonitoringForRegion:(CLRegion *)region {
@@ -74,6 +72,7 @@
         [self.locationManager stopRangingBeaconsInRegion:(CLBeaconRegion *)region];
     }
 }
+
 
 #pragma mark - Beacon Location Manager Delegate Methods
 
@@ -102,9 +101,11 @@
     [self.locationManager startRangingBeaconsInRegion:region];
 }
 
+
 - (void)stopRangingBeaconsInRegion:(CLBeaconRegion *)region {
     [self.locationManager stopRangingBeaconsInRegion:region];
 }
+
 
 - (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region {
     if (state != CLRegionStateOutside) {

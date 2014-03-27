@@ -29,9 +29,10 @@
 - (instancetype)initWithCity:(NSString *)city
                        state:(NSString *)state
                      country:(NSString *)country
+            uniqueIdentifier:(NSString *)identifier
+                showOnlyOnce:(BOOL)showOnce
                    startDate:(NSDate *)startDate
                      endDate:(NSDate *)endDate
-     showOnceUserDefaultsKey:(NSString *)userDefaultsKey
                       action:(VPLPromotionAction)action;
 
 
@@ -45,9 +46,10 @@
  */
 - (instancetype)initWithCenter:(CLLocation *)centerLocation
                          range:(NSUInteger)range
+              uniqueIdentifier:(NSString *)identifier
+                  showOnlyOnce:(BOOL)showOnce
                      startDate:(NSDate *)startDate
                        endDate:(NSDate *)endDate
-       showOnceUserDefaultsKey:(NSString *)userDefaultsKey
                         action:(VPLPromotionAction)action;
 
 

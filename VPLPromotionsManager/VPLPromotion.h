@@ -5,8 +5,10 @@ typedef void(^VPLPromotionAction)();
 
 @interface VPLPromotion : NSObject
 
+@property (nonatomic, assign) BOOL showOnce;
+
 ///The user defaults key that will persist if the promotion has been shown. If this is nil, promotions can trigger more than once on subsequent launches.
-@property (nonatomic, strong) NSString *showOnceUserDefaultsKey;
+@property (nonatomic, strong) NSString *identifier;
 
 ///The event that should occur when a promotion is triggered.Examples include Modal View Controllers and UIAlertviews.
 @property (nonatomic, copy) VPLPromotionAction action;
@@ -33,11 +35,17 @@ typedef void(^VPLPromotionAction)();
 - (BOOL)canTriggerInFutureForCurrentDate:(NSDate *)date;
 
 /**
- This method should not be called. It will be called by super class's of the VPLPromotion during initialization. This method the valid date interval for the promotion, the user defaults key that will persist if the promotion has been shown,and the action that takes place when the promotion is triggered.
+ This method should not be called. It will be called by superclass's of the VPLPromotion during initialization. This method the valid date interval for the promotion, the user defaults key that will persist if the promotion has been shown,and the action that takes place when the promotion is triggered.
  */
-- (void)setStartDate:(NSDate *)startDate
+- (void)setIdentifier:(NSString *)identifier
+         showOnlyOnce:(BOOL)showOnce
+            startDate:(NSDate *)startDate
              endDate:(NSDate *)endDate
-showOnceUserDefaultsKey:(NSString *)userDefaultsKey
               action:(VPLPromotionAction)action;
+
+/**
+ This method should only be called and implemented it VPLPromotion's superclasses.
+ */
+- (NSString *)showOnceUserDefaultsKey;
 
 @end

@@ -16,9 +16,10 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
         NSString *userDefaultsKey = [NSString stringWithFormat:@"%@%ld", kVENPromotionAppleKey,(long)i];
         VPLLocationPromotion *promotion = [[VPLLocationPromotion alloc] initWithCenter:appleHQLocation
                                                                                  range:3000
+                                                                      uniqueIdentifier:userDefaultsKey
+                                                                          showOnlyOnce:YES
                                                                              startDate:nil
                                                                                endDate:nil
-                                                               showOnceUserDefaultsKey:userDefaultsKey
                                                                                 action:^{
                                                                                     NSLog(@"Promotion Number %ld Fired",(long)(i+1));
                                                                                 }];
@@ -38,10 +39,10 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
     [[VPLBeaconPromotion alloc]
      initWithBeaconRegion:deskRegion
      withMaximiumProximity:CLProximityImmediate
-     repeatInterval:10
+     repeatInterval:2
      startDate:nil
      endDate:nil
-     showOnceUserDefaultsKey:nil
+     showOnlyOnce:YES
      action:^{
          NSString *title    = @"Welcome to Chris's Desk!";
          NSString *message  = @"This is the future of Venmo Mobile";
@@ -67,10 +68,10 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
     [[VPLBeaconPromotion alloc]
      initWithBeaconRegion:doorRegion
      withMaximiumProximity:CLProximityImmediate
-     repeatInterval:10
+     repeatInterval:2
      startDate:nil
      endDate:nil
-     showOnceUserDefaultsKey:nil
+     showOnlyOnce:NO
      action:^{
          NSLog(@"TRIGGERED");
          

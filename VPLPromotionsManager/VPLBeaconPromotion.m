@@ -3,11 +3,11 @@
 @implementation VPLBeaconPromotion
 
 - (instancetype)initWithBeaconRegion:(CLBeaconRegion *)beaconRegion
-                           withMaximiumProximity:(CLProximity)proximity
+               withMaximiumProximity:(CLProximity)proximity
                       repeatInterval:(NSInteger)repeatInterval
                            startDate:(NSDate *)startDate
                              endDate:(NSDate *)endDate
-             showOnceUserDefaultsKey:(NSString *)userDefaultsKey
+                        showOnlyOnce:(BOOL)showOnce
                               action:(VPLPromotionAction)action {
     self = [super init];
     if (self) {
@@ -20,10 +20,16 @@
             [self saveNextFireDate];
             
         }
-        [self setStartDate:startDate
-                   endDate:endDate
-   showOnceUserDefaultsKey:userDefaultsKey
-                    action:action];
+        
+        if (!showOnce && self.repeatInterval == NSIntegerMax) {
+            showOnce = YES;
+        }
+        
+        [self setIdentifier:self.beaconRegion.identifier
+               showOnlyOnce:showOnce
+                  startDate:startDate
+                    endDate:endDate
+                     action:action];
     }
     return self;
 }
@@ -31,7 +37,6 @@
 - (NSString *)nextFireDateDefaultsKey {
     return [NSString stringWithFormat:@"kVPL%@NextFireDate", self.beaconRegion.identifier];
 }
-
 
 - (BOOL)shouldTriggerOnDate:(NSDate *)date {
     if (![super shouldTriggerOnDate:date]) {

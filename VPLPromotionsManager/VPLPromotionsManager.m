@@ -28,7 +28,6 @@ static VPLPromotionsManager *promotionsManager = nil;
 
 @implementation VPLPromotionsManager
 
-
 + (instancetype)startWithPromotions:(NSArray *)promotions
                                 locationTypes:(VPLLocationType)types
                               locationService:(id<VPLLocationServiceProtocol>)locationService
@@ -127,8 +126,8 @@ static VPLPromotionsManager *promotionsManager = nil;
                         if ([timeValidPromotion shouldTriggerOnDate:now atLocation:currentLocation]) {
                             [timeValidPromotion triggerPromotion];
                             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                            NSString *showOnceUserDefaultsKey = timeValidPromotion.showOnceUserDefaultsKey;
-                            if (timeValidPromotion.showOnceUserDefaultsKey) {
+                            NSString *showOnceUserDefaultsKey = [timeValidPromotion showOnceUserDefaultsKey];
+                            if (showOnceUserDefaultsKey) {
                                 [userDefaults setBool:YES forKey:showOnceUserDefaultsKey];
                                 [userDefaults synchronize];
                             }
@@ -159,7 +158,7 @@ static VPLPromotionsManager *promotionsManager = nil;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     for (VPLPromotion *promotion in promotions){
         if ([promotion canTriggerInFutureForCurrentDate:currentDate]) {
-            NSString *showOnceUserDefaultsKey = promotion.showOnceUserDefaultsKey;
+            NSString *showOnceUserDefaultsKey = [promotion showOnceUserDefaultsKey];
             if(!showOnceUserDefaultsKey) {
                 [self queuePromotion:promotion];
             }
@@ -229,16 +228,11 @@ static VPLPromotionsManager *promotionsManager = nil;
         }
         if (beaconIsInProximityRange) {
             [promotion triggerPromotion];
-            NSString *showOnceUserDefaultsKey = promotion.showOnceUserDefaultsKey;
+            NSString *showOnceUserDefaultsKey = [promotion showOnceUserDefaultsKey];
             if (showOnceUserDefaultsKey) {
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:showOnceUserDefaultsKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
             }
-            if (promotion.repeatInterval > 0) {
-                
-            }
-            
-            
             if (promotion.repeatInterval == NSIntegerMax || showOnceUserDefaultsKey) {
                     [self.beaconPromotions removeObjectForKey:region.identifier];
                     [self.gpsService stopMonitoringForRegion:region];
@@ -247,56 +241,6 @@ static VPLPromotionsManager *promotionsManager = nil;
         }
         }
     }
-}
-
-
-//- (void) rangeBeaconPromotion:(VPLBeaconPromotion *)promotion ifTimeValidAtDate:(NSDate *)date {
-//    self.pausedBeaconPromotions = [[NSMutableArray alloc] init];
-//    if (!promotion.nextFireDate || [date compare:promotion.nextFireDate] == NSOrderedDescending) {
-//        [self.gpsService startMonitoringForRegion:promotion.beaconRegion];
-//        if ([self.pausedBeaconPromotions containsObject:promotion]) {
-//            [self.pausedBeaconPromotions removeObject:promotion];
-//        }
-//    }
-//    else {
-//        
-//    }
-//}
-//
-//- (void) pauseBeaconPromotionTillNextFireDate:(VPLBeaconPromotion *)beaconPromotion {
-//    [self.pausedBeaconPromotions addObject:beaconPromotion];
-//    NSDate *safeFireDate = [beaconPromotion.nextFireDate dateByAddingTimeInterval:-1];
-//    NSDictionary *userInfo = @{@"promotion": beaconPromotion};
-//    NSTimer *resumeTimer = [[NSTimer alloc] initWithFireDate:safeFireDate
-//                                                    interval:0
-//                                                      target:self
-//                                                    selector:@selector(didRecieveResumeBeaconMonitoringNotificationFromTimer:)
-//                                                    userInfo:userInfo
-//                                                     repeats:NO];
-//    [[NSRunLoop mainRunLoop] addTimer:resumeTimer forMode:NSDefaultRunLoopMode];
-//}
-//
-//
-//- (void)resumeMonitoringTimeValidBeaconPromotions {
-//    NSDate *now = [NSDate date];
-//    for (VPLBeaconPromotion *beaconPromotion in self.pausedBeaconPromotions) {
-//        [self monitorBeaconPromotion:beaconPromotion ifTimeValidAtDate:now];
-//    }
-//}
-//
-//- (void)didRecieveResumeBeaconMonitoringNotificationFromTimer:(NSTimer *)timer {
-//    
-//}
-
-- (BOOL)shouldRangeRegion:(CLRegion *)region {
-    NSLog(@"shouldRangeRegion Called");
-    VPLBeaconPromotion *beaconPromotion = self.beaconPromotions[region.identifier];
-    BOOL shouldRangeRegion = [beaconPromotion shouldTriggerOnDate:[NSDate date]];
-    return shouldRangeRegion;
-}
-
-- (void)foundBeaconRegion:(CLBeaconRegion *)region withBeacons:(NSArray *)beacons {
-    
 }
 
 @end

@@ -6,13 +6,15 @@
 #pragma mark - Initialization Methods
 
 
-- (void)setStartDate:(NSDate *)startDate
+- (void)setIdentifier:(NSString *)identifier
+         showOnlyOnce:(BOOL)showOnce
+            startDate:(NSDate *)startDate
               endDate:(NSDate *)endDate
-showOnceUserDefaultsKey:(NSString *)userDefaultsKey
                action:(VPLPromotionAction)action {
     self.startDate = startDate ? startDate : [NSDate distantPast];
     self.endDate = endDate ? endDate : [NSDate distantFuture];
-    self.showOnceUserDefaultsKey = userDefaultsKey;
+    self.identifier = identifier;
+    self.showOnce = showOnce;
     self.action = action;
 }
 
@@ -46,6 +48,15 @@ showOnceUserDefaultsKey:(NSString *)userDefaultsKey
         return NO;
     }
     return YES;
+}
+
+- (NSString *)showOnceUserDefaultsKey {
+    if (!self.showOnce) {
+        return nil;
+    }
+    else {
+        return [NSString stringWithFormat:@"kVPLOnce%@", self.identifier];
+    }
 }
 
 

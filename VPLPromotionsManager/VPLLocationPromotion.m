@@ -1,22 +1,25 @@
 #import "VPLLocationPromotion.h"
 
 @implementation VPLLocationPromotion
+
 - (instancetype)initWithCity:(NSString *)city
                        state:(NSString *)state
                      country:(NSString *)country
-                   startDate:startDate
-                     endDate:endDate
-     showOnceUserDefaultsKey:(NSString *)userDefaultsKey
+            uniqueIdentifier:(NSString *)identifier
+                showOnlyOnce:(BOOL)showOnce
+                   startDate:(NSDate *)startDate
+                     endDate:(NSDate *)endDate
                       action:(VPLPromotionAction)action {
     self = [super init];
     if (self) {
         self.city       = city;
         self.state      = state;
         self.country    = country;
-        [self setStartDate:startDate
-                   endDate:endDate
-   showOnceUserDefaultsKey:userDefaultsKey
-                    action:action];
+        [self setIdentifier:identifier
+               showOnlyOnce:showOnce
+                  startDate:startDate
+                    endDate:endDate
+                     action:action];
     }
     return self;
 }
@@ -24,17 +27,26 @@
 
 - (instancetype)initWithCenter:(CLLocation *)centerLocation
                          range:(NSUInteger)range
-                     startDate:startDate
-                       endDate:endDate
-       showOnceUserDefaultsKey:(NSString *)userDefaultsKey
+              uniqueIdentifier:(NSString *)identifier
+                  showOnlyOnce:(BOOL)showOnce
+                     startDate:(NSDate *)startDate
+                       endDate:(NSDate *)endDate
                         action:(VPLPromotionAction)action {
     self = [super init];
     if (self) {
         self.centerLocation = centerLocation;
-        self.range  = range;
-        [self setStartDate:startDate endDate:endDate showOnceUserDefaultsKey:userDefaultsKey action:action];
+        self.range          = range;
+        [self setIdentifier:identifier
+               showOnlyOnce:showOnce
+                  startDate:startDate
+                    endDate:endDate
+                     action:action];
     }
     return self;
+}
+
+- (NSString *)nextFireDateDefaultsKey {
+    return [NSString stringWithFormat:@"kVPL%@NextFireDate", self.identifier];
 }
 
 - (BOOL)shouldTriggerOnDate:(NSDate *)date atLocation:(VPLLocation *)location {
