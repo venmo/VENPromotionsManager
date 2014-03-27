@@ -92,7 +92,7 @@
         didRangeBeacons:(NSArray *)beacons
                inRegion:(CLBeaconRegion *)region {
     if (self.regionFoundCallback) {
-        self.regionFoundCallback(region, beacons, nil);
+        self.regionFoundCallback(region, beacons);
     }
 }
 

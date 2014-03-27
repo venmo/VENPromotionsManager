@@ -173,10 +173,8 @@ static VPLPromotionsManager *promotionsManager = nil;
         [self createGPSLocationServiceIfPossible];
         if (self.gpsService) {
             __weak VPLPromotionsManager *weakSelf = self;
-            self.gpsService.regionFoundCallback = ^(CLBeaconRegion *region, NSArray *beacons, NSError *error) {
-                if (!error) {
+            self.gpsService.regionFoundCallback = ^(CLBeaconRegion *region, NSArray *beacons) {
                     [weakSelf triggerValidPromotionInRegion:region withBeacons:beacons];
-                }
             };
             NSArray *regionIdentifiers = [self.beaconPromotions allKeys];
             for (id identifier in regionIdentifiers) {

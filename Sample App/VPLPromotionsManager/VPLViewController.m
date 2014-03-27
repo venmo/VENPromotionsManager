@@ -25,45 +25,12 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
                                                                                 }];
         [promotions addObject:promotion];
     }
+    
     NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
     CLBeaconRegion *doorRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid
                                                                          major:12622
                                                                          minor:33881
-                                                                    identifier:@"DoorEstimoteRemote"];
-    CLBeaconRegion *deskRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid
-                                                                         major:20874
-                                                                         minor:64674
-                                                                    identifier:@"DeskEstimoteRemote"];
-    
-    VPLBeaconPromotion *deskBeaconPromotion =
-    [[VPLBeaconPromotion alloc]
-     initWithBeaconRegion:deskRegion
-     withMaximiumProximity:CLProximityImmediate
-     repeatInterval:2
-     startDate:nil
-     endDate:nil
-     showOnlyOnce:YES
-     action:^{
-         NSString *title    = @"Welcome to Chris's Desk!";
-         NSString *message  = @"This is the future of Venmo Mobile";
-         UIApplicationState state = [[UIApplication sharedApplication] applicationState];
-         if (state == UIApplicationStateActive) {
-             [[[UIAlertView alloc] initWithTitle:title
-                                         message:message
-                                        delegate:nil
-                               cancelButtonTitle:@"OK"
-                               otherButtonTitles: nil] show];
-         }
-         else {
-             UILocalNotification *notification = [[UILocalNotification alloc] init];
-             notification.alertAction = title;
-             notification.alertBody = message;
-             [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-         }
-         
-         
-     }];
-    
+                                                                    identifier:@"VenmoEntrancePromotion"];
     VPLBeaconPromotion *doorBeaconPromotion =
     [[VPLBeaconPromotion alloc]
      initWithBeaconRegion:doorRegion
@@ -73,11 +40,8 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
      endDate:nil
      showOnlyOnce:NO
      action:^{
-         NSLog(@"TRIGGERED");
-         
          NSString *title    = @"Welcome to Venmo!";
          NSString *message  = @"You've just stepped into the world's most innovative office";
-         
          UIApplicationState state = [[UIApplication sharedApplication] applicationState];
          if (state == UIApplicationStateActive) {
              [[[UIAlertView alloc] initWithTitle:title
@@ -95,11 +59,7 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
          
 
      }];
-    
-    [promotions addObject:deskBeaconPromotion];
     [promotions addObject:doorBeaconPromotion];
-
-    
     [VPLPromotionsManager startWithPromotions:[promotions copy]
                                 locationTypes:VPLLocationTypeGPSRequestPermission
                               locationService:nil

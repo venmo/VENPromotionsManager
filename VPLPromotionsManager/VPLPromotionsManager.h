@@ -29,10 +29,10 @@ typedef NS_OPTIONS(NSUInteger, VPLLocationType) {
 /**
  Creates and starts a Promotion Manager singleton object.
  @param promotions promotions array of VPLPromotion objects in order of fire priority.
- @param types types the type of location services that should be used in order to fire the promotion
+ @param types the type of location services that should be used in order to fire the promotion. This must be VPLLocationTypeGPSIfPermissionGranted or VPLLocationTypeGPSRequestPermission for beacon promotions to trigger.
  @param locationService locationService a object that conforms to the VPLLocationServiceProtocol protocol. One can use the VPLPromotionLocationGPSService or supply a custom object.
  @param seconds the number of seconds between location checks to fire promotions. To disable repeated checks, specify VPLPromotionsManagerRefreshIntervalNone,
- @param multipleTriggerType the way in which the promotion manager handles multiple vailid fires on one check. By default, it fires at maximum only one promotion per check.
+ @param multipleTriggerType the way in which the promotion manager handles multiple vaild fires on one check. By default, it fires at maximum only one promotion per check.
  @return An `VPLPromotionsManager` singleton object
  */
 + (instancetype)startWithPromotions:(NSArray *)promotions
@@ -51,10 +51,10 @@ typedef NS_OPTIONS(NSUInteger, VPLLocationType) {
 /**
  Creates a promotion object instance. If you are creating a singleton object use startWithPromotions: instead.
  @param promotions promotions array of VPLPromotion objects in order of fire priority.
- @param types types the type of location services that should be used in order to fire the promotion
+ @param types the type of location services that should be used in order to fire the promotion
  @param locationService locationService a object that conforms to the VPLLocationServiceProtocol protocol. One can use the VPLPromotionLocationGPSService or supply a custom object.
  @param seconds the number of seconds between location checks to fire promotions. To disable repeated checks, specify VPLPromotionsManagerRefreshIntervalNone,
- @param multipleTriggerType the way in which the promotion manager handles multiple vailid fires on one check. By default, it fires at maximum only one promotion per check.
+ @param multipleTriggerType the way in which the promotion manager handles multiple vaild fires on one check. By default, it fires at maximum only one promotion per check.
  @return An `VPLPromotionsManager` instance
  */
 - (instancetype)initWithPromotions:(NSArray *)promotions

@@ -4,7 +4,7 @@
 
 @interface VPLPromotionLocationGPSService : NSObject <VPLLocationServiceProtocol>
 
-@property (copy) void(^regionFoundCallback)(CLBeaconRegion *region, NSArray *beacons, NSError *error);
+@property (copy) void(^regionFoundCallback)(CLBeaconRegion *region, NSArray *beacons);
 
 - (id)initWithLocationAccuracy:(CLLocationAccuracy)accuracy
   minimumHorizontalAccuracy:(float)horizontalAccuracy;
@@ -13,6 +13,5 @@
 
 - (void)stopMonitoringForRegion:(CLRegion *)region;
 
-- (void)setRegionFoundCallback:(void (^)(CLBeaconRegion *, NSArray *, NSError *))callback;
 
 @end
