@@ -5,7 +5,7 @@
 @interface VPLPromotionLocationGPSService () <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
-@property (copy) void(^callback)(VPLLocation *location, NSError *error);
+@property (copy) void(^locationFoundCallback)(VPLLocation *location, NSError *error);
 @property (nonatomic, assign) float gpsMinimumHorizontalAccuracy;
 @property (nonatomic, strong) NSMutableArray *pausedRegions;
 
@@ -29,7 +29,7 @@
 
 
 - (void)requestCurrentLocationWithCompletion:(void(^)(VPLLocation *location, NSError *error))callback {
-    self.callback = callback;
+    self.locationFoundCallback = callback;
     [self.locationManager startUpdatingLocation];
 }
 
@@ -39,19 +39,19 @@
     if(myCurrentLocation.horizontalAccuracy <= self.gpsMinimumHorizontalAccuracy) {
         [self.locationManager stopUpdatingLocation];
         VPLLocation *currentVPLLocation = [[VPLLocation alloc] initWithLocation:myCurrentLocation];
-        if (self.callback) {
-            self.callback(currentVPLLocation,nil);
+        if (self.locationFoundCallback) {
+            self.locationFoundCallback(currentVPLLocation,nil);
         }
-        self.callback = nil;
+        self.locationFoundCallback = nil;
     }
 }
 
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
-    if (self.callback) {
-    self.callback(nil,error);
+    if (self.locationFoundCallback) {
+        self.locationFoundCallback(nil,error);
     }
-    self.callback = nil;
+    self.locationFoundCallback = nil;
 }
 
 
