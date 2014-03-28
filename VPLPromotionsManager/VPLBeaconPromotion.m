@@ -5,9 +5,6 @@
 - (instancetype)initWithBeaconRegion:(CLBeaconRegion *)beaconRegion
                withMaximiumProximity:(CLProximity)proximity
                       repeatInterval:(NSInteger)repeatInterval
-                           startDate:(NSDate *)startDate
-                             endDate:(NSDate *)endDate
-                        showOnlyOnce:(BOOL)showOnce
                               action:(VPLPromotionAction)action {
     self = [super init];
     if (self) {
@@ -15,21 +12,10 @@
         self.maximumProximity   = proximity;
         self.repeatInterval = repeatInterval;
         self.nextFireDate = [[NSUserDefaults standardUserDefaults] objectForKey:[self nextFireDateDefaultsKey]];
-        if ([[NSDate date] compare: startDate] ==  NSOrderedAscending && !self.nextFireDate) {
-            self.nextFireDate = startDate;
-            [self saveNextFireDate];
-            
+        if (self.repeatInterval == NSIntegerMax) {
+            self.showOnce = YES;
         }
-        
-        if (!showOnce && self.repeatInterval == NSIntegerMax) {
-            showOnce = YES;
-        }
-        
-        [self setIdentifier:self.beaconRegion.identifier
-               showOnlyOnce:showOnce
-                  startDate:startDate
-                    endDate:endDate
-                     action:action];
+        self.action = action;
     }
     return self;
 }
@@ -59,6 +45,16 @@
 - (void) saveNextFireDate {
     [[NSUserDefaults standardUserDefaults] setObject:self.nextFireDate forKey:[self nextFireDateDefaultsKey]];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma Custom Setters
+
+- (void)setStartDate:(NSDate *)startDate {
+    [super setStartDate:startDate];
+    if ([[NSDate date] compare: startDate] ==  NSOrderedAscending && !self.nextFireDate) {
+        self.nextFireDate = startDate;
+        [self saveNextFireDate];
+    }
 }
 
 @end

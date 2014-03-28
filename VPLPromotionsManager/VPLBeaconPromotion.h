@@ -30,9 +30,6 @@
 - (instancetype)initWithBeaconRegion:(CLBeaconRegion *)beaconRegion
                 withMaximiumProximity:(CLProximity)maximumProximity
                       repeatInterval:(NSInteger)repeatInterval
-                           startDate:(NSDate *)startDate
-                             endDate:(NSDate *)endDate
-                        showOnlyOnce:(BOOL)showOnce
                               action:(VPLPromotionAction)action;
 
 @end

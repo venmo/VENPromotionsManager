@@ -5,6 +5,15 @@
 
 #pragma mark - Initialization Methods
 
+- (id) init {
+    self = [super init];
+    if (self) {
+        self.startDate = [NSDate distantPast];
+        self.endDate = [NSDate distantFuture];
+    }
+    return self;
+}
+
 
 - (void)setIdentifier:(NSString *)identifier
          showOnlyOnce:(BOOL)showOnce

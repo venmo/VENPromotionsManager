@@ -30,9 +30,6 @@
                        state:(NSString *)state
                      country:(NSString *)country
             uniqueIdentifier:(NSString *)identifier
-                showOnlyOnce:(BOOL)showOnce
-                   startDate:(NSDate *)startDate
-                     endDate:(NSDate *)endDate
                       action:(VPLPromotionAction)action;
 
 
@@ -47,9 +44,6 @@
 - (instancetype)initWithCenter:(CLLocation *)centerLocation
                          range:(NSUInteger)range
               uniqueIdentifier:(NSString *)identifier
-                  showOnlyOnce:(BOOL)showOnce
-                     startDate:(NSDate *)startDate
-                       endDate:(NSDate *)endDate
                         action:(VPLPromotionAction)action;
 
 

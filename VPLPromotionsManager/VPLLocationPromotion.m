@@ -6,20 +6,14 @@
                        state:(NSString *)state
                      country:(NSString *)country
             uniqueIdentifier:(NSString *)identifier
-                showOnlyOnce:(BOOL)showOnce
-                   startDate:(NSDate *)startDate
-                     endDate:(NSDate *)endDate
                       action:(VPLPromotionAction)action {
     self = [super init];
     if (self) {
         self.city       = city;
         self.state      = state;
         self.country    = country;
-        [self setIdentifier:identifier
-               showOnlyOnce:showOnce
-                  startDate:startDate
-                    endDate:endDate
-                     action:action];
+        self.identifier = identifier;
+        self.action     = action;
     }
     return self;
 }
@@ -28,19 +22,13 @@
 - (instancetype)initWithCenter:(CLLocation *)centerLocation
                          range:(NSUInteger)range
               uniqueIdentifier:(NSString *)identifier
-                  showOnlyOnce:(BOOL)showOnce
-                     startDate:(NSDate *)startDate
-                       endDate:(NSDate *)endDate
                         action:(VPLPromotionAction)action {
     self = [super init];
     if (self) {
         self.centerLocation = centerLocation;
         self.range          = range;
-        [self setIdentifier:identifier
-               showOnlyOnce:showOnce
-                  startDate:startDate
-                    endDate:endDate
-                     action:action];
+        self.identifier = identifier;
+        self.action     = action;
     }
     return self;
 }
