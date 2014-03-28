@@ -15,19 +15,6 @@
 }
 
 
-- (void)setIdentifier:(NSString *)identifier
-         showOnlyOnce:(BOOL)showOnce
-            startDate:(NSDate *)startDate
-              endDate:(NSDate *)endDate
-               action:(VPLPromotionAction)action {
-    self.startDate = startDate ? startDate : [NSDate distantPast];
-    self.endDate = endDate ? endDate : [NSDate distantFuture];
-    self.identifier = identifier;
-    self.showOnce = showOnce;
-    self.action = action;
-}
-
-
 #pragma mark - Custom Methods
 
 - (void)triggerPromotion {
