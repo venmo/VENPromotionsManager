@@ -15,7 +15,6 @@ static VPLPromotionsManager *promotionsManager = nil;
 
 @property (nonatomic, strong) id<VPLLocationServiceProtocol> locationService;
 @property (nonatomic, strong) VPLPromotionLocationGPSService<VPLLocationServiceProtocol> *gpsService;
-@property (nonatomic, assign) NSUInteger refreshInterval;
 @property (nonatomic, strong) NSMutableArray *locationPromotions;
 @property (nonatomic, strong) NSMutableDictionary *beaconPromotions;
 @property (nonatomic, assign) VPLLocationType types;
@@ -29,17 +28,13 @@ static VPLPromotionsManager *promotionsManager = nil;
 @implementation VPLPromotionsManager
 
 + (instancetype)startWithPromotions:(NSArray *)promotions
-                                locationTypes:(VPLLocationType)types
-                              locationService:(id<VPLLocationServiceProtocol>)locationService
-                          withLocationRequestInterval:(NSUInteger)seconds
-                      withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType {
+                      locationTypes:(VPLLocationType)types
+            withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType {
     
     static dispatch_once_t promotionManagerCreationToken = 0;
     dispatch_once(&promotionManagerCreationToken, ^{
         promotionsManager = [[self alloc] initWithPromotions:promotions
                                                locationTypes:types
-                                             locationService:locationService
-                                         withLocationRequestInterval:seconds
                                      withMultipleTriggerType:multipleTriggerType];
         [promotionsManager startMonitoringForPromotionLocations];
     });
@@ -59,14 +54,10 @@ static VPLPromotionsManager *promotionsManager = nil;
 
 - (instancetype)initWithPromotions:(NSArray *)promotions
                      locationTypes:(VPLLocationType)types
-                   locationService:(id<VPLLocationServiceProtocol>)locationService
-               withLocationRequestInterval:(NSUInteger)seconds
            withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType {
     self = [super init];
     if (self){
         self.types = types;
-        self.locationService = locationService;
-        self.refreshInterval = seconds;
         self.multipleTriggerType = multipleTriggerType;
         self.gpsDesiredLocationAccuracy = DefaultGPSDesiredAccuracy;
         self.gpsMinimumHorizontalAccuracy = DefaultGPSMinimumHorizontalAccuracy;

@@ -26,6 +26,10 @@ typedef NS_OPTIONS(NSUInteger, VPLLocationType) {
 ///YES if the VLPPromotionsManager is checking for location based promotions at the rate specified by the refresh interval. NO otherwise.
 @property (nonatomic, assign) BOOL isRunning;
 
+//The number of seconds between location requests
+@property (nonatomic, assign) NSUInteger refreshInterval;
+
+
 /**
  Creates and starts a Promotion Manager singleton object.
  @param promotions promotions array of VPLPromotion objects in order of fire priority.
@@ -36,10 +40,8 @@ typedef NS_OPTIONS(NSUInteger, VPLLocationType) {
  @return An `VPLPromotionsManager` singleton object
  */
 + (instancetype)startWithPromotions:(NSArray *)promotions
-                                locationTypes:(VPLLocationType)types
-                              locationService:(id<VPLLocationServiceProtocol>)locationService
-                          withLocationRequestInterval:(NSUInteger)seconds
-           withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType;
+                      locationTypes:(VPLLocationType)types
+            withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType;
 
 
 /**
@@ -59,8 +61,6 @@ typedef NS_OPTIONS(NSUInteger, VPLLocationType) {
  */
 - (instancetype)initWithPromotions:(NSArray *)promotions
                      locationTypes:(VPLLocationType)types
-                   locationService:(id<VPLLocationServiceProtocol>)locationService
-               withLocationRequestInterval:(NSUInteger)seconds
            withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType;
 
 

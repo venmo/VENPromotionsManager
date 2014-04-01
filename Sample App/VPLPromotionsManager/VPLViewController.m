@@ -53,9 +53,8 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
     [promotions addObject:doorBeaconPromotion];
     [VPLPromotionsManager startWithPromotions:[promotions copy]
                                 locationTypes:VPLLocationTypeGPSRequestPermission
-                              locationService:nil
-                  withLocationRequestInterval:5
                       withMultipleTriggerType:VPLMultipleTriggerOnRefreshTypeTriggerOnce];
+    [VPLPromotionsManager sharedManager].refreshInterval = 5;
 }
 
 
