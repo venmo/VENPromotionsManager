@@ -26,8 +26,8 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
     
     NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
     CLBeaconRegion *doorRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid
-                                                                         major:20874//12622
-                                                                         minor:64674//33881
+                                                                         major:12622
+                                                                         minor:33881
                                                                     identifier:@"VenmoEntrancePromotion"];
     VPLBeaconPromotion *doorBeaconPromotion = [[VPLBeaconPromotion alloc] initWithBeaconRegion:doorRegion
                                                                          withMaximiumProximity:CLProximityFar
@@ -51,10 +51,11 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
                                                                                             }
                                                                                         }];
     [promotions addObject:doorBeaconPromotion];
-    [VPLPromotionsManager startWithPromotions:[promotions copy]
-                                locationTypes:VPLLocationTypeGPSRequestPermission
-                      withMultipleTriggerType:VPLMultipleTriggerOnRefreshTypeTriggerOnce];
+    
+    [VPLPromotionsManager sharedManagerWithPromotions:[promotions copy]
+                                       locationTypes:VPLLocationTypeGPSRequestPermission];
     [VPLPromotionsManager sharedManager].refreshInterval = 5;
+    [[VPLPromotionsManager sharedManager] startMonitoringForPromotionLocations];
 }
 
 
