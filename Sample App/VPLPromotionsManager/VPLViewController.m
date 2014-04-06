@@ -54,6 +54,7 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
     
     [VPLPromotionsManager sharedManagerWithPromotions:[promotions copy]
                                        locationTypes:VPLLocationTypeGPSRequestPermission];
+    
     [VPLPromotionsManager sharedManager].refreshInterval = 5;
     [[VPLPromotionsManager sharedManager] startMonitoringForPromotionLocations];
 }

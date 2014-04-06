@@ -27,16 +27,13 @@ static VPLPromotionsManager *promotionsManager = nil;
 
 @implementation VPLPromotionsManager
 
-+ (instancetype)startWithPromotions:(NSArray *)promotions
-                      locationTypes:(VPLLocationType)types
-            withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType {
++ (instancetype)sharedManagerWithPromotions:(NSArray *)promotions
+                              locationTypes:(VPLLocationType)types {
     
     static dispatch_once_t promotionManagerCreationToken = 0;
     dispatch_once(&promotionManagerCreationToken, ^{
         promotionsManager = [[self alloc] initWithPromotions:promotions
-                                               locationTypes:types
-                                     withMultipleTriggerType:multipleTriggerType];
-        [promotionsManager startMonitoringForPromotionLocations];
+                                               locationTypes:types];
     });
     return promotionsManager;
 }
@@ -53,12 +50,11 @@ static VPLPromotionsManager *promotionsManager = nil;
 
 
 - (instancetype)initWithPromotions:(NSArray *)promotions
-                     locationTypes:(VPLLocationType)types
-           withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType {
+                     locationTypes:(VPLLocationType)types {
     self = [super init];
     if (self){
         self.types = types;
-        self.multipleTriggerType = multipleTriggerType;
+        promotionsManager.refreshInterval = 60 * 60 * 24; //24 hours
         self.gpsDesiredLocationAccuracy = DefaultGPSDesiredAccuracy;
         self.gpsMinimumHorizontalAccuracy = DefaultGPSMinimumHorizontalAccuracy;
         [self setPromotions:promotions];

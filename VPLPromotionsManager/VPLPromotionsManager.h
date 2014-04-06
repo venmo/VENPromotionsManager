@@ -39,9 +39,8 @@ typedef NS_OPTIONS(NSUInteger, VPLLocationType) {
  @param multipleTriggerType the way in which the promotion manager handles multiple vaild fires on one check. By default, it fires at maximum only one promotion per check.
  @return An `VPLPromotionsManager` singleton object
  */
-+ (instancetype)startWithPromotions:(NSArray *)promotions
-                      locationTypes:(VPLLocationType)types
-            withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType;
++ (instancetype)sharedManagerWithPromotions:(NSArray *)promotions
+                      locationTypes:(VPLLocationType)types;
 
 
 /**
@@ -60,8 +59,7 @@ typedef NS_OPTIONS(NSUInteger, VPLLocationType) {
  @return An `VPLPromotionsManager` instance
  */
 - (instancetype)initWithPromotions:(NSArray *)promotions
-                     locationTypes:(VPLLocationType)types
-           withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType;
+                     locationTypes:(VPLLocationType)types;
 
 
 /**
