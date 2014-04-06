@@ -6,9 +6,6 @@
 ///The beacon region that should trigger this promotion
 @property (nonatomic, strong) CLBeaconRegion *beaconRegion;
 
-///The maximum range in which this promotion would be valid.
-@property (nonatomic, assign) CLProximity maximumProximity;
-
 ///The minimum number of seconds before this promotion can reappear
 @property (nonatomic, assign) NSInteger repeatInterval;
 
@@ -28,8 +25,7 @@
  @return An `VPLBeaconPromotion` instance
  */
 - (instancetype)initWithBeaconRegion:(CLBeaconRegion *)beaconRegion
-                withMaximiumProximity:(CLProximity)maximumProximity
                       repeatInterval:(NSInteger)repeatInterval
-                              action:(VPLPromotionAction)action;
+                              enterAction:(VPLPromotionAction)action;
 
 @end

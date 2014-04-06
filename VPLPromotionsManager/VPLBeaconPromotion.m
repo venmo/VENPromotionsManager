@@ -3,13 +3,11 @@
 @implementation VPLBeaconPromotion
 
 - (instancetype)initWithBeaconRegion:(CLBeaconRegion *)beaconRegion
-               withMaximiumProximity:(CLProximity)proximity
                       repeatInterval:(NSInteger)repeatInterval
-                              action:(VPLPromotionAction)action {
+                              enterAction:(VPLPromotionAction)action {
     self = [super init];
     if (self) {
         self.beaconRegion       = beaconRegion;
-        self.maximumProximity   = proximity;
         self.repeatInterval = repeatInterval;
         self.nextFireDate = [[NSUserDefaults standardUserDefaults] objectForKey:[self nextFireDateDefaultsKey]];
         if (self.repeatInterval == NSIntegerMax) {

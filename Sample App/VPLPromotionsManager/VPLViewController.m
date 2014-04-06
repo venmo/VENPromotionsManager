@@ -30,32 +30,31 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
                                                                          minor:33881
                                                                     identifier:@"VenmoEntrancePromotion"];
     VPLBeaconPromotion *doorBeaconPromotion = [[VPLBeaconPromotion alloc] initWithBeaconRegion:doorRegion
-                                                                         withMaximiumProximity:CLProximityFar
                                                                                 repeatInterval:2
-                                                                                        action:^{
-                                                                                            NSString *title    = @"Welcome to Venmo!";
-                                                                                            NSString *message  = @"You've just stepped into the world's most innovative office";
-                                                                                            UIApplicationState state = [[UIApplication sharedApplication] applicationState];
-                                                                                            if (state == UIApplicationStateActive) {
-                                                                                                [[[UIAlertView alloc] initWithTitle:title
-                                                                                                                            message:message
-                                                                                                                           delegate:nil
-                                                                                                                  cancelButtonTitle:@"OK"
-                                                                                                                  otherButtonTitles: nil] show];
-                                                                                            }
-                                                                                            else {
-                                                                                                UILocalNotification *notification = [[UILocalNotification alloc] init];
-                                                                                                notification.alertAction = title;
-                                                                                                notification.alertBody = message;
-                                                                                                [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-                                                                                            }
-                                                                                        }];
+                                                                                   enterAction:^{
+                                                                                       NSString *title    = @"Welcome to Venmo!";
+                                                                                       NSString *message  = @"You've just stepped into the world's most innovative office";
+                                                                                       UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+                                                                                       if (state == UIApplicationStateActive) {
+                                                                                           [[[UIAlertView alloc] initWithTitle:title
+                                                                                                                       message:message
+                                                                                                                      delegate:nil
+                                                                                                             cancelButtonTitle:@"OK"
+                                                                                                             otherButtonTitles: nil] show];
+                                                                                       }
+                                                                                       else {
+                                                                                           UILocalNotification *notification = [[UILocalNotification alloc] init];
+                                                                                           notification.alertAction = title;
+                                                                                           notification.alertBody = message;
+                                                                                           [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+                                                                                       }
+                                                                                   }];
     [promotions addObject:doorBeaconPromotion];
     
     [VPLPromotionsManager sharedManagerWithPromotions:[promotions copy]
-                                       locationTypes:VPLLocationTypeGPSRequestPermission];
+                                        locationTypes:VPLLocationTypeGPSRequestPermission];
     
-    [VPLPromotionsManager sharedManager].refreshInterval = 5;
+    [VPLPromotionsManager sharedManager].refreshInterval = 2;
     [[VPLPromotionsManager sharedManager] startMonitoringForPromotionLocations];
 }
 

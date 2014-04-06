@@ -68,48 +68,14 @@
 
 - (void)stopMonitoringForRegion:(CLRegion *)region {
     [self.locationManager stopMonitoringForRegion:region];
-    if ([region isKindOfClass:[CLBeaconRegion class]]) {
-        [self.locationManager stopRangingBeaconsInRegion:(CLBeaconRegion *)region];
-    }
 }
 
 
-#pragma mark - Beacon Location Manager Delegate Methods
-
-- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region {
-    if ([region isKindOfClass:[CLBeaconRegion class]]) {
-        [self.locationManager startRangingBeaconsInRegion:(CLBeaconRegion *)region];
-    }
-}
-
-
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region {
-    [self.locationManager stopRangingBeaconsInRegion:(CLBeaconRegion *)region];
-}
-
-
-- (void)locationManager:(CLLocationManager *)manager
-        didRangeBeacons:(NSArray *)beacons
-               inRegion:(CLBeaconRegion *)region {
-    if (self.regionFoundCallback) {
-        self.regionFoundCallback(region, beacons);
-    }
-}
-
-
-- (void)startRangingBeaconsInRegion:(CLBeaconRegion *)region {
-    [self.locationManager startRangingBeaconsInRegion:region];
-}
-
-
-- (void)stopRangingBeaconsInRegion:(CLBeaconRegion *)region {
-    [self.locationManager stopRangingBeaconsInRegion:region];
-}
-
+#pragma mark - Region Location Manager Delegate Methods
 
 - (void)locationManager:(CLLocationManager *)manager didDetermineState:(CLRegionState)state forRegion:(CLRegion *)region {
-    if (state != CLRegionStateOutside) {
-        [self.locationManager startRangingBeaconsInRegion:(CLBeaconRegion *)region];
+    if (state == CLRegionStateInside && self.regionEnteredCallback) {
+        self.regionEnteredCallback(region);
     }
 }
 

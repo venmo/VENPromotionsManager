@@ -112,13 +112,16 @@ static VPLPromotionsManager *promotionsManager = nil;
                     for (VPLLocationPromotion *timeValidPromotion in currentTimeValidPromotions) {
                         if ([timeValidPromotion shouldTriggerOnDate:now atLocation:currentLocation]) {
                             [timeValidPromotion triggerPromotion];
+                            [weakSelf.locationPromotions removeObject:timeValidPromotion];
                             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                             NSString *showOnceUserDefaultsKey = [timeValidPromotion showOnceUserDefaultsKey];
                             if (showOnceUserDefaultsKey) {
                                 [userDefaults setBool:YES forKey:showOnceUserDefaultsKey];
                                 [userDefaults synchronize];
                             }
-                            [weakSelf.locationPromotions removeObject:timeValidPromotion];
+                            else {
+                                [weakSelf.locationPromotions addObject:timeValidPromotion];
+                            }
                             if (self.multipleTriggerType == VPLMultipleTriggerOnRefreshTypeTriggerOnce) {
                                 break;
                             }
@@ -146,13 +149,8 @@ static VPLPromotionsManager *promotionsManager = nil;
     for (VPLPromotion *promotion in promotions){
         if ([promotion canTriggerInFutureForCurrentDate:currentDate]) {
             NSString *showOnceUserDefaultsKey = [promotion showOnceUserDefaultsKey];
-            if(!showOnceUserDefaultsKey) {
+            if(!showOnceUserDefaultsKey ||![userDefaults boolForKey:showOnceUserDefaultsKey]) {
                 [self queuePromotion:promotion];
-            }
-            else {
-                if (![userDefaults boolForKey:showOnceUserDefaultsKey]) {
-                    [self queuePromotion:promotion];
-                }
             }
         }
     }
@@ -160,8 +158,8 @@ static VPLPromotionsManager *promotionsManager = nil;
         [self createGPSLocationServiceIfPossible];
         if (self.gpsService) {
             __weak VPLPromotionsManager *weakSelf = self;
-            self.gpsService.regionFoundCallback = ^(CLBeaconRegion *region, NSArray *beacons) {
-                    [weakSelf triggerValidPromotionInRegion:region withBeacons:beacons];
+            self.gpsService.regionEnteredCallback =  ^(CLRegion *region) {
+                [weakSelf triggerValidPromotionInRegion:region];
             };
             NSArray *regionIdentifiers = [self.beaconPromotions allKeys];
             for (id identifier in regionIdentifiers) {
@@ -199,19 +197,10 @@ static VPLPromotionsManager *promotionsManager = nil;
 
 #pragma mark - Beacon Methods
 
-- (void)triggerValidPromotionInRegion:(CLRegion *)region withBeacons:(NSArray *)beacons {
+- (void)triggerValidPromotionInRegion:(CLRegion *)region {
     VPLBeaconPromotion *promotion = self.beaconPromotions[region.identifier];
     if (promotion) {
         if ([promotion shouldTriggerOnDate:[NSDate date]]) {
-        BOOL beaconIsInProximityRange;
-        for (CLBeacon *beacon in beacons) {
-            CLProximity proximity = beacon.proximity;
-            if (proximity <= promotion.maximumProximity && proximity != CLProximityUnknown) {
-                beaconIsInProximityRange = YES;
-                break;
-            }
-        }
-        if (beaconIsInProximityRange) {
             [promotion triggerPromotion];
             NSString *showOnceUserDefaultsKey = [promotion showOnceUserDefaultsKey];
             if (showOnceUserDefaultsKey) {
@@ -219,11 +208,10 @@ static VPLPromotionsManager *promotionsManager = nil;
                 [[NSUserDefaults standardUserDefaults] synchronize];
             }
             if (promotion.repeatInterval == NSIntegerMax || showOnceUserDefaultsKey) {
-                    [self.beaconPromotions removeObjectForKey:region.identifier];
-                    [self.gpsService stopMonitoringForRegion:region];
-
+                [self.beaconPromotions removeObjectForKey:region.identifier];
+                [self.gpsService stopMonitoringForRegion:region];
+                
             }
-        }
         }
     }
 }
