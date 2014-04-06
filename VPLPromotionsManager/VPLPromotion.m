@@ -8,8 +8,6 @@
 - (id) init {
     self = [super init];
     if (self) {
-        self.startDate = [NSDate distantPast];
-        self.endDate = [NSDate distantFuture];
     }
     return self;
 }
@@ -55,6 +53,23 @@
     }
 }
 
+
+#pragma mark - Custom Getters
+
+- (NSDate *)startDate {
+    if (!_startDate) {
+        return [NSDate distantPast];
+    }
+    return _startDate;
+}
+
+
+- (NSDate *)endDate {
+    if (!_endDate) {
+        return [NSDate distantFuture];
+    }
+    return _endDate;
+}
 
 
 @end

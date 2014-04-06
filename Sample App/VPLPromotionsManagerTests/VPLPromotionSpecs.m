@@ -1,4 +1,4 @@
-#import "VPLPromotion.h"
+#import "VPLLocationPromotion.h"
 
 VPLLocation *emptyLocation;
 VPLLocation *validLocation;
@@ -48,14 +48,10 @@ before(^{
 
 describe(@"Non wildcard promotion shouldTriggerForLocation", ^{
     
-    VPLPromotion *promotion = [[VPLPromotion alloc] initWithCity:@"Austin"
-                                                           state:@"TX"
-                                                         country:@"US"
-                                                       startDate:beforeDate
-                                                         endDate:afterDate
-                                         showOnceUserDefaultsKey:nil
-                                                          action:^(VPLLocation * location) { }];
-    
+    VPLLocationPromotion *promotion = [[VPLLocationPromotion alloc] initWithCity:@"Austin" state:@"TX" country:@"US" uniqueIdentifier:@"uniqueID" action:^{
+    }];
+    promotion.startDate = beforeDate;
+    promotion.endDate   = afterDate;
     
     it(@"should never trigger for empty object", ^{
         expect([promotion shouldTriggerAtLocation:emptyLocation]).to.equal(NO);
@@ -71,13 +67,14 @@ describe(@"Non wildcard promotion shouldTriggerForLocation", ^{
 });
 
 describe(@"City wildcard promotion shouldTriggerForLocation", ^{
-    VPLPromotion *promotion = [[VPLPromotion alloc] initWithCity:kVPLWildCardLocationAttribute
-                                                           state:@"TX"
-                                                         country:@"US"
-                                                       startDate:beforeDate
-                                                         endDate:afterDate
-                                         showOnceUserDefaultsKey:nil
-                                                          action:^(VPLLocation * location) { }];
+
+    VPLLocationPromotion *promotion = [[VPLLocationPromotion alloc] initWithCity:kVPLWildCardLocationAttribute
+                                                                           state:@"TX"
+                                                                         country:@"US"
+                                                            uniqueIdentifier:@"uniqueID" action:^{
+    }];
+    promotion.startDate = beforeDate;
+    promotion.endDate   = afterDate;
     
     it(@"should never trigger for empty object", ^{
         expect([promotion shouldTriggerAtLocation:emptyLocation]).to.equal(NO);
@@ -97,14 +94,14 @@ describe(@"City wildcard promotion shouldTriggerForLocation", ^{
 });
 
 describe(@"State wildcard promotion shouldTriggerForLocation", ^{
-    VPLPromotion *promotion = [[VPLPromotion alloc] initWithCity:@"Austin"
-                                                           state:kVPLWildCardLocationAttribute
-                                                         country:@"US"
-                                                       startDate:beforeDate
-                                                         endDate:afterDate
-                                         showOnceUserDefaultsKey:nil
-                                                          action:^(VPLLocation * location) { }];
     
+    VPLLocationPromotion *promotion = [[VPLLocationPromotion alloc] initWithCity:@"Austin"
+                                                                           state:kVPLWildCardLocationAttribute
+                                                                         country:@"US"
+                                                                uniqueIdentifier:@"uniqueID" action:^{
+                                                                }];
+    promotion.startDate = beforeDate;
+    promotion.endDate   = afterDate;
     it(@"should never trigger for empty object", ^{
         expect([promotion shouldTriggerAtLocation:emptyLocation]).to.equal(NO);
     });
@@ -123,13 +120,13 @@ describe(@"State wildcard promotion shouldTriggerForLocation", ^{
 });
 
 describe(@"Country wildcard promotion shouldTriggerForLocation", ^{
-    VPLPromotion *promotion = [[VPLPromotion alloc] initWithCity:@"Austin"
-                                                           state:@"TX"
-                                                         country:kVPLWildCardLocationAttribute
-                                                       startDate:beforeDate
-                                                         endDate:afterDate
-                                         showOnceUserDefaultsKey:nil
-                                                          action:^(VPLLocation * location) { }];
+    VPLLocationPromotion *promotion = [[VPLLocationPromotion alloc] initWithCity:@"Austin"
+                                                                           state:@"TX"
+                                                                         country:kVPLWildCardLocationAttribute
+                                                                uniqueIdentifier:@"uniqueID" action:^{
+                                                                }];
+    promotion.startDate = beforeDate;
+    promotion.endDate   = afterDate;
     
     it(@"should never trigger for empty object", ^{
         expect([promotion shouldTriggerAtLocation:emptyLocation]).to.equal(NO);
@@ -149,82 +146,59 @@ describe(@"Country wildcard promotion shouldTriggerForLocation", ^{
 });
 
 describe(@"shouldTriggerForLocation", ^{
-    VPLPromotion *validTimeIntervalPromotion = [[VPLPromotion alloc] initWithCity:@"Austin"
-                                                                            state:@"TX"
-                                                                          country:@"US"
-                                                                        startDate:beforeDate
-                                                                          endDate:afterDate
-                                                          showOnceUserDefaultsKey:nil
-                                                                           action:^(VPLLocation * location) { }];
+    VPLLocationPromotion *promotion = [[VPLLocationPromotion alloc] initWithCity:@"Austin"
+                                                                           state:@"TX"
+                                                                         country:kVPLWildCardLocationAttribute
+                                                                uniqueIdentifier:@"uniqueID" action:^{
+                                                                }];
+
+  
     it(@"should trigger for if current time is after start date and before end date", ^{
-        expect([validTimeIntervalPromotion shouldTriggerOnDate:currentDate]).to.equal(YES);
+        promotion.startDate = beforeDate;
+        promotion.endDate   = afterDate;
+        expect([promotion shouldTriggerOnDate:currentDate]).beTruthy();
     });
     
-    VPLPromotion *nilStartDateValidEndDateIntervalPromotion = [[VPLPromotion alloc] initWithCity:@"Austin"
-                                                                                           state:@"TX"
-                                                                                         country:@"US"
-                                                                                       startDate:nil
-                                                                                         endDate:afterDate
-                                                                         showOnceUserDefaultsKey:nil
-                                                                                          action:^(VPLLocation * location) { }];
+
     it(@"should trigger for nil start date if end date is after current time", ^{
-        expect([nilStartDateValidEndDateIntervalPromotion shouldTriggerOnDate:currentDate]).to.equal(YES);
+        promotion.startDate = nil;
+        promotion.endDate = afterDate;
+        expect([promotion shouldTriggerOnDate:currentDate]).beTruthy();
     });
     
-    VPLPromotion *nilStartDateInvalidEndDateIntervalPromotion = [[VPLPromotion alloc] initWithCity:@"Austin"
-                                                                                             state:@"TX"
-                                                                                           country:@"US"
-                                                                                         startDate:nil
-                                                                                           endDate:beforeDate
-                                                                           showOnceUserDefaultsKey:nil
-                                                                                            action:^(VPLLocation * location) { }];
+
     it(@"should not trigger for nil start date if end date is before current time", ^{
-        expect([nilStartDateInvalidEndDateIntervalPromotion shouldTriggerOnDate:currentDate]).to.equal(NO);
+        promotion.startDate = nil;
+        promotion.endDate = beforeDate;
+        expect([promotion shouldTriggerOnDate:currentDate]).beFalsy();
     });
     
-    VPLPromotion *nilStartDateNilEndDateIntervalPromotion = [[VPLPromotion alloc] initWithCity:@"Austin"
-                                                                                         state:@"TX"
-                                                                                       country:@"US"
-                                                                                     startDate:nil
-                                                                                       endDate:nil
-                                                                       showOnceUserDefaultsKey:nil
-                                                                                        action:^(VPLLocation * location) { }];
+
     it(@"should always trigger for nil start time and nil end time", ^{
-        expect([nilStartDateNilEndDateIntervalPromotion shouldTriggerOnDate:currentDate]).to.equal(YES);
+        promotion.startDate = nil;
+        promotion.endDate = nil;
+        expect([promotion shouldTriggerOnDate:currentDate]).beTruthy();
     });
     
-    VPLPromotion *validStartDateNilEndDateIntervalPromotion = [[VPLPromotion alloc] initWithCity:@"Austin"
-                                                                                           state:@"TX"
-                                                                                         country:@"US"
-                                                                                       startDate:beforeDate
-                                                                                         endDate:nil
-                                                                         showOnceUserDefaultsKey:nil
-                                                                                          action:^(VPLLocation * location) { }];
+
     it(@"should trigger for start date prior to current date and nil end date", ^{
-        expect([validStartDateNilEndDateIntervalPromotion shouldTriggerOnDate:currentDate]).to.equal(YES);
+        promotion.startDate = nil;
+        promotion.endDate = nil;
+        expect([promotion shouldTriggerOnDate:currentDate]).beTruthy();
     });
     
-    VPLPromotion *invalidStartDateNilEndDateIntervalPromotion = [[VPLPromotion alloc] initWithCity:@"Austin"
-                                                                                             state:@"TX"
-                                                                                           country:@"US"
-                                                                                         startDate:afterDate
-                                                                                           endDate:nil
-                                                                           showOnceUserDefaultsKey:nil
-                                                                                            action:^(VPLLocation * location) { }];
+
     it(@"should not trigger for start date after current date and nil end date", ^{
-        expect([invalidStartDateNilEndDateIntervalPromotion shouldTriggerOnDate:currentDate]).to.equal(NO);
+        promotion.startDate = afterDate;
+        promotion.endDate = nil;
+        expect([promotion shouldTriggerOnDate:currentDate]).beFalsy();
         
     });
     
-    VPLPromotion *invalidStartDateAndInvalidEndDateIntervalPromotion = [[VPLPromotion alloc] initWithCity:@"Austin"
-                                                                                                    state:@"TX"
-                                                                                                  country:@"US"
-                                                                                                startDate:afterDate
-                                                                                                  endDate:beforeDate
-                                                                                  showOnceUserDefaultsKey:nil
-                                                                                                   action:^(VPLLocation * location) { }];
     it(@"should not trigger for start date after current date and end date prior to current date", ^{
-        expect([invalidStartDateAndInvalidEndDateIntervalPromotion shouldTriggerOnDate:currentDate]).to.equal(NO);
+        promotion.startDate = afterDate;
+        promotion.endDate = beforeDate;
+        expect([promotion shouldTriggerOnDate:currentDate]).beFalsy();
     });
     
 });
