@@ -10,7 +10,7 @@ typedef void(^VPLPromotionAction)();
 ///A unique identifier for this promotion.  This must not be nil and must be unique for each promotion.
 @property (nonatomic, strong) NSString *identifier;
 
-///The event that should occur when a promotion is triggered.Examples include Modal View Controllers and UIAlertviews.
+///The event that should occur when a promotion is triggered.
 @property (nonatomic, copy) VPLPromotionAction action;
 
 ///The first date this promotion can possibly trigger.If startDate is nil, any date prior to the endDate is a valid trigger date.

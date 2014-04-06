@@ -17,13 +17,14 @@
 ///The radius distance of the valid geocircle (in meters) in which the promotion can be triggered.
 @property (nonatomic, assign) NSUInteger range;
 
+
 /**
  Initializes the VPLPromotion object with
  @param city the city the promotion should trigger in.
  @param state the state the promotion should trigger in.
  @param country the country the promotion should trigger in.
- @param startDate the first date that the promotion is valid (can be triggered).
- @param endDate startDate the last date that the promotion is valid (can be triggered).
+ @param identifier the unique identifier for this promotion.  This must not be nil and must be unique for each promotion.
+ @param action the event that should occur when a promotion is triggered.
  @return A `VPLPromotion` object
  */
 - (instancetype)initWithCity:(NSString *)city
@@ -37,8 +38,8 @@
  Initializes the VPLPromotion object with
  @param center the center of the valid geocircle in which the promotion can be triggered.
  @param range the radius distance (in meters) of the valid geocircle in which the promotion can be triggered.
- @param startDate the first date that the promotion is valid (can be triggered).
- @param endDate startDate the last date that the promotion is valid (can be triggered).
+ @param identifier the unique identifier for this promotion.  This must not be nil and must be unique for each promotion.
+ @param action the event that should occur when a promotion is triggered.
  @return A VPLPromotion object
  */
 - (instancetype)initWithCenter:(CLLocation *)centerLocation
