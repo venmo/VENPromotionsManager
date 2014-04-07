@@ -22,7 +22,8 @@ First create one (or more) promotion(s). Promotions can be either region based (
 ```objc
 
 //Location Promotion
-CLLocation *appleHQLocation = [[CLLocation alloc] initWithLatitude:37.3318 longitude:-122.0312];
+CLLocation *appleHQLocation = [[CLLocation alloc] initWithLatitude:37.3318
+                                                         longitude:-122.0312];
 
 VPLLocationPromotion *locationPromotion = [[VPLLocationPromotion alloc] initWithCenter:appleHQLocation
                                                                                  range:3000

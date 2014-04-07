@@ -10,7 +10,8 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    CLLocation *appleHQLocation = [[CLLocation alloc] initWithLatitude:37.3318 longitude:-122.0312];
+    CLLocation *appleHQLocation = [[CLLocation alloc] initWithLatitude:37.3318
+                                                             longitude:-122.0312];
     NSMutableArray *promotions = [[NSMutableArray alloc] init];
     for (NSInteger i=0; i<15; i++) {
         NSString *userDefaultsKey = [NSString stringWithFormat:@"%@%ld", kVENPromotionAppleKey,(long)i];
@@ -49,33 +50,7 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
                                                                                            [[UIApplication sharedApplication] scheduleLocalNotification:notification];
                                                                                        }
                                                                                    }];
-    
-    NSUUID *registerUUID = [[NSUUID alloc] initWithUUIDString:@"6F25DEE9-7874-4FA1-B876-FFE11245BD0D"];
-    CLBeaconRegion *registerRegion = [[CLBeaconRegion alloc] initWithProximityUUID:registerUUID
-                                                                    identifier:@"VenmoRegisterBeacon"];
-    
-    
-    VPLRegionPromotion *registerBeaconPromotion = [[VPLRegionPromotion alloc] initWithRegion:registerRegion
-                                                                          repeatInterval:10
-                                                                             enterAction:^{
-                                                                                 NSString *title    = @"You just passed a Venmo Register";
-                                                                                 NSString *message  = @"Use your Venmo balance to pay!";
-                                                                                 UIApplicationState state = [[UIApplication sharedApplication] applicationState];
-                                                                                 if (state == UIApplicationStateActive) {
-                                                                                     [[[UIAlertView alloc] initWithTitle:title
-                                                                                                                 message:message
-                                                                                                                delegate:nil
-                                                                                                       cancelButtonTitle:@"OK"
-                                                                                                       otherButtonTitles: nil] show];
-                                                                                 }
-                                                                                 else {
-                                                                                     UILocalNotification *notification = [[UILocalNotification alloc] init];
-                                                                                     notification.alertAction = title;
-                                                                                     notification.alertBody = message;
-                                                                                     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-                                                                                 }
-                                                                             }];
-    [promotions addObject:registerBeaconPromotion];
+
     [promotions addObject:doorBeaconPromotion];
 
     [VPLPromotionsManager sharedManagerWithPromotions:[promotions copy]
