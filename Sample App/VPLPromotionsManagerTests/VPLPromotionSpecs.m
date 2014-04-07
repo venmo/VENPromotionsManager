@@ -87,4 +87,22 @@ describe(@"canTriggerInFutureForCurrentDate:", ^{
 
 });
 
+
+describe(@"showOnceUserDefaultsKey:", ^{
+    VPLPromotion *promotion = [[VPLPromotion alloc] init];
+    
+    it(@"should be created from its unique identifier if showOnce is YES", ^{
+        promotion.identifier    = @"TestID";
+        promotion.showOnce      = YES;
+        expect([promotion showOnceUserDefaultsKey]).to.equal(@"kVPLOnceTestID");
+    });
+    
+    it(@"should be nil if showOnce is NO", ^{
+        promotion.identifier    = @"TestID";
+        promotion.showOnce      = NO;
+        expect([promotion showOnceUserDefaultsKey]).to.beNil();
+    });
+    
+});
+
 SpecEnd

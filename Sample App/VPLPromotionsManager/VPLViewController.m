@@ -2,7 +2,7 @@
 #import "VPLAppDelegate.h"
 #import "VPLPromotionsManager.h"
 #import "VPLLocationPromotion.h"
-#import "VPLBeaconPromotion.h"
+#import "VPLRegionPromotion.h"
 
 static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
 
@@ -24,12 +24,12 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
         [promotions addObject:promotion];
     }
     
-    NSUUID *uuid = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
-    CLBeaconRegion *doorRegion = [[CLBeaconRegion alloc] initWithProximityUUID:uuid
+    NSUUID *estimoteUUID = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
+    CLBeaconRegion *doorRegion = [[CLBeaconRegion alloc] initWithProximityUUID:estimoteUUID
                                                                          major:12622
                                                                          minor:33881
                                                                     identifier:@"VenmoEntrancePromotion"];
-    VPLBeaconPromotion *doorBeaconPromotion = [[VPLBeaconPromotion alloc] initWithBeaconRegion:doorRegion
+    VPLRegionPromotion *doorBeaconPromotion = [[VPLRegionPromotion alloc] initWithRegion:doorRegion
                                                                                 repeatInterval:2
                                                                                    enterAction:^{
                                                                                        NSString *title    = @"Welcome to Venmo!";
@@ -49,8 +49,35 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
                                                                                            [[UIApplication sharedApplication] scheduleLocalNotification:notification];
                                                                                        }
                                                                                    }];
-    [promotions addObject:doorBeaconPromotion];
     
+    NSUUID *registerUUID = [[NSUUID alloc] initWithUUIDString:@"6F25DEE9-7874-4FA1-B876-FFE11245BD0D"];
+    CLBeaconRegion *registerRegion = [[CLBeaconRegion alloc] initWithProximityUUID:registerUUID
+                                                                    identifier:@"VenmoRegisterBeacon"];
+    
+    
+    VPLRegionPromotion *registerBeaconPromotion = [[VPLRegionPromotion alloc] initWithRegion:registerRegion
+                                                                          repeatInterval:10
+                                                                             enterAction:^{
+                                                                                 NSString *title    = @"You just passed a Venmo Register";
+                                                                                 NSString *message  = @"Use your Venmo balance to pay!";
+                                                                                 UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+                                                                                 if (state == UIApplicationStateActive) {
+                                                                                     [[[UIAlertView alloc] initWithTitle:title
+                                                                                                                 message:message
+                                                                                                                delegate:nil
+                                                                                                       cancelButtonTitle:@"OK"
+                                                                                                       otherButtonTitles: nil] show];
+                                                                                 }
+                                                                                 else {
+                                                                                     UILocalNotification *notification = [[UILocalNotification alloc] init];
+                                                                                     notification.alertAction = title;
+                                                                                     notification.alertBody = message;
+                                                                                     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+                                                                                 }
+                                                                             }];
+    [promotions addObject:registerBeaconPromotion];
+    [promotions addObject:doorBeaconPromotion];
+
     [VPLPromotionsManager sharedManagerWithPromotions:[promotions copy]
                                         locationTypes:VPLLocationTypeGPSRequestPermission];
     
