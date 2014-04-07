@@ -48,10 +48,11 @@ Then start the promotions manager with an array of the created promotion(s)
 ```objc
 [VPLPromotionsManager sharedManagerWithPromotions:@[locationPromotion, regionPromotion]
                                     locationTypes:VPLLocationTypeGPSRequestPermission];
-[VPLPromotionsManager sharedManager].refreshInterval = 60 * 60; //Lookup location every hour
+[VPLPromotionsManager sharedManager].refreshInterval = 60 * 60; //Lookup location every 60 minutes
 [[VPLPromotionsManager sharedManager] startMonitoringForPromotionLocations];
  ```
-The VPLPromotionsManager is a singleton object and will display any valid location based promotions.  It checks for a valid promotion every 10 minutes.  By supplying a userdefaults key, you gurantee a user will not see a repeat promotion on subsequent launches.
+The VPLPromotionsManager is a singleton object and will display any valid location based promotions.  It checks for a valid location promotion every 60 minutes, and will trigger any valid region promotions when it enter's the promotion region. Region promotions support background notifications, while location promotions do not.
+
 ### Contributing
 
 1. Fork it
