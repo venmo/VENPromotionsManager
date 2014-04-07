@@ -14,7 +14,7 @@ VENPromotionsManager enables easy definition, management and control of in-app l
 You can install VENPromotionsManager in your project by using [CocoaPods](https://github.com/cocoapods/cocoapods):
 
 ```Ruby
-pod 'VENPromotionsManager', '~> 0.2.0'
+pod 'VENPromotionsManager', '~> 1.0.0'
 ```
 ### Usage
 
@@ -41,7 +41,7 @@ VPLRegionPromotion *regionPromotion = [[VPLRegionPromotion alloc] initWithRegion
                                                                   repeatInterval:2
                                                                     enterAction:^{
                                                                       //Implement code to launch promotion here
-                                                                 }];
+                                                                   }];
  ```
  
 Then start the promotions manager with an array of the created promotion(s)
