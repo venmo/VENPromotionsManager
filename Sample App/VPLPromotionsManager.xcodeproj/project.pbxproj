@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F17E26B18F24C72002A277E /* VPLPromotionSpecs.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F17E26A18F24C72002A277E /* VPLPromotionSpecs.m */; };
+		2F17E26D18F250E0002A277E /* VPLBeaconPromotionSpecs.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F17E26C18F250E0002A277E /* VPLBeaconPromotionSpecs.m */; };
 		3A5095C518C69A5C00C6905B /* NSString+VPLSanitiation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5095BB18C69A5C00C6905B /* NSString+VPLSanitiation.m */; };
 		3A5095C618C69A5C00C6905B /* VPLLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5095BD18C69A5C00C6905B /* VPLLocation.m */; };
 		3A5095C718C69A5C00C6905B /* VPLPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5095C018C69A5C00C6905B /* VPLPromotion.m */; };
@@ -21,7 +23,7 @@
 		3ABD12E818E12DF300AF9AC8 /* VPLBeaconPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABD12E718E12DF300AF9AC8 /* VPLBeaconPromotion.m */; };
 		3ABD12EB18E12F3B00AF9AC8 /* VPLLocationPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABD12EA18E12F3B00AF9AC8 /* VPLLocationPromotion.m */; };
 		3AF6EF0018C68DAD000AD74B /* VPLLocationSpecs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6EEFD18C68DAD000AD74B /* VPLLocationSpecs.m */; };
-		3AF6EF0218C68DAD000AD74B /* VPLPromotionSpecs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6EEFF18C68DAD000AD74B /* VPLPromotionSpecs.m */; };
+		3AF6EF0218C68DAD000AD74B /* VPLLocationPromotionSpecs.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6EEFF18C68DAD000AD74B /* VPLLocationPromotionSpecs.m */; };
 		3AF6EF1518C690D2000AD74B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6EF1118C690D2000AD74B /* main.m */; };
 		3AF6EF4118C695D1000AD74B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AF6EF3B18C695D1000AD74B /* Images.xcassets */; };
 		3AF6EF4218C695D1000AD74B /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AF6EF3C18C695D1000AD74B /* Main_iPhone.storyboard */; };
@@ -42,6 +44,8 @@
 
 /* Begin PBXFileReference section */
 		1D2D48CF2C70471A865B175B /* libPods-VPLPromotionsManagerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VPLPromotionsManagerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F17E26A18F24C72002A277E /* VPLPromotionSpecs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLPromotionSpecs.m; path = VPLPromotionsManagerTests/VPLPromotionSpecs.m; sourceTree = SOURCE_ROOT; };
+		2F17E26C18F250E0002A277E /* VPLBeaconPromotionSpecs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLBeaconPromotionSpecs.m; path = VPLPromotionsManagerTests/VPLBeaconPromotionSpecs.m; sourceTree = SOURCE_ROOT; };
 		3A5095BA18C69A5C00C6905B /* NSString+VPLSanitiation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+VPLSanitiation.h"; path = "VPLPromotionsManager/NSString+VPLSanitiation.h"; sourceTree = "<group>"; };
 		3A5095BB18C69A5C00C6905B /* NSString+VPLSanitiation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+VPLSanitiation.m"; path = "VPLPromotionsManager/NSString+VPLSanitiation.m"; sourceTree = "<group>"; };
 		3A5095BC18C69A5C00C6905B /* VPLLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPLLocation.h; path = VPLPromotionsManager/VPLLocation.h; sourceTree = "<group>"; };
@@ -64,7 +68,7 @@
 		3ABD12E918E12F3B00AF9AC8 /* VPLLocationPromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPLLocationPromotion.h; path = VPLPromotionsManager/VPLLocationPromotion.h; sourceTree = "<group>"; };
 		3ABD12EA18E12F3B00AF9AC8 /* VPLLocationPromotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLLocationPromotion.m; path = VPLPromotionsManager/VPLLocationPromotion.m; sourceTree = "<group>"; };
 		3AF6EEFD18C68DAD000AD74B /* VPLLocationSpecs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLLocationSpecs.m; path = VPLPromotionsManagerTests/VPLLocationSpecs.m; sourceTree = SOURCE_ROOT; };
-		3AF6EEFF18C68DAD000AD74B /* VPLPromotionSpecs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLPromotionSpecs.m; path = VPLPromotionsManagerTests/VPLPromotionSpecs.m; sourceTree = SOURCE_ROOT; };
+		3AF6EEFF18C68DAD000AD74B /* VPLLocationPromotionSpecs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLLocationPromotionSpecs.m; path = VPLPromotionsManagerTests/VPLLocationPromotionSpecs.m; sourceTree = SOURCE_ROOT; };
 		3AF6EF0318C68DB6000AD74B /* VPLPromotionsManagerTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "VPLPromotionsManagerTests-Info.plist"; path = "VPLPromotionsManagerTests/VPLPromotionsManagerTests-Info.plist"; sourceTree = SOURCE_ROOT; };
 		3AF6EF0418C68DB6000AD74B /* VPLPromotionsManagerTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VPLPromotionsManagerTests-Prefix.pch"; path = "VPLPromotionsManagerTests/VPLPromotionsManagerTests-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		3AF6EF1018C690D2000AD74B /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = VPLPromotionsManager/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
@@ -172,7 +176,9 @@
 			isa = PBXGroup;
 			children = (
 				3AF6EEFD18C68DAD000AD74B /* VPLLocationSpecs.m */,
-				3AF6EEFF18C68DAD000AD74B /* VPLPromotionSpecs.m */,
+				3AF6EEFF18C68DAD000AD74B /* VPLLocationPromotionSpecs.m */,
+				2F17E26A18F24C72002A277E /* VPLPromotionSpecs.m */,
+				2F17E26C18F250E0002A277E /* VPLBeaconPromotionSpecs.m */,
 				3AA8548718C624BA00F03FCF /* Supporting Files */,
 			);
 			name = VPLPromotionsManagerTests;
@@ -366,8 +372,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3AF6EF0218C68DAD000AD74B /* VPLPromotionSpecs.m in Sources */,
+				2F17E26B18F24C72002A277E /* VPLPromotionSpecs.m in Sources */,
+				3AF6EF0218C68DAD000AD74B /* VPLLocationPromotionSpecs.m in Sources */,
 				3AF6EF0018C68DAD000AD74B /* VPLLocationSpecs.m in Sources */,
+				2F17E26D18F250E0002A277E /* VPLBeaconPromotionSpecs.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

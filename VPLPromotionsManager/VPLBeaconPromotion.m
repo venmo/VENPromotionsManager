@@ -8,8 +8,10 @@
     self = [super init];
     if (self) {
         self.beaconRegion       = beaconRegion;
-        self.repeatInterval = repeatInterval;
-        self.nextFireDate = [[NSUserDefaults standardUserDefaults] objectForKey:[self nextFireDateDefaultsKey]];
+        self.identifier         = beaconRegion.identifier;
+        self.repeatInterval     = repeatInterval;
+        self.nextFireDate       = [[NSUserDefaults standardUserDefaults]
+                                   objectForKey:[self nextFireDateDefaultsKey]];
         if (self.repeatInterval == NSIntegerMax) {
             self.showOnce = YES;
         }
