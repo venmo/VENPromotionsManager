@@ -1,14 +1,14 @@
-#import "VPLBeaconPromotion.h"
+#import "VPLRegionPromotion.h"
 
-@implementation VPLBeaconPromotion
+@implementation VPLRegionPromotion
 
-- (instancetype)initWithBeaconRegion:(CLBeaconRegion *)beaconRegion
+- (instancetype)initWithRegion:(CLRegion *)region
                       repeatInterval:(NSInteger)repeatInterval
                               enterAction:(VPLPromotionAction)action {
     self = [super init];
     if (self) {
-        self.beaconRegion       = beaconRegion;
-        self.identifier         = beaconRegion.identifier;
+        self.region             = region;
+        self.identifier         = region.identifier;
         self.repeatInterval     = repeatInterval;
         self.nextFireDate       = [[NSUserDefaults standardUserDefaults]
                                    objectForKey:[self nextFireDateDefaultsKey]];
@@ -21,7 +21,7 @@
 }
 
 - (NSString *)nextFireDateDefaultsKey {
-    return [NSString stringWithFormat:@"kVPL%@NextFireDate", self.beaconRegion.identifier];
+    return [NSString stringWithFormat:@"kVPL%@NextFireDate", self.region.identifier];
 }
 
 - (BOOL)shouldTriggerOnDate:(NSDate *)date {

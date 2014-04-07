@@ -71,5 +71,4 @@
     return _endDate;
 }
 
-
 @end

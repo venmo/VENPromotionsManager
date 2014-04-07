@@ -59,5 +59,4 @@
  */
 - (BOOL)shouldTriggerOnDate:(NSDate *)date atLocation:(VPLLocation *)location;
 
-
 @end

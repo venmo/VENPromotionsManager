@@ -1,7 +1,7 @@
-#import "VPLPromotionsManager.h"
+    #import "VPLPromotionsManager.h"
 #import "VPLPromotionLocationGPSService.h"
 #import "VPLLocationPromotion.h"
-#import "VPLBeaconPromotion.h"
+#import "VPLRegionPromotion.h"
 
 #define DefaultGPSDesiredAccuracy kCLLocationAccuracyBest;
 #define DefaultGPSMinimumHorizontalAccuracy 5000;
@@ -16,7 +16,7 @@ static VPLPromotionsManager *promotionsManager = nil;
 @property (nonatomic, strong) id<VPLLocationServiceProtocol> locationService;
 @property (nonatomic, strong) VPLPromotionLocationGPSService<VPLLocationServiceProtocol> *gpsService;
 @property (nonatomic, strong) NSMutableArray *locationPromotions;
-@property (nonatomic, strong) NSMutableDictionary *beaconPromotions;
+@property (nonatomic, strong) NSMutableDictionary *regionPromotions;
 @property (nonatomic, assign) VPLLocationType types;
 @property (nonatomic, assign) VPLMultipleTriggerOnRefreshType multipleTriggerType;
 @property (nonatomic, copy) VPLGCDtimerTick promotionCheckTimerTick;
@@ -141,9 +141,7 @@ static VPLPromotionsManager *promotionsManager = nil;
 
 - (void)setPromotions:(NSArray *)promotions {
     self.locationPromotions = [[NSMutableArray alloc] init];
-    if ([CLLocationManager isMonitoringAvailableForClass:[CLBeaconRegion class]]) {
-        self.beaconPromotions = [[NSMutableDictionary alloc] init];
-    }
+    self.regionPromotions = [[NSMutableDictionary alloc] init];
     NSDate *currentDate = [NSDate date];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     for (VPLPromotion *promotion in promotions){
@@ -154,19 +152,19 @@ static VPLPromotionsManager *promotionsManager = nil;
             }
         }
     }
-    if ([self.beaconPromotions count]) {
+    if ([self.regionPromotions count]) {
         [self createGPSLocationServiceIfPossible];
         if (self.gpsService) {
             __weak VPLPromotionsManager *weakSelf = self;
             self.gpsService.regionEnteredCallback =  ^(CLRegion *region) {
                 [weakSelf triggerValidPromotionInRegion:region];
             };
-            NSArray *regionIdentifiers = [self.beaconPromotions allKeys];
+            NSArray *regionIdentifiers = [self.regionPromotions allKeys];
             for (id identifier in regionIdentifiers) {
                 if ([identifier isKindOfClass:[NSString class]]) {
-                    VPLBeaconPromotion *beaconPromotion = self.beaconPromotions[identifier];
-                    if (beaconPromotion) {
-                        [self.gpsService startMonitoringForRegion:beaconPromotion.beaconRegion];
+                    VPLRegionPromotion *regionPromotion = self.regionPromotions[identifier];
+                    if ([CLLocationManager isMonitoringAvailableForClass:[regionPromotion.region class]]) {
+                        [self.gpsService startMonitoringForRegion:regionPromotion.region];
                     }
                 }
             }
@@ -181,9 +179,9 @@ static VPLPromotionsManager *promotionsManager = nil;
     if ([promotion isKindOfClass:[VPLLocationPromotion class]]) {
         [self.locationPromotions addObject:promotion];
     }
-    else if ([promotion isKindOfClass:[VPLBeaconPromotion class]]) {
-        VPLBeaconPromotion *beaconPromotion = (VPLBeaconPromotion *)promotion;
-        [self.beaconPromotions setObject:beaconPromotion forKey:beaconPromotion.beaconRegion.identifier];
+    else if ([promotion isKindOfClass:[VPLRegionPromotion class]]) {
+        VPLRegionPromotion *regionPromotion = (VPLRegionPromotion *)promotion;
+        [self.regionPromotions setObject:regionPromotion forKey:regionPromotion.region.identifier];
     }
 }
 
@@ -195,10 +193,10 @@ static VPLPromotionsManager *promotionsManager = nil;
         }
 }
 
-#pragma mark - Beacon Methods
+#pragma mark - Region Methods
 
 - (void)triggerValidPromotionInRegion:(CLRegion *)region {
-    VPLBeaconPromotion *promotion = self.beaconPromotions[region.identifier];
+    VPLRegionPromotion *promotion = self.regionPromotions[region.identifier];
     if (promotion) {
         if ([promotion shouldTriggerOnDate:[NSDate date]]) {
             [promotion triggerPromotion];
@@ -208,7 +206,7 @@ static VPLPromotionsManager *promotionsManager = nil;
                 [[NSUserDefaults standardUserDefaults] synchronize];
             }
             if (promotion.repeatInterval == NSIntegerMax || showOnceUserDefaultsKey) {
-                [self.beaconPromotions removeObjectForKey:region.identifier];
+                [self.regionPromotions removeObjectForKey:region.identifier];
                 [self.gpsService stopMonitoringForRegion:region];
                 
             }

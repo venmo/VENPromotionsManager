@@ -18,27 +18,37 @@ pod 'VENPromotionsManager', '~> 0.2.0'
 ```
 ### Usage
 
-First create one (or more) promotion(s)
+First create one (or more) promotion(s). Promotions can be either region based (using beacons or geofencing) or location based which require periodic location lookups.
 ```objc
+
+//Location Promotion
 CLLocation *appleHQLocation = [[CLLocation alloc] initWithLatitude:37.3318 longitude:-122.0312];
 
-VPLPromotion *promotion1 = [[VPLPromotion alloc] initWithCenter:appleHQLocation
-                                                          range:3000 //in meters
-                                                      startDate:[NSDate distantPast]
-                                                        endDate:[NSDate distantFuture]
-                                        showOnceUserDefaultsKey:kUserDefaultsKey //userDefaultsKey to persist trigger history
-                                                         action:^{
-                                                                 //Implement code to launch promotion here
-                                                             }];
+VPLLocationPromotion *locationPromotion = [[VPLLocationPromotion alloc] initWithCenter:appleHQLocation
+                                                                                 range:3000
+                                                                      uniqueIdentifier:userDefaultsKey
+                                                                                action:^{
+                                                                                    //Implement code to launch promotion here
+                                                                                }];
+
+//Beacon based Region Promotion
+NSUUID *estimoteUUID = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
+CLBeaconRegion *doorRegion = [[CLBeaconRegion alloc] initWithProximityUUID:estimoteUUID
+                                                                    identifier:@"VenmoEntrancePromotion"];
+
+VPLRegionPromotion *regionPromotion = [[VPLRegionPromotion alloc] initWithRegion:doorRegion
+                                                                  repeatInterval:2
+                                                                    enterAction:^{
+                                                                      //Implement code to launch promotion here
+                                                                 }];
  ```
  
 Then start the promotions manager with an array of the created promotion(s)
 ```objc
-[VPLPromotionsManager startWithPromotions:@[promotion1,promotion2,promotion3]
-                            locationTypes:VPLLocationTypeGPSRequestPermission
-                          locationService:nil //custom location service. use nil if you plan to use the included CLLocationManger.
-                      withRefreshInterval:600 //in seconds
-                  withMultipleTriggerType:VPLMultipleTriggerOnRefreshTypeTriggerOnce];
+[VPLPromotionsManager sharedManagerWithPromotions:@[locationPromotion, regionPromotion]
+                                    locationTypes:VPLLocationTypeGPSRequestPermission];
+[VPLPromotionsManager sharedManager].refreshInterval = 60 * 60; //Lookup location every hour
+[[VPLPromotionsManager sharedManager] startMonitoringForPromotionLocations];
  ```
 The VPLPromotionsManager is a singleton object and will display any valid location based promotions.  It checks for a valid promotion every 10 minutes.  By supplying a userdefaults key, you gurantee a user will not see a repeat promotion on subsequent launches.
 ### Contributing

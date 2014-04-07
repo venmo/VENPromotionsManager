@@ -13,5 +13,4 @@
 
 - (void)stopMonitoringForRegion:(CLRegion *)region;
 
-
 @end

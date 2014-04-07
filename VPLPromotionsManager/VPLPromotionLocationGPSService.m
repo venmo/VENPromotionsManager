@@ -1,6 +1,6 @@
 #import "VPLPromotionLocationGPSService.h"
 #import <CoreLocation/CoreLocation.h>
-#import "VPLBeaconPromotion.h"
+#import "VPLRegionPromotion.h"
 
 @interface VPLPromotionLocationGPSService () <CLLocationManagerDelegate>
 
@@ -55,14 +55,14 @@
 }
 
 
-#pragma mark - Beacon Methods
+#pragma mark - Region Methods
 
 - (void)startMonitoringForRegion:(CLRegion *)region {
     NSSet *monitoredRegions = [self.locationManager monitoredRegions];
     if (![monitoredRegions containsObject:region]) {
         [self.locationManager startMonitoringForRegion:region];
     }
-    [self.locationManager requestStateForRegion:(CLBeaconRegion *)region];
+    [self.locationManager requestStateForRegion:region];
 }
 
 
