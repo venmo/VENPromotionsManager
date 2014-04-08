@@ -6,6 +6,12 @@
 
 static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
 
+@interface VPLViewController ()
+
+@property (nonatomic, strong) VPLPromotionsManager *promotionsManager;
+
+@end
+
 @implementation VPLViewController
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -28,44 +34,45 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
     NSUUID *estimoteUUID = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
     CLBeaconRegion *doorRegion = [[CLBeaconRegion alloc] initWithProximityUUID:estimoteUUID
                                                                     identifier:@"VenmoEntrancePromotion"];
+    VPLPromotionAction doorEnterAction = ^{
+        NSString *title    = @"Welcome to Venmo!";
+        NSString *message  = @"You've just stepped into the world's most innovative office";
+        UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+        if (state == UIApplicationStateActive) {
+            [[[UIAlertView alloc] initWithTitle:title
+                                        message:message
+                                       delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles: nil] show];
+        }
+        else {
+            UILocalNotification *notification = [[UILocalNotification alloc] init];
+            notification.alertAction = title;
+            notification.alertBody = message;
+            [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+        }
+    };
+
     VPLRegionPromotion *doorBeaconPromotion = [[VPLRegionPromotion alloc] initWithRegion:doorRegion
                                                                                 repeatInterval:2
-                                                                                   enterAction:^{
-                                                                                       NSString *title    = @"Welcome to Venmo!";
-                                                                                       NSString *message  = @"You've just stepped into the world's most innovative office";
-                                                                                       UIApplicationState state = [[UIApplication sharedApplication] applicationState];
-                                                                                       if (state == UIApplicationStateActive) {
-                                                                                           [[[UIAlertView alloc] initWithTitle:title
-                                                                                                                       message:message
-                                                                                                                      delegate:nil
-                                                                                                             cancelButtonTitle:@"OK"
-                                                                                                             otherButtonTitles: nil] show];
-                                                                                       }
-                                                                                       else {
-                                                                                           UILocalNotification *notification = [[UILocalNotification alloc] init];
-                                                                                           notification.alertAction = title;
-                                                                                           notification.alertBody = message;
-                                                                                           [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-                                                                                       }
-                                                                                   }];
+                                                                                   enterAction:doorEnterAction];
 
     [promotions addObject:doorBeaconPromotion];
-
-//    [VPLPromotionsManager sharedManagerWithPromotions:[promotions copy]
-//                                        locationTypes:VPLLocationTypeGPSRequestPermission];
-//    
-//    [VPLPromotionsManager sharedManager].refreshInterval = 2;
-//    [[VPLPromotionsManager sharedManager] startMonitoringForPromotionLocations];
+    
+    self.promotionsManager = [[VPLPromotionsManager alloc] initWithPromotions:[promotions copy]
+                                                       shouldRequestGPSAccess:YES];
+    self.promotionsManager.refreshInterval = 2;
+    [self.promotionsManager startMonitoringForPromotionLocations];
 }
 
 
 - (IBAction)startStopClicked:(id)sender {
-//    if ([VPLPromotionsManager sharedManager].isRunning) {
-//        [[VPLPromotionsManager sharedManager] stopMonitoringForPromotionLocations];
-//    }
-//    else {
-//        [[VPLPromotionsManager sharedManager] startMonitoringForPromotionLocations];
-//    }
+    if (self.promotionsManager.isRunning) {
+        [self.promotionsManager stopMonitoringForPromotionLocations];
+    }
+    else {
+        [self.promotionsManager startMonitoringForPromotionLocations];
+    }
 }
 
 @end

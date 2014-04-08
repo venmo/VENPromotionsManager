@@ -13,11 +13,10 @@ static VPLPromotionsManager *promotionsManager = nil;
 
 @interface VPLPromotionsManager()
 
-@property (nonatomic, strong) id<VPLLocationServiceProtocol> locationService;
 @property (nonatomic, strong) VPLPromotionLocationGPSService<VPLLocationServiceProtocol> *gpsService;
+@property (nonatomic, assign) BOOL shouldRequestGPSAccess;
 @property (nonatomic, strong) NSMutableArray *locationPromotions;
 @property (nonatomic, strong) NSMutableDictionary *regionPromotions;
-@property (nonatomic, assign) VPLLocationType types;
 @property (nonatomic, assign) VPLMultipleTriggerOnRefreshType multipleTriggerType;
 @property (nonatomic, copy) VPLGCDtimerTick promotionCheckTimerTick;
 @property (nonatomic, assign) CLLocationAccuracy gpsDesiredLocationAccuracy;
@@ -29,15 +28,14 @@ static VPLPromotionsManager *promotionsManager = nil;
 
 
 - (instancetype)initWithPromotions:(NSArray *)promotions
-                     locationTypes:(VPLLocationType)types {
+            shouldRequestGPSAccess:(BOOL)shouldRequestGPSAccess {
     self = [super init];
     if (self){
-        self.types = types;
-        promotionsManager.refreshInterval = 60 * 60 * 24; //24 hours
-        self.gpsDesiredLocationAccuracy = DefaultGPSDesiredAccuracy;
-        self.gpsMinimumHorizontalAccuracy = DefaultGPSMinimumHorizontalAccuracy;
+        promotionsManager.refreshInterval   = 60;
+        self.gpsDesiredLocationAccuracy     = DefaultGPSDesiredAccuracy;
+        self.gpsMinimumHorizontalAccuracy   = DefaultGPSMinimumHorizontalAccuracy;
+        self.shouldRequestGPSAccess         = shouldRequestGPSAccess;
         [self setPromotions:promotions];
-
     }
     return self;
 }
@@ -76,7 +74,7 @@ static VPLPromotionsManager *promotionsManager = nil;
         if (!self.gpsService) {
             [self createGPSLocationServiceIfPossible];
         }
-        id<VPLLocationServiceProtocol> currentService = self.gpsService ? self.gpsService : self.locationService;
+        id<VPLLocationServiceProtocol> currentService = self.gpsService ? self.gpsService : self.locationFetchServer;
         NSDate *now = [NSDate date];
         NSMutableArray *currentTimeValidPromotions = [[NSMutableArray alloc] init];
         for (VPLPromotion *promotion in self.locationPromotions) {
@@ -173,9 +171,7 @@ static VPLPromotionsManager *promotionsManager = nil;
 }
 
 - (void)createGPSLocationServiceIfPossible{
-    if ((self.types & VPLLocationTypeGPSRequestPermission)
-        || (self.types & VPLLocationTypeGPSIfPermissionGranted
-            && [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)) {
+    if (self.shouldRequestGPSAccess || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
             self.gpsService = [[VPLPromotionLocationGPSService alloc] initWithLocationAccuracy:self.gpsDesiredLocationAccuracy minimumHorizontalAccuracy:self.gpsMinimumHorizontalAccuracy];
         }
 }
