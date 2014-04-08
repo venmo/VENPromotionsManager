@@ -7,7 +7,7 @@
 @property (copy) void(^regionEnteredCallback)(CLRegion *region);
 
 - (id)initWithLocationAccuracy:(CLLocationAccuracy)accuracy
-  minimumHorizontalAccuracy:(float)horizontalAccuracy;
+     minimumHorizontalAccuracy:(float)horizontalAccuracy;
 
 - (void)startMonitoringForRegion:(CLRegion *)region;
 

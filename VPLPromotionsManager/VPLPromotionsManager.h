@@ -31,22 +31,6 @@ typedef NS_OPTIONS(NSUInteger, VPLLocationType) {
 
 
 /**
- Creates and starts a Promotion Manager singleton object.
- @param promotions promotions array of VPLPromotion objects in order of fire priority.
- @param types the type of location services that should be used in order to fire the promotion. This must be VPLLocationTypeGPSIfPermissionGranted or VPLLocationTypeGPSRequestPermission for region promotions to trigger.
- @return An `VPLPromotionsManager` singleton object
- */
-+ (instancetype)sharedManagerWithPromotions:(NSArray *)promotions
-                      locationTypes:(VPLLocationType)types;
-
-
-/**
- A reference to the shared instance of the Promotion Manager. This should be called each time after and only after startWithPromotions: is called.
- */
-+ (instancetype)sharedManager;
-
-
-/**
  Creates a promotion object instance. If you are creating a singleton object use startWithPromotions: instead.
  @param promotions promotions array of VPLPromotion objects in order of fire priority.
  @param types the type of location services that should be used in order to fire the promotion

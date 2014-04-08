@@ -27,8 +27,6 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
     
     NSUUID *estimoteUUID = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
     CLBeaconRegion *doorRegion = [[CLBeaconRegion alloc] initWithProximityUUID:estimoteUUID
-                                                                         major:12622
-                                                                         minor:33881
                                                                     identifier:@"VenmoEntrancePromotion"];
     VPLRegionPromotion *doorBeaconPromotion = [[VPLRegionPromotion alloc] initWithRegion:doorRegion
                                                                                 repeatInterval:2
@@ -53,21 +51,21 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
 
     [promotions addObject:doorBeaconPromotion];
 
-    [VPLPromotionsManager sharedManagerWithPromotions:[promotions copy]
-                                        locationTypes:VPLLocationTypeGPSRequestPermission];
-    
-    [VPLPromotionsManager sharedManager].refreshInterval = 2;
-    [[VPLPromotionsManager sharedManager] startMonitoringForPromotionLocations];
+//    [VPLPromotionsManager sharedManagerWithPromotions:[promotions copy]
+//                                        locationTypes:VPLLocationTypeGPSRequestPermission];
+//    
+//    [VPLPromotionsManager sharedManager].refreshInterval = 2;
+//    [[VPLPromotionsManager sharedManager] startMonitoringForPromotionLocations];
 }
 
 
 - (IBAction)startStopClicked:(id)sender {
-    if ([VPLPromotionsManager sharedManager].isRunning) {
-        [[VPLPromotionsManager sharedManager] stopMonitoringForPromotionLocations];
-    }
-    else {
-        [[VPLPromotionsManager sharedManager] startMonitoringForPromotionLocations];
-    }
+//    if ([VPLPromotionsManager sharedManager].isRunning) {
+//        [[VPLPromotionsManager sharedManager] stopMonitoringForPromotionLocations];
+//    }
+//    else {
+//        [[VPLPromotionsManager sharedManager] startMonitoringForPromotionLocations];
+//    }
 }
 
 @end

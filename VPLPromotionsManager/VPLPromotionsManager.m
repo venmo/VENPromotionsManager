@@ -27,27 +27,6 @@ static VPLPromotionsManager *promotionsManager = nil;
 
 @implementation VPLPromotionsManager
 
-+ (instancetype)sharedManagerWithPromotions:(NSArray *)promotions
-                              locationTypes:(VPLLocationType)types {
-    
-    static dispatch_once_t promotionManagerCreationToken = 0;
-    dispatch_once(&promotionManagerCreationToken, ^{
-        promotionsManager = [[self alloc] initWithPromotions:promotions
-                                               locationTypes:types];
-    });
-    return promotionsManager;
-}
-
-
-+ (instancetype)sharedManager {
-    return promotionsManager;
-}
-
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 
 - (instancetype)initWithPromotions:(NSArray *)promotions
                      locationTypes:(VPLLocationType)types {
@@ -108,11 +87,15 @@ static VPLPromotionsManager *promotionsManager = nil;
         if (currentService && [currentTimeValidPromotions count]) {
             __weak VPLPromotionsManager *weakSelf = self;
             [currentService requestCurrentLocationWithCompletion:^(VPLLocation *currentLocation, NSError *error) {
+                VPLPromotionsManager *strongSelf = weakSelf;
+                if (!strongSelf) {
+                    return;
+                }
                 if (!error){
                     for (VPLLocationPromotion *timeValidPromotion in currentTimeValidPromotions) {
                         if ([timeValidPromotion shouldTriggerOnDate:now atLocation:currentLocation]) {
                             [timeValidPromotion triggerPromotion];
-                            [weakSelf.locationPromotions removeObject:timeValidPromotion];
+                            [strongSelf.locationPromotions removeObject:timeValidPromotion];
                             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
                             NSString *showOnceUserDefaultsKey = [timeValidPromotion showOnceUserDefaultsKey];
                             if (showOnceUserDefaultsKey) {
@@ -120,15 +103,15 @@ static VPLPromotionsManager *promotionsManager = nil;
                                 [userDefaults synchronize];
                             }
                             else {
-                                [weakSelf.locationPromotions addObject:timeValidPromotion];
+                                [strongSelf.locationPromotions addObject:timeValidPromotion];
                             }
-                            if (self.multipleTriggerType == VPLMultipleTriggerOnRefreshTypeTriggerOnce) {
+                            if (strongSelf.multipleTriggerType == VPLMultipleTriggerOnRefreshTypeTriggerOnce) {
                                 break;
                             }
                         }
                     }
-                    if (![weakSelf.locationPromotions count]) {
-                        [self stopMonitoringForPromotionLocations];
+                    if (![strongSelf.locationPromotions count]) {
+                        [strongSelf stopMonitoringForPromotionLocations];
                     }
                 }
             }];
@@ -157,7 +140,11 @@ static VPLPromotionsManager *promotionsManager = nil;
         if (self.gpsService) {
             __weak VPLPromotionsManager *weakSelf = self;
             self.gpsService.regionEnteredCallback =  ^(CLRegion *region) {
-                [weakSelf triggerValidPromotionInRegion:region];
+                VPLPromotionsManager *strongSelf = weakSelf;
+                if (!strongSelf) {
+                    return;
+                }
+                [strongSelf triggerValidPromotionInRegion:region];
             };
             NSArray *regionIdentifiers = [self.regionPromotions allKeys];
             for (id identifier in regionIdentifiers) {
