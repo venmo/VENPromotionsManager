@@ -16,17 +16,14 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    CLLocation *appleHQLocation = [[CLLocation alloc] initWithLatitude:37.3318
-                                                             longitude:-122.0312];
     NSMutableArray *promotions = [[NSMutableArray alloc] init];
     for (NSInteger i=0; i<15; i++) {
         NSString *userDefaultsKey = [NSString stringWithFormat:@"%@%ld", kVENPromotionAppleKey,(long)i];
-        VPLLocationPromotion *promotion = [[VPLLocationPromotion alloc] initWithCenter:appleHQLocation
-                                                                                 range:3000
-                                                                      uniqueIdentifier:userDefaultsKey
-                                                                                action:^{
-                                                                                    NSLog(@"Promotion Number %ld Fired",(long)(i+1));
-                                                                                }];
+        
+        VPLLocationPromotion *promotion = [[VPLLocationPromotion alloc] initWithCity:@"Cupertino" state:@"CA" country:@"United States" uniqueIdentifier:userDefaultsKey action:^{
+            NSLog(@"Promotion Number %ld Fired",(long)(i+1));
+        }];
+                                                                                
         promotion.showOnce = YES;
         [promotions addObject:promotion];
     }
@@ -56,7 +53,6 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
     VPLRegionPromotion *doorBeaconPromotion = [[VPLRegionPromotion alloc] initWithRegion:doorRegion
                                                                                 repeatInterval:2
                                                                                    enterAction:doorEnterAction];
-
     [promotions addObject:doorBeaconPromotion];
     
     self.promotionsManager = [[VPLPromotionsManager alloc] initWithPromotions:[promotions copy]

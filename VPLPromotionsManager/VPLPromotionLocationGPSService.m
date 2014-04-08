@@ -5,6 +5,7 @@
 @interface VPLPromotionLocationGPSService () <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic, strong) CLGeocoder *geocoder;
 @property (copy) void(^locationFoundCallback)(VPLLocation *location, NSError *error);
 @property (nonatomic, assign) float gpsMinimumHorizontalAccuracy;
 @property (nonatomic, strong) NSMutableArray *pausedRegions;
@@ -23,6 +24,7 @@
         self.locationManager.desiredAccuracy = accuracy;
         self.locationManager.delegate = self;
         self.gpsMinimumHorizontalAccuracy = horizontalAccuracy;
+        self.geocoder = [[CLGeocoder alloc] init];
     }
     return self;
 }
@@ -38,11 +40,19 @@
     CLLocation *myCurrentLocation = [locations lastObject];
     if(myCurrentLocation.horizontalAccuracy <= self.gpsMinimumHorizontalAccuracy) {
         [self.locationManager stopUpdatingLocation];
-        VPLLocation *currentVPLLocation = [[VPLLocation alloc] initWithLocation:myCurrentLocation];
         if (self.locationFoundCallback) {
-            self.locationFoundCallback(currentVPLLocation,nil);
+            [self.geocoder reverseGeocodeLocation:myCurrentLocation completionHandler:^(NSArray *placemarks, NSError *error) {
+                if (!error) {
+                    CLPlacemark *placemark = [placemarks lastObject];
+                    NSDictionary *locationDictionary = @{VPLLocationCityKey     : placemark.locality,
+                                                         VPLLocationStateKey    : placemark.administrativeArea,
+                                                         VPLLocationCountryKey  : placemark.country};
+                    VPLLocation *currentVPLLocation = [[VPLLocation alloc] initWithLocationDictionary:locationDictionary];
+                    self.locationFoundCallback(currentVPLLocation,nil);
+                    self.locationFoundCallback = nil;
+                }
+            }];
         }
-        self.locationFoundCallback = nil;
     }
 }
 

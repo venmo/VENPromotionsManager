@@ -17,21 +17,6 @@ describe(@"Initialization", ^{
         expect([location isValid]).to.equal(YES);
     });
     
-    it(@"should consider an object with a CLLocation valid", ^{
-        VPLLocation *location = [[VPLLocation alloc] init];
-        location.absoluteLocation = [[CLLocation alloc] initWithLatitude:0 longitude:0];
-        expect([location isValid]).to.equal(YES);
-    });
-
-    it(@"should consider an object with a city, state, country and a CLLocation valid", ^{
-        VPLLocation *location = [[VPLLocation alloc] init];
-        location.city = @"Houston";
-        location.state = @"TX";
-        location.country = @"USA";
-        location.absoluteLocation = [[CLLocation alloc] initWithLatitude:0 longitude:0];
-        expect([location isValid]).to.equal(YES);
-    });
-    
     it(@"should consider an object with partial city, state, country data invalid", ^{
         VPLLocation *locationCityOnly = [[VPLLocation alloc] init];
         locationCityOnly.city = @"Houston";

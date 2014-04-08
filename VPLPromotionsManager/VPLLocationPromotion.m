@@ -19,23 +19,10 @@
 }
 
 
-- (instancetype)initWithCenter:(CLLocation *)centerLocation
-                         range:(NSUInteger)range
-              uniqueIdentifier:(NSString *)identifier
-                        action:(VPLPromotionAction)action {
-    self = [super init];
-    if (self) {
-        self.centerLocation = centerLocation;
-        self.range          = range;
-        self.identifier = identifier;
-        self.action     = action;
-    }
-    return self;
-}
-
 - (NSString *)nextFireDateDefaultsKey {
     return [NSString stringWithFormat:@"kVPL%@NextFireDate", self.identifier];
 }
+
 
 - (BOOL)shouldTriggerOnDate:(NSDate *)date atLocation:(VPLLocation *)location {
     if (![location isValid]) {
@@ -60,12 +47,6 @@
             return NO;
         }
         return YES;
-    }
-    else if (location.absoluteLocation && self.centerLocation) {
-        CLLocationDistance distance = ABS([self.centerLocation distanceFromLocation:location.absoluteLocation]);
-        if (distance < self.range) {
-            return YES;
-        }
     }
     return NO;
 }
