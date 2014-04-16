@@ -48,7 +48,9 @@
                                                          VPLLocationStateKey    : placemark.administrativeArea,
                                                          VPLLocationCountryKey  : placemark.country};
                     VPLLocation *currentVPLLocation = [[VPLLocation alloc] initWithLocationDictionary:locationDictionary];
-                    self.locationFoundCallback(currentVPLLocation,nil);
+                    if (self.locationFoundCallback) {
+                        self.locationFoundCallback(currentVPLLocation,nil);
+                    }
                     self.locationFoundCallback = nil;
                 }
             }];

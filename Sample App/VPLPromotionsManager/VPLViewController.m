@@ -20,9 +20,12 @@ static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
     for (NSInteger i=0; i<15; i++) {
         NSString *userDefaultsKey = [NSString stringWithFormat:@"%@%ld", kVENPromotionAppleKey,(long)i];
         
-        VPLLocationPromotion *promotion = [[VPLLocationPromotion alloc] initWithCity:@"Cupertino" state:@"CA" country:@"United States" uniqueIdentifier:userDefaultsKey action:^{
-            NSLog(@"Promotion Number %ld Fired",(long)(i+1));
-        }];
+        VPLLocationPromotion *promotion = [[VPLLocationPromotion alloc] initWithCity:@"Cupertino"
+                                                                               state:@"CA"
+                                                                             country:@"United States"
+                                                                    uniqueIdentifier:userDefaultsKey action:^{
+                                                                        NSLog(@"Promotion Number %ld Fired",(long)(i+1));
+                                                                    }];
                                                                                 
         promotion.showOnce = YES;
         [promotions addObject:promotion];

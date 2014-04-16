@@ -22,15 +22,12 @@ First create one (or more) promotion(s). Promotions can be either region based (
 ```objc
 
 //Location Promotion
-CLLocation *appleHQLocation = [[CLLocation alloc] initWithLatitude:37.3318
-                                                         longitude:-122.0312];
-
-VPLLocationPromotion *locationPromotion = [[VPLLocationPromotion alloc] initWithCenter:appleHQLocation
-                                                                                 range:3000
-                                                                      uniqueIdentifier:userDefaultsKey
-                                                                                action:^{
-                                                                                    //Implement code to launch promotion here
-                                                                                }];
+VPLLocationPromotion *locationPromotion = [[VPLLocationPromotion alloc] initWithCity:@"Cupertino"
+                                                                       state:@"CA"
+                                                                     country:@"United States"
+                                                            uniqueIdentifier:userDefaultsKey action:^{
+                                                                NSLog(@"Promotion Number %ld Fired",(long)(i+1));
+                                                            }];
 
 //Beacon based Region Promotion
 NSUUID *estimoteUUID = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
@@ -44,16 +41,21 @@ VPLRegionPromotion *regionPromotion = [[VPLRegionPromotion alloc] initWithRegion
                                                                    }];
  ```
  
-Then start the promotions manager with an array of the created promotion(s)
+Then init the promotions manager with an array of the created promotion(s)
 ```objc
-[VPLPromotionsManager sharedManagerWithPromotions:@[locationPromotion, regionPromotion]
-                                    locationTypes:VPLLocationTypeGPSRequestPermission];
-[VPLPromotionsManager sharedManager].refreshInterval = 60 * 60; //Lookup location every 60 minutes
-[[VPLPromotionsManager sharedManager] startMonitoringForPromotionLocations];
+self.promotionsManager = [[VPLPromotionsManager alloc] initWithPromotions:@[locationPromotion, regionPromotion]
+                                                   shouldRequestGPSAccess:YES];
+self.promotionsManager.refreshInterval = 60 * 60; //Lookup location every 60 minutes
+[self.promotionsManager startMonitoringForPromotionLocations];
  ```
-The VPLPromotionsManager is a singleton object and will display any valid location based promotions.  It checks for a valid location promotion every 60 minutes, and will trigger any valid region promotions when it enter's the promotion region. Region promotions support background notifications, while location promotions do not.
+
+In this example, the VPLPromotionsManager instance will perform a location lookup and trigger any valid location promotion every 60 minutes and will trigger any valid region promotions whenever it enters the promotion's region. Region promotions support background notifications, while location promotions do not.
 
 ### Contributing
+
+We'd love to see your ideas for improving VENPromotionsManager! The best way to contribute is by submitting a pull request. We'll do our best to respond to your patch as soon as possible. You can also submit a new Github issue if you find bugs or have questions. 
+
+Please make sure to follow our general coding style and add test coverage for new features!
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
