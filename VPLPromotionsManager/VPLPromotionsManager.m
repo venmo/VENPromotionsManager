@@ -1,7 +1,5 @@
-    #import "VPLPromotionsManager.h"
+#import "VPLPromotionsManager.h"
 #import "VPLPromotionLocationGPSService.h"
-#import "VPLLocationPromotion.h"
-#import "VPLRegionPromotion.h"
 
 #define DefaultGPSDesiredAccuracy kCLLocationAccuracyBest;
 #define DefaultGPSMinimumHorizontalAccuracy 5000;

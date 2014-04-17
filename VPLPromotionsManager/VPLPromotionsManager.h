@@ -1,7 +1,8 @@
 #import <Foundation/Foundation.h>
 #import "VPLLocationServiceProtocol.h"
 #import "NSString+VPLSanitiation.h"
-#import "VPLPromotion.h"
+#import "VPLLocationPromotion.h"
+#import "VPLRegionPromotion.h"
 #import "VPLLocation.h"
 
 /**
