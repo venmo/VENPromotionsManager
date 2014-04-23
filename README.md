@@ -3,7 +3,7 @@
 VENPromotionsManager enables easy definition, management and control of in-app location based promotions including the following:
 - Define promotion action events along with trigger locations and valid date intervals
 - Fire promotions on entering a geographic region or a region created by Bluetooh LE beacons, even if the app is not yet launched or is backgrounded
-- Check for location based promotions on a background timer (optional)
+- Schedule location updates on a repeating timer that runs on a background queue (optional)
 - Use an included location service built on a CLLocationManager or a custom location service
 
 ### Demo
