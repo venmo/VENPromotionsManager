@@ -270,7 +270,7 @@
 					3AA8545A18C624BA00F03FCF = {
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
