@@ -11,14 +11,12 @@ static VPLPromotionsManager *promotionsManager = nil;
 
 @interface VPLPromotionsManager()
 
-@property (nonatomic, strong) id<VPLLocationServiceProtocol> locationService;
 @property (nonatomic, strong) VPLPromotionLocationGPSService<VPLLocationServiceProtocol> *gpsService;
-@property (nonatomic, assign) NSUInteger refreshInterval;
-@property (nonatomic, strong) NSMutableArray *promotions;
-@property (nonatomic, assign) VPLLocationType types;
+@property (nonatomic, assign) BOOL shouldRequestGPSAccess;
+@property (nonatomic, strong) NSMutableArray *locationPromotions;
+@property (nonatomic, strong) NSMutableDictionary *regionPromotions;
 @property (nonatomic, assign) VPLMultipleTriggerOnRefreshType multipleTriggerType;
 @property (nonatomic, copy) VPLGCDtimerTick promotionCheckTimerTick;
-
 @property (nonatomic, assign) CLLocationAccuracy gpsDesiredLocationAccuracy;
 @property (nonatomic, assign) CGFloat gpsMinimumHorizontalAccuracy;
 
@@ -27,49 +25,15 @@ static VPLPromotionsManager *promotionsManager = nil;
 @implementation VPLPromotionsManager
 
 
-+ (instancetype)startWithPromotions:(NSArray *)promotions
-                                locationTypes:(VPLLocationType)types
-                              locationService:(id<VPLLocationServiceProtocol>)locationService
-                          withRefreshInterval:(NSUInteger)seconds
-                      withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType {
-    
-    static dispatch_once_t promotionManagerCreationToken = 0;
-    dispatch_once(&promotionManagerCreationToken, ^{
-        promotionsManager = [[self alloc] initWithPromotions:promotions
-                                               locationTypes:types
-                                             locationService:locationService
-                                         withRefreshInterval:seconds
-                                     withMultipleTriggerType:multipleTriggerType];
-        [promotionsManager startMonitoringForPromotionLocations];
-    });
-    return promotionsManager;
-}
-
-
-+ (instancetype)sharedManager {
-    return promotionsManager;
-}
-
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-
 - (instancetype)initWithPromotions:(NSArray *)promotions
-                     locationTypes:(VPLLocationType)types
-                   locationService:(id<VPLLocationServiceProtocol>)locationService
-               withRefreshInterval:(NSUInteger)seconds
-           withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType {
+            shouldRequestGPSAccess:(BOOL)shouldRequestGPSAccess {
     self = [super init];
     if (self){
-        self.promotions = [promotions mutableCopy];
-        self.types = types;
-        self.locationService = locationService;
-        self.refreshInterval = seconds;
-        self.multipleTriggerType = multipleTriggerType;
-        self.gpsDesiredLocationAccuracy = DefaultGPSDesiredAccuracy;
-        self.gpsMinimumHorizontalAccuracy = DefaultGPSMinimumHorizontalAccuracy;
+        promotionsManager.refreshInterval   = 60;
+        self.gpsDesiredLocationAccuracy     = DefaultGPSDesiredAccuracy;
+        self.gpsMinimumHorizontalAccuracy   = DefaultGPSMinimumHorizontalAccuracy;
+        self.shouldRequestGPSAccess         = shouldRequestGPSAccess;
+        [self setPromotions:promotions];
     }
     return self;
 }
@@ -104,20 +68,14 @@ static VPLPromotionsManager *promotionsManager = nil;
 
 
 - (void)checkForLocationBasedPromotions {
-    if ([self.promotions count]) {
+    if ([self.locationPromotions count]) {
         if (!self.gpsService) {
-            if ((self.types & VPLLocationTypeGPSRequestPermission)
-                || (self.types & VPLLocationTypeGPSIfPermissionGranted
-                    && [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)) {
-                    
-                    self.gpsService = [[VPLPromotionLocationGPSService alloc] initWithLocationAccuracy:self.gpsDesiredLocationAccuracy andMinimumHorizontalAccuracy:self.gpsMinimumHorizontalAccuracy];
-
-                }
+            [self createGPSLocationServiceIfPossible];
         }
-        id<VPLLocationServiceProtocol> currentService = self.gpsService ? self.gpsService : self.locationService;
+        id<VPLLocationServiceProtocol> currentService = self.gpsService ? self.gpsService : self.locationFetchServer;
         NSDate *now = [NSDate date];
         NSMutableArray *currentTimeValidPromotions = [[NSMutableArray alloc] init];
-        for (VPLPromotion *promotion in self.promotions) {
+        for (VPLPromotion *promotion in self.locationPromotions) {
             if ([promotion shouldTriggerOnDate:now]) {
                 [currentTimeValidPromotions addObject:promotion];
             }
@@ -125,24 +83,31 @@ static VPLPromotionsManager *promotionsManager = nil;
         if (currentService && [currentTimeValidPromotions count]) {
             __weak VPLPromotionsManager *weakSelf = self;
             [currentService requestCurrentLocationWithCompletion:^(VPLLocation *currentLocation, NSError *error) {
+                VPLPromotionsManager *strongSelf = weakSelf;
+                if (!strongSelf) {
+                    return;
+                }
                 if (!error){
-                    for (VPLPromotion *timeValidPromotion in currentTimeValidPromotions) {
+                    for (VPLLocationPromotion *timeValidPromotion in currentTimeValidPromotions) {
                         if ([timeValidPromotion shouldTriggerOnDate:now atLocation:currentLocation]) {
                             [timeValidPromotion triggerPromotion];
+                            [strongSelf.locationPromotions removeObject:timeValidPromotion];
                             NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-                            NSString *showOnceUserDefaultsKey = timeValidPromotion.showOnceUserDefaultsKey;
-                            if (timeValidPromotion.showOnceUserDefaultsKey) {
+                            NSString *showOnceUserDefaultsKey = [timeValidPromotion showOnceUserDefaultsKey];
+                            if (showOnceUserDefaultsKey) {
                                 [userDefaults setBool:YES forKey:showOnceUserDefaultsKey];
                                 [userDefaults synchronize];
                             }
-                            [weakSelf.promotions removeObject:timeValidPromotion];
-                            if (self.multipleTriggerType == VPLMultipleTriggerOnRefreshTypeTriggerOnce) {
+                            else {
+                                [strongSelf.locationPromotions addObject:timeValidPromotion];
+                            }
+                            if (strongSelf.multipleTriggerType == VPLMultipleTriggerOnRefreshTypeTriggerOnce) {
                                 break;
                             }
                         }
                     }
-                    if (![weakSelf.promotions count]) {
-                        [self stopMonitoringForPromotionLocations];
+                    if (![strongSelf.locationPromotions count]) {
+                        [strongSelf stopMonitoringForPromotionLocations];
                     }
                 }
             }];
@@ -153,17 +118,78 @@ static VPLPromotionsManager *promotionsManager = nil;
 
 #pragma mark - Setters
 
-- (void)setPromotions:(NSMutableArray *)promotions {
-    _promotions = [[NSMutableArray alloc] init];
+- (void)setPromotions:(NSArray *)promotions {
+    self.locationPromotions = [[NSMutableArray alloc] init];
+    self.regionPromotions = [[NSMutableDictionary alloc] init];
+    NSDate *currentDate = [NSDate date];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     for (VPLPromotion *promotion in promotions){
-        NSString *showOnceUserDefaultsKey = promotion.showOnceUserDefaultsKey;
-        if(!showOnceUserDefaultsKey) {
-            [_promotions addObject:promotion];
+        if ([promotion canTriggerInFutureForCurrentDate:currentDate]) {
+            NSString *showOnceUserDefaultsKey = [promotion showOnceUserDefaultsKey];
+            if(!showOnceUserDefaultsKey ||![userDefaults boolForKey:showOnceUserDefaultsKey]) {
+                [self queuePromotion:promotion];
+            }
         }
-        else {
-            if (![userDefaults boolForKey:showOnceUserDefaultsKey]) {
-                [_promotions addObject:promotion];
+    }
+    if ([self.regionPromotions count]) {
+        [self createGPSLocationServiceIfPossible];
+        if (self.gpsService) {
+            __weak VPLPromotionsManager *weakSelf = self;
+            self.gpsService.regionEnteredCallback =  ^(CLRegion *region) {
+                VPLPromotionsManager *strongSelf = weakSelf;
+                if (!strongSelf) {
+                    return;
+                }
+                [strongSelf triggerValidPromotionInRegion:region];
+            };
+            NSArray *regionIdentifiers = [self.regionPromotions allKeys];
+            for (id identifier in regionIdentifiers) {
+                if ([identifier isKindOfClass:[NSString class]]) {
+                    VPLRegionPromotion *regionPromotion = self.regionPromotions[identifier];
+                    if ([CLLocationManager isMonitoringAvailableForClass:[regionPromotion.region class]]) {
+                        [self.gpsService startMonitoringForRegion:regionPromotion.region];
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+#pragma mark - Custom Private Methods
+
+- (void)queuePromotion:(VPLPromotion *)promotion{
+    if ([promotion isKindOfClass:[VPLLocationPromotion class]]) {
+        [self.locationPromotions addObject:promotion];
+    }
+    else if ([promotion isKindOfClass:[VPLRegionPromotion class]]) {
+        VPLRegionPromotion *regionPromotion = (VPLRegionPromotion *)promotion;
+        [self.regionPromotions setObject:regionPromotion forKey:regionPromotion.region.identifier];
+    }
+}
+
+- (void)createGPSLocationServiceIfPossible{
+    if (self.shouldRequestGPSAccess || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized) {
+            self.gpsService = [[VPLPromotionLocationGPSService alloc] initWithLocationAccuracy:self.gpsDesiredLocationAccuracy minimumHorizontalAccuracy:self.gpsMinimumHorizontalAccuracy];
+        }
+}
+
+#pragma mark - Region Methods
+
+- (void)triggerValidPromotionInRegion:(CLRegion *)region {
+    VPLRegionPromotion *promotion = self.regionPromotions[region.identifier];
+    if (promotion) {
+        if ([promotion shouldTriggerOnDate:[NSDate date]]) {
+            [promotion triggerPromotion];
+            NSString *showOnceUserDefaultsKey = [promotion showOnceUserDefaultsKey];
+            if (showOnceUserDefaultsKey) {
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:showOnceUserDefaultsKey];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+            if (promotion.repeatInterval == NSIntegerMax || showOnceUserDefaultsKey) {
+                [self.regionPromotions removeObjectForKey:region.identifier];
+                [self.gpsService stopMonitoringForRegion:region];
+                
             }
         }
     }

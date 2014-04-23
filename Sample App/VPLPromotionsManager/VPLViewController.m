@@ -1,41 +1,76 @@
 #import "VPLViewController.h"
 #import "VPLAppDelegate.h"
 #import "VPLPromotionsManager.h"
+#import "VPLLocationPromotion.h"
+#import "VPLRegionPromotion.h"
 
 static NSString *kVENPromotionAppleKey = @"ApplePromotionKey";
+
+@interface VPLViewController ()
+
+@property (nonatomic, strong) VPLPromotionsManager *promotionsManager;
+
+@end
 
 @implementation VPLViewController
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    CLLocation *appleHQLocation = [[CLLocation alloc] initWithLatitude:37.3318 longitude:-122.0312];
     NSMutableArray *promotions = [[NSMutableArray alloc] init];
     for (NSInteger i=0; i<15; i++) {
         NSString *userDefaultsKey = [NSString stringWithFormat:@"%@%ld", kVENPromotionAppleKey,(long)i];
-        VPLPromotion *promotion = [[VPLPromotion alloc] initWithCenter:appleHQLocation
-                                                                  range:3000
-                                                              startDate:nil
-                                                                endDate:nil
-                                                showOnceUserDefaultsKey:userDefaultsKey
-                                                                 action:^{
-                                                                     NSLog(@"Promotion Number %ld Fired",(i+1));
-                                                                 }];
+        
+        VPLLocationPromotion *promotion = [[VPLLocationPromotion alloc] initWithCity:@"Cupertino"
+                                                                               state:@"CA"
+                                                                             country:@"United States"
+                                                                    uniqueIdentifier:userDefaultsKey action:^{
+                                                                        NSLog(@"Promotion Number %ld Fired",(long)(i+1));
+                                                                    }];
+                                                                                
+        promotion.showOnce = YES;
         [promotions addObject:promotion];
     }
-    [VPLPromotionsManager startWithPromotions:[promotions copy]
-                                locationTypes:VPLLocationTypeGPSRequestPermission
-                              locationService:nil
-                          withRefreshInterval:5
-                      withMultipleTriggerType:VPLMultipleTriggerOnRefreshTypeTriggerOnce];
+    
+    NSUUID *estimoteUUID = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
+    CLBeaconRegion *doorRegion = [[CLBeaconRegion alloc] initWithProximityUUID:estimoteUUID
+                                                                    identifier:@"VenmoEntrancePromotion"];
+    VPLPromotionAction doorEnterAction = ^{
+        NSString *title    = @"Welcome to Venmo!";
+        NSString *message  = @"You've just stepped into the world's most innovative office";
+        UIApplicationState state = [[UIApplication sharedApplication] applicationState];
+        if (state == UIApplicationStateActive) {
+            [[[UIAlertView alloc] initWithTitle:title
+                                        message:message
+                                       delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles: nil] show];
+        }
+        else {
+            UILocalNotification *notification = [[UILocalNotification alloc] init];
+            notification.alertAction = title;
+            notification.alertBody = message;
+            [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+        }
+    };
+
+    VPLRegionPromotion *doorBeaconPromotion = [[VPLRegionPromotion alloc] initWithRegion:doorRegion
+                                                                                repeatInterval:2
+                                                                                   enterAction:doorEnterAction];
+    [promotions addObject:doorBeaconPromotion];
+    
+    self.promotionsManager = [[VPLPromotionsManager alloc] initWithPromotions:[promotions copy]
+                                                       shouldRequestGPSAccess:YES];
+    self.promotionsManager.refreshInterval = 2;
+    [self.promotionsManager startMonitoringForPromotionLocations];
 }
 
 
 - (IBAction)startStopClicked:(id)sender {
-    if ([VPLPromotionsManager sharedManager].isRunning) {
-        [[VPLPromotionsManager sharedManager] stopMonitoringForPromotionLocations];
+    if (self.promotionsManager.isRunning) {
+        [self.promotionsManager stopMonitoringForPromotionLocations];
     }
     else {
-        [[VPLPromotionsManager sharedManager] startMonitoringForPromotionLocations];
+        [self.promotionsManager startMonitoringForPromotionLocations];
     }
 }
 

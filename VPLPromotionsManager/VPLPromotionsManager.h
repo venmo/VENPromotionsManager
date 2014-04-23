@@ -1,7 +1,8 @@
 #import <Foundation/Foundation.h>
 #import "VPLLocationServiceProtocol.h"
 #import "NSString+VPLSanitiation.h"
-#import "VPLPromotion.h"
+#import "VPLLocationPromotion.h"
+#import "VPLRegionPromotion.h"
 #import "VPLLocation.h"
 
 /**
@@ -16,52 +17,24 @@ typedef NS_ENUM(NSUInteger, VPLMultipleTriggerOnRefreshType) {
     VPLMultipleTriggerOnRefreshTypeTriggerAll
 };
 
-
-typedef NS_OPTIONS(NSUInteger, VPLLocationType) {
-    VPLLocationTypeService,
-    VPLLocationTypeGPSIfPermissionGranted,
-    VPLLocationTypeGPSRequestPermission
-};
+///A custom (and optional) location service to be used instead of the gps service. If permission has already been granted to the app for GPS or if shouldRequestGPSAccess is YES, the GPS will always be used. The custom service cannot be used for region promotions which require the GPS service.
+@property (nonatomic, strong) id<VPLLocationServiceProtocol> locationFetchServer;
 
 ///YES if the VLPPromotionsManager is checking for location based promotions at the rate specified by the refresh interval. NO otherwise.
 @property (nonatomic, assign) BOOL isRunning;
 
-/**
- Creates and starts a Promotion Manager singleton object.
- @param promotions promotions array of VPLPromotion objects in order of fire priority.
- @param types types the type of location services that should be used in order to fire the promotion
- @param locationService locationService a object that conforms to the VPLLocationServiceProtocol protocol. One can use the VPLPromotionLocationGPSService or supply a custom object.
- @param seconds the number of seconds between location checks to fire promotions. To disable repeated checks, specify VPLPromotionsManagerRefreshIntervalNone,
- @param multipleTriggerType the way in which the promotion manager handles multiple vailid fires on one check. By default, it fires at maximum only one promotion per check.
- @return An `VPLPromotionsManager` singleton object
- */
-+ (instancetype)startWithPromotions:(NSArray *)promotions
-                                locationTypes:(VPLLocationType)types
-                              locationService:(id<VPLLocationServiceProtocol>)locationService
-                          withRefreshInterval:(NSUInteger)seconds
-           withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType;
-
-
-/**
- A reference to the shared instance of the Promotion Manager. This should be called each time after and only after startWithPromotions: is called.
- */
-+ (instancetype)sharedManager;
+//The number of seconds between location requests. This default to 60 seconds at intialization.
+@property (nonatomic, assign) NSUInteger refreshInterval;
 
 
 /**
  Creates a promotion object instance. If you are creating a singleton object use startWithPromotions: instead.
  @param promotions promotions array of VPLPromotion objects in order of fire priority.
- @param types types the type of location services that should be used in order to fire the promotion
- @param locationService locationService a object that conforms to the VPLLocationServiceProtocol protocol. One can use the VPLPromotionLocationGPSService or supply a custom object.
- @param seconds the number of seconds between location checks to fire promotions. To disable repeated checks, specify VPLPromotionsManagerRefreshIntervalNone,
- @param multipleTriggerType the way in which the promotion manager handles multiple vailid fires on one check. By default, it fires at maximum only one promotion per check.
+ @param shouldRequestGPSAccess YES if the manager instance should ask for GPS permissions. If set to NO, the manager will use the locationFetchServer. If locationFetchServer is not set and shouldRequestGPSAccess is NO, no location requests will be made.
  @return An `VPLPromotionsManager` instance
  */
 - (instancetype)initWithPromotions:(NSArray *)promotions
-                     locationTypes:(VPLLocationType)types
-                   locationService:(id<VPLLocationServiceProtocol>)locationService
-               withRefreshInterval:(NSUInteger)seconds
-           withMultipleTriggerType:(VPLMultipleTriggerOnRefreshType)multipleTriggerType;
+            shouldRequestGPSAccess:(BOOL)shouldRequestGPSAccess;
 
 
 /**
@@ -77,7 +50,7 @@ typedef NS_OPTIONS(NSUInteger, VPLLocationType) {
 
 
 /**
- Checks if user's current location should fire any promotion(s) manually. This is automatically called at regular intervals after startMonitoringForPromotionLocations.
+ Checks if user's current location should fire any location promotion(s) manually. This is automatically called at regular intervals after startMonitoringForPromotionLocations.
  */
 - (void)checkForLocationBasedPromotions;
 

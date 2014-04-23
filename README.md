@@ -1,7 +1,8 @@
 ## VENPromotionsManager
 
 VENPromotionsManager enables easy definition, management and control of in-app location based promotions including the following:
-- Define promotion action events along with trigger locations and active date intervals
+- Define promotion action events along with trigger locations and valid date intervals
+- Fire promotions on entering a geographic region or a region created by Bluetooh LE beacons, even if the app is not yet launched or is backgrounded
 - Check for location based promotions on a background timer (optional)
 - Use an included location service built on a CLLocationManager or a custom location service
 
@@ -14,33 +15,43 @@ VENPromotionsManager enables easy definition, management and control of in-app l
 You can install VENPromotionsManager in your project by using [CocoaPods](https://github.com/cocoapods/cocoapods):
 
 ```Ruby
-pod 'VENPromotionsManager', '~> 0.2.0'
+pod 'VENPromotionsManager', '~> 1.0.0'
 ```
 ### Usage
 
-First create one (or more) promotion(s)
+First create one (or more) promotion(s). Promotions can be either region based (using beacons or geofencing) or location based which require periodic location lookups.
 ```objc
-CLLocation *appleHQLocation = [[CLLocation alloc] initWithLatitude:37.3318 longitude:-122.0312];
 
-VPLPromotion *promotion1 = [[VPLPromotion alloc] initWithCenter:appleHQLocation
-                                                          range:3000 //in meters
-                                                      startDate:[NSDate distantPast]
-                                                        endDate:[NSDate distantFuture]
-                                        showOnceUserDefaultsKey:kUserDefaultsKey //userDefaultsKey to persist trigger history
-                                                         action:^{
-                                                                 //Implement code to launch promotion here
-                                                             }];
+//Location Promotion
+VPLLocationPromotion *locationPromotion = [[VPLLocationPromotion alloc] initWithCity:@"Cupertino"
+                                                                       state:@"CA"
+                                                                     country:@"United States"
+                                                            uniqueIdentifier:userDefaultsKey action:^{
+                                                                NSLog(@"Promotion Number %ld Fired",(long)(i+1));
+                                                            }];
+
+//Beacon based Region Promotion
+NSUUID *estimoteUUID = [[NSUUID alloc] initWithUUIDString:@"B9407F30-F5F8-466E-AFF9-25556B57FE6D"];
+CLBeaconRegion *doorRegion = [[CLBeaconRegion alloc] initWithProximityUUID:estimoteUUID
+                                                                    identifier:@"VenmoEntrancePromotion"];
+
+VPLRegionPromotion *regionPromotion = [[VPLRegionPromotion alloc] initWithRegion:doorRegion
+                                                                  repeatInterval:2
+                                                                    enterAction:^{
+                                                                      //Implement code to launch promotion here
+                                                                   }];
  ```
  
-Then start the promotions manager with an array of the created promotion(s)
+Then init the promotions manager with an array of the created promotion(s)
 ```objc
-[VPLPromotionsManager startWithPromotions:@[promotion1,promotion2,promotion3]
-                            locationTypes:VPLLocationTypeGPSRequestPermission
-                          locationService:nil //custom location service. use nil if you plan to use the included CLLocationManger.
-                      withRefreshInterval:600 //in seconds
-                  withMultipleTriggerType:VPLMultipleTriggerOnRefreshTypeTriggerOnce];
+self.promotionsManager = [[VPLPromotionsManager alloc] initWithPromotions:@[locationPromotion, regionPromotion]
+                                                   shouldRequestGPSAccess:YES];
+self.promotionsManager.refreshInterval = 60 * 60; //Lookup location every 60 minutes
+[self.promotionsManager startMonitoringForPromotionLocations];
  ```
-The VPLPromotionsManager is a singleton object and will display any valid location based promotions.  It checks for a valid promotion every 10 minutes.  By supplying a userdefaults key, you gurantee a user will not see a repeat promotion on subsequent launches.
+
+In this example, the VPLPromotionsManager instance will perform a location lookup and trigger any valid location promotion every 60 minutes and will trigger any valid region promotions whenever it enters the promotion's region. Region promotions support background notifications, while location promotions do not.
+
 ### Contributing
 
 We'd love to see your ideas for improving VENPromotionsManager! The best way to contribute is by submitting a pull request. We'll do our best to respond to your patch as soon as possible. You can also submit a new Github issue if you find bugs or have questions. 
