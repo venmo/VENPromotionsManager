@@ -25,14 +25,21 @@ static VPLPromotionsManager *promotionsManager = nil;
 @implementation VPLPromotionsManager
 
 
-- (instancetype)initWithPromotions:(NSArray *)promotions
-            shouldRequestGPSAccess:(BOOL)shouldRequestGPSAccess {
+- (instancetype)initWithGPSAccess:(BOOL)shouldRequestGPSAccess {
     self = [super init];
     if (self){
         promotionsManager.refreshInterval   = 60;
         self.gpsDesiredLocationAccuracy     = DefaultGPSDesiredAccuracy;
         self.gpsMinimumHorizontalAccuracy   = DefaultGPSMinimumHorizontalAccuracy;
         self.shouldRequestGPSAccess         = shouldRequestGPSAccess;
+    }
+    return self;
+}
+
+- (instancetype)initWithPromotions:(NSArray *)promotions
+            shouldRequestGPSAccess:(BOOL)shouldRequestGPSAccess {
+    self = [self initWithGPSAccess:shouldRequestGPSAccess];
+    if (self){
         [self setPromotions:promotions];
     }
     return self;

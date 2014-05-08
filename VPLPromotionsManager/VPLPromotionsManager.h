@@ -26,6 +26,12 @@ typedef NS_ENUM(NSUInteger, VPLMultipleTriggerOnRefreshType) {
 //The number of seconds between location requests. This default to 60 seconds at intialization.
 @property (nonatomic, assign) NSUInteger refreshInterval;
 
+/**
+ Creates a promotion object instance. Before starting this instance, be sure to setPromotions.
+ @param shouldRequestGPSAccess YES if the manager instance should ask for GPS permissions. If set to NO, the manager will use the locationFetchServer. If locationFetchServer is not set and shouldRequestGPSAccess is NO, no location requests will be made.
+ @return An `VPLPromotionsManager` instance
+  */
+- (instancetype)initWithGPSAccess:(BOOL)shouldRequestGPSAccess;
 
 /**
  Creates a promotion object instance. If you are creating a singleton object use startWithPromotions: instead.
@@ -36,6 +42,12 @@ typedef NS_ENUM(NSUInteger, VPLMultipleTriggerOnRefreshType) {
 - (instancetype)initWithPromotions:(NSArray *)promotions
             shouldRequestGPSAccess:(BOOL)shouldRequestGPSAccess;
 
+
+/**
+ Sets the promotions of the VPLPromotionsManager. Note: promotions should only be set once, and should be set before starting the VPLPromotionsManager instance.
+ @param promotions array of VPLPromotion objects in order of fire priority.
+ */
+- (void)setPromotions:(NSArray *)promotions;
 
 /**
  Begins monitoring for location based promotions at the the refresh rate rate specified during initialization. This function does not repeat if refresh rate was set to VPLPromotionsManagerRefreshIntervalNone.  This is also automatically called in startWithPromotions:
