@@ -17,6 +17,9 @@ typedef NS_ENUM(NSUInteger, VPLMultipleTriggerOnRefreshType) {
     VPLMultipleTriggerOnRefreshTypeTriggerAll
 };
 
+///A boolean that is YES if the manager instance should ask for GPS permissions. If set to NO, the manager will use the locationFetchServer. If locationFetchServer is not set and shouldRequestGPSAccess is NO, no location requests will be made. Note: This should only be set before setPromotions and before starting the VPLPromotionsManager instance.
+@property (nonatomic, assign) BOOL shouldRequestGPSAccess;
+
 ///A custom (and optional) location service to be used instead of the gps service. If permission has already been granted to the app for GPS or if shouldRequestGPSAccess is YES, the GPS will always be used. The custom service cannot be used for region promotions which require the GPS service.
 @property (nonatomic, strong) id<VPLLocationServiceProtocol> locationFetchServer;
 
@@ -25,13 +28,6 @@ typedef NS_ENUM(NSUInteger, VPLMultipleTriggerOnRefreshType) {
 
 //The number of seconds between location requests. This default to 60 seconds at intialization.
 @property (nonatomic, assign) NSUInteger refreshInterval;
-
-/**
- Creates a promotion object instance. Before starting this instance, be sure to setPromotions.
- @param shouldRequestGPSAccess YES if the manager instance should ask for GPS permissions. If set to NO, the manager will use the locationFetchServer. If locationFetchServer is not set and shouldRequestGPSAccess is NO, no location requests will be made.
- @return An `VPLPromotionsManager` instance
-  */
-- (instancetype)initWithGPSAccess:(BOOL)shouldRequestGPSAccess;
 
 /**
  Creates a promotion object instance. If you are creating a singleton object use startWithPromotions: instead.

@@ -12,7 +12,6 @@ static VPLPromotionsManager *promotionsManager = nil;
 @interface VPLPromotionsManager()
 
 @property (nonatomic, strong) VPLPromotionLocationGPSService<VPLLocationServiceProtocol> *gpsService;
-@property (nonatomic, assign) BOOL shouldRequestGPSAccess;
 @property (nonatomic, strong) NSMutableArray *locationPromotions;
 @property (nonatomic, strong) NSMutableDictionary *regionPromotions;
 @property (nonatomic, assign) VPLMultipleTriggerOnRefreshType multipleTriggerType;
@@ -24,22 +23,21 @@ static VPLPromotionsManager *promotionsManager = nil;
 
 @implementation VPLPromotionsManager
 
-
-- (instancetype)initWithGPSAccess:(BOOL)shouldRequestGPSAccess {
+- (instancetype)init {
     self = [super init];
     if (self){
         promotionsManager.refreshInterval   = 60;
         self.gpsDesiredLocationAccuracy     = DefaultGPSDesiredAccuracy;
         self.gpsMinimumHorizontalAccuracy   = DefaultGPSMinimumHorizontalAccuracy;
-        self.shouldRequestGPSAccess         = shouldRequestGPSAccess;
     }
     return self;
 }
 
 - (instancetype)initWithPromotions:(NSArray *)promotions
             shouldRequestGPSAccess:(BOOL)shouldRequestGPSAccess {
-    self = [self initWithGPSAccess:shouldRequestGPSAccess];
+    self = [self init];
     if (self){
+        self.shouldRequestGPSAccess = shouldRequestGPSAccess;
         [self setPromotions:promotions];
     }
     return self;
