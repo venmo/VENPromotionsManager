@@ -1,5 +1,5 @@
 ## VENPromotionsManager
-[![Build Status](https://travis-ci.org/venmo/VENPromotionsManager.svg?branch=master)](https://travis-ci.org/venmo/VENSeparatorView)
+[![Build Status](https://travis-ci.org/venmo/VENPromotionsManager.svg?branch=master)](https://travis-ci.org/venmo/VENPromotionsManager)
 
 VENPromotionsManager enables easy definition, management and control of in-app location based promotions including the following:
 - Define promotion action events along with trigger locations and valid date intervals
