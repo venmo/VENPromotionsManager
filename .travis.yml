@@ -2,8 +2,8 @@ language: objective-c
 before_install:
 - gem update cocoapods -v
 - brew uninstall xctool; brew install xctool --HEAD;
-xcode_workspace: VENPromotionsManager.xcworkspace
-xcode_scheme: VENPromotionsManager
+xcode_workspace: VPLPromotionsManager.xcworkspace
+xcode_scheme: VPLPromotionsManager
 xcode_sdk:
   - iphonesimulator7.0
   - iphonesimulator7.1
