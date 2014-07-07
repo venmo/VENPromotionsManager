@@ -1,6 +1,5 @@
 # Xcode
 .DS_Store
-Sample\ App/Pods/*
 build/
 *.pbxuser
 !default.pbxuser
@@ -17,3 +16,7 @@ profile
 *.moved-aside
 DerivedData
 .idea/
+
+#CocoaPods
+Pods
+SampleApp/Pods/*
