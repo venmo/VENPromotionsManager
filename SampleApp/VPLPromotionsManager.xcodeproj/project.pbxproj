@@ -1,0 +1,531 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3A5095C518C69A5C00C6905B /* NSString+VPLSanitiation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5095BB18C69A5C00C6905B /* NSString+VPLSanitiation.m */; };
+		3A5095C618C69A5C00C6905B /* VPLLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5095BD18C69A5C00C6905B /* VPLLocation.m */; };
+		3A5095C718C69A5C00C6905B /* VPLPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5095C018C69A5C00C6905B /* VPLPromotion.m */; };
+		3A5095C818C69A5C00C6905B /* VPLPromotionLocationGPSService.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5095C218C69A5C00C6905B /* VPLPromotionLocationGPSService.m */; };
+		3A5095C918C69A5C00C6905B /* VPLPromotionsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A5095C418C69A5C00C6905B /* VPLPromotionsManager.m */; };
+		3AA8545F18C624BA00F03FCF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA8545E18C624BA00F03FCF /* Foundation.framework */; };
+		3AA8546118C624BA00F03FCF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA8546018C624BA00F03FCF /* CoreGraphics.framework */; };
+		3AA8546318C624BA00F03FCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA8546218C624BA00F03FCF /* UIKit.framework */; };
+		3AA8548118C624BA00F03FCF /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA8548018C624BA00F03FCF /* XCTest.framework */; };
+		3AA8548218C624BA00F03FCF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA8545E18C624BA00F03FCF /* Foundation.framework */; };
+		3AA8548318C624BA00F03FCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3AA8546218C624BA00F03FCF /* UIKit.framework */; };
+		3ABD12E818E12DF300AF9AC8 /* VPLRegionPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABD12E718E12DF300AF9AC8 /* VPLRegionPromotion.m */; };
+		3ABD12EB18E12F3B00AF9AC8 /* VPLLocationPromotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABD12EA18E12F3B00AF9AC8 /* VPLLocationPromotion.m */; };
+		3AF6EF1518C690D2000AD74B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6EF1118C690D2000AD74B /* main.m */; };
+		3AF6EF4118C695D1000AD74B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3AF6EF3B18C695D1000AD74B /* Images.xcassets */; };
+		3AF6EF4218C695D1000AD74B /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3AF6EF3C18C695D1000AD74B /* Main_iPhone.storyboard */; };
+		3AF6EF4318C695D1000AD74B /* VPLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6EF3E18C695D1000AD74B /* VPLAppDelegate.m */; };
+		3AF6EF4418C695D1000AD74B /* VPLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AF6EF4018C695D1000AD74B /* VPLViewController.m */; };
+		437E09A539C14F89B9300BA6 /* libPods-VPLPromotionsManagerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D2D48CF2C70471A865B175B /* libPods-VPLPromotionsManagerTests.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3AA8548418C624BA00F03FCF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3AA8545318C624BA00F03FCF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3AA8545A18C624BA00F03FCF;
+			remoteInfo = VENPromotionManager;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1D2D48CF2C70471A865B175B /* libPods-VPLPromotionsManagerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VPLPromotionsManagerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A5095BA18C69A5C00C6905B /* NSString+VPLSanitiation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+VPLSanitiation.h"; path = "VPLPromotionsManager/NSString+VPLSanitiation.h"; sourceTree = "<group>"; };
+		3A5095BB18C69A5C00C6905B /* NSString+VPLSanitiation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+VPLSanitiation.m"; path = "VPLPromotionsManager/NSString+VPLSanitiation.m"; sourceTree = "<group>"; };
+		3A5095BC18C69A5C00C6905B /* VPLLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPLLocation.h; path = VPLPromotionsManager/VPLLocation.h; sourceTree = "<group>"; };
+		3A5095BD18C69A5C00C6905B /* VPLLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLLocation.m; path = VPLPromotionsManager/VPLLocation.m; sourceTree = "<group>"; };
+		3A5095BE18C69A5C00C6905B /* VPLLocationServiceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPLLocationServiceProtocol.h; path = VPLPromotionsManager/VPLLocationServiceProtocol.h; sourceTree = "<group>"; };
+		3A5095BF18C69A5C00C6905B /* VPLPromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPLPromotion.h; path = VPLPromotionsManager/VPLPromotion.h; sourceTree = "<group>"; };
+		3A5095C018C69A5C00C6905B /* VPLPromotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLPromotion.m; path = VPLPromotionsManager/VPLPromotion.m; sourceTree = "<group>"; };
+		3A5095C118C69A5C00C6905B /* VPLPromotionLocationGPSService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPLPromotionLocationGPSService.h; path = VPLPromotionsManager/VPLPromotionLocationGPSService.h; sourceTree = "<group>"; };
+		3A5095C218C69A5C00C6905B /* VPLPromotionLocationGPSService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLPromotionLocationGPSService.m; path = VPLPromotionsManager/VPLPromotionLocationGPSService.m; sourceTree = "<group>"; };
+		3A5095C318C69A5C00C6905B /* VPLPromotionsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPLPromotionsManager.h; path = VPLPromotionsManager/VPLPromotionsManager.h; sourceTree = "<group>"; };
+		3A5095C418C69A5C00C6905B /* VPLPromotionsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLPromotionsManager.m; path = VPLPromotionsManager/VPLPromotionsManager.m; sourceTree = "<group>"; };
+		3AA8545B18C624BA00F03FCF /* VPLPromotionsManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VPLPromotionsManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AA8545E18C624BA00F03FCF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3AA8546018C624BA00F03FCF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		3AA8546218C624BA00F03FCF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3AA8547F18C624BA00F03FCF /* VPLPromotionsManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VPLPromotionsManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3AA8548018C624BA00F03FCF /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		3ABD12E618E12DF300AF9AC8 /* VPLRegionPromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPLRegionPromotion.h; path = VPLPromotionsManager/VPLRegionPromotion.h; sourceTree = "<group>"; };
+		3ABD12E718E12DF300AF9AC8 /* VPLRegionPromotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLRegionPromotion.m; path = VPLPromotionsManager/VPLRegionPromotion.m; sourceTree = "<group>"; };
+		3ABD12E918E12F3B00AF9AC8 /* VPLLocationPromotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPLLocationPromotion.h; path = VPLPromotionsManager/VPLLocationPromotion.h; sourceTree = "<group>"; };
+		3ABD12EA18E12F3B00AF9AC8 /* VPLLocationPromotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLLocationPromotion.m; path = VPLPromotionsManager/VPLLocationPromotion.m; sourceTree = "<group>"; };
+		3AF6EF1018C690D2000AD74B /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = VPLPromotionsManager/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		3AF6EF1118C690D2000AD74B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = VPLPromotionsManager/main.m; sourceTree = SOURCE_ROOT; };
+		3AF6EF1218C690D2000AD74B /* VPLPromotionsManager-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "VPLPromotionsManager-Info.plist"; path = "VPLPromotionsManager/VPLPromotionsManager-Info.plist"; sourceTree = SOURCE_ROOT; };
+		3AF6EF1318C690D2000AD74B /* VPLPromotionsManager-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VPLPromotionsManager-Prefix.pch"; path = "VPLPromotionsManager/VPLPromotionsManager-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		3AF6EF3B18C695D1000AD74B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = VPLPromotionsManager/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		3AF6EF3C18C695D1000AD74B /* Main_iPhone.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main_iPhone.storyboard; path = VPLPromotionsManager/Main_iPhone.storyboard; sourceTree = SOURCE_ROOT; };
+		3AF6EF3D18C695D1000AD74B /* VPLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPLAppDelegate.h; path = VPLPromotionsManager/VPLAppDelegate.h; sourceTree = SOURCE_ROOT; };
+		3AF6EF3E18C695D1000AD74B /* VPLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLAppDelegate.m; path = VPLPromotionsManager/VPLAppDelegate.m; sourceTree = SOURCE_ROOT; };
+		3AF6EF3F18C695D1000AD74B /* VPLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VPLViewController.h; path = VPLPromotionsManager/VPLViewController.h; sourceTree = SOURCE_ROOT; };
+		3AF6EF4018C695D1000AD74B /* VPLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VPLViewController.m; path = VPLPromotionsManager/VPLViewController.m; sourceTree = SOURCE_ROOT; };
+		65B7D4273FA04F7CBFC73F23 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CD492AB7C074AB4BF559E34 /* Pods-VPLPromotionsManagerTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VPLPromotionsManagerTests.xcconfig"; path = "Pods/Pods-VPLPromotionsManagerTests.xcconfig"; sourceTree = "<group>"; };
+		F796929953A34FEB98C98F64 /* libPods-VENPromotionManagerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-VENPromotionManagerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3AA8545818C624BA00F03FCF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AA8546118C624BA00F03FCF /* CoreGraphics.framework in Frameworks */,
+				3AA8546318C624BA00F03FCF /* UIKit.framework in Frameworks */,
+				3AA8545F18C624BA00F03FCF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AA8547C18C624BA00F03FCF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AA8548118C624BA00F03FCF /* XCTest.framework in Frameworks */,
+				3AA8548318C624BA00F03FCF /* UIKit.framework in Frameworks */,
+				3AA8548218C624BA00F03FCF /* Foundation.framework in Frameworks */,
+				437E09A539C14F89B9300BA6 /* libPods-VPLPromotionsManagerTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3AA8545218C624BA00F03FCF = {
+			isa = PBXGroup;
+			children = (
+				3AA8549A18C626CC00F03FCF /* VPLPromotionsManager */,
+				3AA8546418C624BA00F03FCF /* Sample App */,
+				3AA8545D18C624BA00F03FCF /* Frameworks */,
+				3AA8545C18C624BA00F03FCF /* Products */,
+				7CD492AB7C074AB4BF559E34 /* Pods-VPLPromotionsManagerTests.xcconfig */,
+			);
+			sourceTree = "<group>";
+		};
+		3AA8545C18C624BA00F03FCF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3AA8545B18C624BA00F03FCF /* VPLPromotionsManager.app */,
+				3AA8547F18C624BA00F03FCF /* VPLPromotionsManagerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3AA8545D18C624BA00F03FCF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3AA8545E18C624BA00F03FCF /* Foundation.framework */,
+				3AA8546018C624BA00F03FCF /* CoreGraphics.framework */,
+				3AA8546218C624BA00F03FCF /* UIKit.framework */,
+				3AA8548018C624BA00F03FCF /* XCTest.framework */,
+				F796929953A34FEB98C98F64 /* libPods-VENPromotionManagerTests.a */,
+				65B7D4273FA04F7CBFC73F23 /* libPods.a */,
+				1D2D48CF2C70471A865B175B /* libPods-VPLPromotionsManagerTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3AA8546418C624BA00F03FCF /* Sample App */ = {
+			isa = PBXGroup;
+			children = (
+				3AF6EF3B18C695D1000AD74B /* Images.xcassets */,
+				3AF6EF3C18C695D1000AD74B /* Main_iPhone.storyboard */,
+				3AF6EF3D18C695D1000AD74B /* VPLAppDelegate.h */,
+				3AF6EF3E18C695D1000AD74B /* VPLAppDelegate.m */,
+				3AF6EF3F18C695D1000AD74B /* VPLViewController.h */,
+				3AF6EF4018C695D1000AD74B /* VPLViewController.m */,
+				3AA8546518C624BA00F03FCF /* Supporting Files */,
+			);
+			name = "Sample App";
+			path = VENPromotionManager;
+			sourceTree = "<group>";
+		};
+		3AA8546518C624BA00F03FCF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3AF6EF1018C690D2000AD74B /* InfoPlist.strings */,
+				3AF6EF1118C690D2000AD74B /* main.m */,
+				3AF6EF1218C690D2000AD74B /* VPLPromotionsManager-Info.plist */,
+				3AF6EF1318C690D2000AD74B /* VPLPromotionsManager-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3AA8549A18C626CC00F03FCF /* VPLPromotionsManager */ = {
+			isa = PBXGroup;
+			children = (
+				3A5095C318C69A5C00C6905B /* VPLPromotionsManager.h */,
+				3A5095C418C69A5C00C6905B /* VPLPromotionsManager.m */,
+				3ABD12E618E12DF300AF9AC8 /* VPLRegionPromotion.h */,
+				3ABD12E718E12DF300AF9AC8 /* VPLRegionPromotion.m */,
+				3ABD12E918E12F3B00AF9AC8 /* VPLLocationPromotion.h */,
+				3ABD12EA18E12F3B00AF9AC8 /* VPLLocationPromotion.m */,
+				3A5095BF18C69A5C00C6905B /* VPLPromotion.h */,
+				3A5095C018C69A5C00C6905B /* VPLPromotion.m */,
+				3A5095BC18C69A5C00C6905B /* VPLLocation.h */,
+				3A5095BD18C69A5C00C6905B /* VPLLocation.m */,
+				3A5095BE18C69A5C00C6905B /* VPLLocationServiceProtocol.h */,
+				3A5095C118C69A5C00C6905B /* VPLPromotionLocationGPSService.h */,
+				3A5095C218C69A5C00C6905B /* VPLPromotionLocationGPSService.m */,
+				3A5095BA18C69A5C00C6905B /* NSString+VPLSanitiation.h */,
+				3A5095BB18C69A5C00C6905B /* NSString+VPLSanitiation.m */,
+			);
+			name = VPLPromotionsManager;
+			path = ..;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3AA8545A18C624BA00F03FCF /* VPLPromotionsManager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AA8549018C624BA00F03FCF /* Build configuration list for PBXNativeTarget "VPLPromotionsManager" */;
+			buildPhases = (
+				3AA8545718C624BA00F03FCF /* Sources */,
+				3AA8545818C624BA00F03FCF /* Frameworks */,
+				3AA8545918C624BA00F03FCF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VPLPromotionsManager;
+			productName = VENPromotionManager;
+			productReference = 3AA8545B18C624BA00F03FCF /* VPLPromotionsManager.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3AA8547E18C624BA00F03FCF /* VPLPromotionsManagerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3AA8549318C624BA00F03FCF /* Build configuration list for PBXNativeTarget "VPLPromotionsManagerTests" */;
+			buildPhases = (
+				45EA63B7AA9645D1AC5CF42E /* Check Pods Manifest.lock */,
+				3AA8547B18C624BA00F03FCF /* Sources */,
+				3AA8547C18C624BA00F03FCF /* Frameworks */,
+				3AA8547D18C624BA00F03FCF /* Resources */,
+				4DBFD3F148E84E8EB580B16D /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3AA8548518C624BA00F03FCF /* PBXTargetDependency */,
+			);
+			name = VPLPromotionsManagerTests;
+			productName = VENPromotionManagerTests;
+			productReference = 3AA8547F18C624BA00F03FCF /* VPLPromotionsManagerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3AA8545318C624BA00F03FCF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = VPL;
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = Venmo;
+				TargetAttributes = {
+					3AA8545A18C624BA00F03FCF = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 0;
+							};
+						};
+					};
+					3AA8547E18C624BA00F03FCF = {
+						TestTargetID = 3AA8545A18C624BA00F03FCF;
+					};
+				};
+			};
+			buildConfigurationList = 3AA8545618C624BA00F03FCF /* Build configuration list for PBXProject "VPLPromotionsManager" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3AA8545218C624BA00F03FCF;
+			productRefGroup = 3AA8545C18C624BA00F03FCF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3AA8545A18C624BA00F03FCF /* VPLPromotionsManager */,
+				3AA8547E18C624BA00F03FCF /* VPLPromotionsManagerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3AA8545918C624BA00F03FCF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3AF6EF4118C695D1000AD74B /* Images.xcassets in Resources */,
+				3AF6EF4218C695D1000AD74B /* Main_iPhone.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AA8547D18C624BA00F03FCF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		45EA63B7AA9645D1AC5CF42E /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4DBFD3F148E84E8EB580B16D /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-VPLPromotionsManagerTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3AA8545718C624BA00F03FCF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A5095C918C69A5C00C6905B /* VPLPromotionsManager.m in Sources */,
+				3A5095C518C69A5C00C6905B /* NSString+VPLSanitiation.m in Sources */,
+				3ABD12E818E12DF300AF9AC8 /* VPLRegionPromotion.m in Sources */,
+				3AF6EF4318C695D1000AD74B /* VPLAppDelegate.m in Sources */,
+				3A5095C718C69A5C00C6905B /* VPLPromotion.m in Sources */,
+				3AF6EF1518C690D2000AD74B /* main.m in Sources */,
+				3A5095C618C69A5C00C6905B /* VPLLocation.m in Sources */,
+				3ABD12EB18E12F3B00AF9AC8 /* VPLLocationPromotion.m in Sources */,
+				3A5095C818C69A5C00C6905B /* VPLPromotionLocationGPSService.m in Sources */,
+				3AF6EF4418C695D1000AD74B /* VPLViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AA8547B18C624BA00F03FCF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3AA8548518C624BA00F03FCF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3AA8545A18C624BA00F03FCF /* VPLPromotionsManager */;
+			targetProxy = 3AA8548418C624BA00F03FCF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		3AA8548E18C624BA00F03FCF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3AA8548F18C624BA00F03FCF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3AA8549118C624BA00F03FCF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "VPLPromotionsManager/VPLPromotionsManager-Prefix.pch";
+				INFOPLIST_FILE = "VPLPromotionsManager/VPLPromotionsManager-Info.plist";
+				PRODUCT_NAME = VPLPromotionsManager;
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		3AA8549218C624BA00F03FCF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "VPLPromotionsManager/VPLPromotionsManager-Prefix.pch";
+				INFOPLIST_FILE = "VPLPromotionsManager/VPLPromotionsManager-Info.plist";
+				PRODUCT_NAME = VPLPromotionsManager;
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		3AA8549418C624BA00F03FCF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CD492AB7C074AB4BF559E34 /* Pods-VPLPromotionsManagerTests.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/VPLPromotionsManager.app/VPLPromotionsManager";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "VPLPromotionsManagerTests/VPLPromotionsManagerTests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "VPLPromotionsManagerTests/VPLPromotionsManagerTests-Info.plist";
+				PRODUCT_NAME = VPLPromotionsManagerTests;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		3AA8549518C624BA00F03FCF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CD492AB7C074AB4BF559E34 /* Pods-VPLPromotionsManagerTests.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/VPLPromotionsManager.app/VPLPromotionsManager";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "VPLPromotionsManagerTests/VPLPromotionsManagerTests-Prefix.pch";
+				INFOPLIST_FILE = "VPLPromotionsManagerTests/VPLPromotionsManagerTests-Info.plist";
+				PRODUCT_NAME = VPLPromotionsManagerTests;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3AA8545618C624BA00F03FCF /* Build configuration list for PBXProject "VPLPromotionsManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AA8548E18C624BA00F03FCF /* Debug */,
+				3AA8548F18C624BA00F03FCF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3AA8549018C624BA00F03FCF /* Build configuration list for PBXNativeTarget "VPLPromotionsManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AA8549118C624BA00F03FCF /* Debug */,
+				3AA8549218C624BA00F03FCF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3AA8549318C624BA00F03FCF /* Build configuration list for PBXNativeTarget "VPLPromotionsManagerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3AA8549418C624BA00F03FCF /* Debug */,
+				3AA8549518C624BA00F03FCF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3AA8545318C624BA00F03FCF /* Project object */;
+}
